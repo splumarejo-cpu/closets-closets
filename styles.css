@@ -64,12 +64,14 @@ img { max-width: 100%; display: block; }
   align-items: center;
   gap: 12px;
   text-decoration: none;
+  flex-shrink: 0;
 }
 
 .brand-logo {
   height: 40px;
   width: auto;
   object-fit: contain;
+  flex-shrink: 0;
 }
 
 .brand-meta {
@@ -77,6 +79,7 @@ img { max-width: 100%; display: block; }
   flex-direction: column;
   border-left: 1px solid var(--line-strong);
   padding-left: 12px;
+  white-space: nowrap;
 }
 
 .brand-sub {
@@ -96,8 +99,9 @@ img { max-width: 100%; display: block; }
 .nav-links {
   display: flex;
   align-items: center;
-  gap: 24px;
+  gap: 20px;
   list-style: none;
+  flex-shrink: 1;
 }
 
 .nav-links a {
@@ -105,6 +109,7 @@ img { max-width: 100%; display: block; }
   font-size: 13px;
   font-weight: 600;
   color: var(--ink-soft);
+  white-space: nowrap;
   transition: color 0.2s;
 }
 
@@ -117,6 +122,8 @@ img { max-width: 100%; display: block; }
   display: flex;
   align-items: center;
   gap: 10px;
+  flex-shrink: 0;
+  white-space: nowrap;
 }
 
 .mobile-toggle {
@@ -330,9 +337,7 @@ img { max-width: 100%; display: block; }
 }
 
 .cad-floating-card {
-  margin-top: -28px;
-  margin-left: 20px;
-  margin-right: 20px;
+  margin-top: 12px;
   position: relative;
   background: var(--navy-deep);
   color: var(--paper);
@@ -882,7 +887,7 @@ img { max-width: 100%; display: block; }
 
 .studio-grid {
   display: grid;
-  grid-template-columns: 380px 1fr;
+  grid-template-columns: 350px minmax(0, 1fr);
   gap: 24px;
   align-items: start;
 }
@@ -891,6 +896,7 @@ img { max-width: 100%; display: block; }
   background: var(--surface);
   border: 1px solid var(--line-strong);
   padding: 22px;
+  min-width: 0;
 }
 
 .studio-block {
@@ -1023,11 +1029,34 @@ img { max-width: 100%; display: block; }
   display: flex;
   flex-direction: column;
   gap: 20px;
+  min-width: 0;
 }
 
 .cad-card {
   background: var(--surface);
   border: 1px solid var(--line-strong);
+}
+
+.cad-infobar {
+  display: flex;
+  flex-wrap: wrap;
+  justify-content: space-between;
+  align-items: center;
+  gap: 8px;
+  padding: 9px 16px;
+  background: var(--surface);
+  border-bottom: 1px solid var(--line);
+  font-family: var(--mono);
+  font-size: 11px;
+  color: var(--ink);
+}
+
+.cad-infobar span.muted {
+  color: var(--ink-soft);
+}
+
+.cad-viewport.is-2d .cad-hud-bottom {
+  display: none !important;
 }
 
 .cad-toolbar {
@@ -1195,14 +1224,14 @@ img { max-width: 100%; display: block; }
 }
 
 /* Responsive Breakpoints */
-@media (max-width: 1040px) {
+@media (max-width: 1020px) {
   .specialties-grid { grid-template-columns: repeat(2, 1fr); }
   .process-grid { grid-template-columns: repeat(2, 1fr); }
-  .studio-grid { grid-template-columns: 1fr; }
   .studio-summary-grid { grid-template-columns: 1fr; }
 }
 
-@media (max-width: 840px) {
+@media (max-width: 960px) {
+  .studio-grid { grid-template-columns: 1fr; }
   .nav-links,
   .nav-actions .hide-mobile { display: none; }
   .mobile-toggle { display: inline-flex; }

@@ -590,17 +590,29 @@
     ctx.font = "600 16px monospace";
     ctx.fillText(`FOLIO: ${params.folio}   |   MONTERREY, N.L.   |   WHATSAPP TALLER: 81 3457 5939`, 44, 88);
 
-    // Panel Izquierdo: Perspectiva 3D CAD
+    const pal = palette();
+
+    // Panel Izquierdo: Perspectiva 3D CAD con barra superior legible en modo claro y Blueprint
+    ctx.fillStyle = pal.svgBg;
+    ctx.fillRect(44, 112, 740, 480);
+    ctx.drawImage(canvas, 44, 142, 740, 450);
+    ctx.fillStyle = "#1B365D";
+    ctx.fillRect(44, 112, 740, 30);
+    ctx.fillStyle = "#FFFFFF";
+    ctx.font = "bold 13px monospace";
+    ctx.fillText("VISTA 01 / PERSPECTIVA CONCEPTUAL EN TRAZOS (3D CAD)", 58, 132);
     ctx.strokeStyle = "#161513";
     ctx.lineWidth = 1.5;
     ctx.strokeRect(44, 112, 740, 480);
-    ctx.drawImage(canvas, 44, 112, 740, 480);
-    ctx.fillStyle = "#161513";
-    ctx.font = "600 13px monospace";
-    ctx.fillText("VISTA 01 / PERSPECTIVA CONCEPTUAL EN TRAZOS (3D CAD)", 54, 134);
 
-    // Panel Derecho: SVG Alzado 2D Acotado rasterizado
-    ctx.strokeRect(816, 112, 740, 480);
+    // Panel Derecho: SVG Alzado 2D Acotado rasterizado con fondo completo consistente
+    ctx.fillStyle = pal.svgBg;
+    ctx.fillRect(816, 112, 740, 480);
+    ctx.fillStyle = "#1B365D";
+    ctx.fillRect(816, 112, 740, 30);
+    ctx.fillStyle = "#FFFFFF";
+    ctx.font = "bold 13px monospace";
+    ctx.fillText("VISTA 02 / ALZADO FRONTAL ACOTADO EN CENTÍMETROS", 830, 132);
     const svgEl = document.getElementById("planoSvgActivo");
     if (svgEl) {
       const xml = new XMLSerializer().serializeToString(svgEl);
@@ -609,7 +621,7 @@
       await new Promise((resolve) => {
         const img = new Image();
         img.onload = () => {
-          ctx.drawImage(img, 818, 120, 736, 432);
+          ctx.drawImage(img, 818, 148, 736, 434);
           URL.revokeObjectURL(url);
           resolve();
         };
@@ -617,6 +629,9 @@
         img.src = url;
       });
     }
+    ctx.strokeStyle = "#161513";
+    ctx.lineWidth = 1.5;
+    ctx.strokeRect(816, 112, 740, 480);
 
     // Ficha técnica inferior
     ctx.fillStyle = "#FFFFFF";
@@ -682,6 +697,7 @@
     },
     setViewMode: function (mode) {
       activeView = mode === "2d" ? "2d" : "3d";
+      container.classList.toggle("is-2d", activeView === "2d");
       svgWrap.classList.toggle("active", activeView === "2d");
       if (activeView === "3d") resize();
     },
