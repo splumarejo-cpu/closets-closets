@@ -40,6 +40,12 @@
       <div class="cat-pills" id="catPills"></div>
     </div>
 
+    <!-- PREAJUSTES DE INSPIRACIÓN RÁPIDA (1 CLIC) -->
+    <div class="preset-strip-wrap">
+      <span class="preset-strip-title">⚡ Inspiración Rápida:</span>
+      <div class="preset-pills" id="presetPills"></div>
+    </div>
+
     <div class="studio-grid">
       <!-- PANEL IZQUIERDO DE PARÁMETROS -->
       <aside class="studio-sidebar">
@@ -206,11 +212,14 @@
       const initCat = M.categorias[urlParams.get("cat")] ? urlParams.get("cat") : "CLOSET";
       const initGama = M.gamas[urlParams.get("gama")] ? urlParams.get("gama") : "taller_mty";
 
+      const initSub = urlParams.get("sub");
+      const initPreset = urlParams.get("preset");
+
       const state = {
         folio: "CAD-" + String(Date.now()).slice(-5),
         categoria: initCat,
         gama: initGama,
-        subtipo: M.categorias[initCat].subtipos[0].id,
+        subtipo: (initSub && M.categorias[initCat].subtipos.some(s => s.id === initSub)) ? initSub : M.categorias[initCat].subtipos[0].id,
         largo: M.categorias[initCat].largoDefault,
         alto: M.categorias[initCat].altoDefault,
         fondo: M.categorias[initCat].fondoDefault,
@@ -219,6 +228,7 @@
       };
 
       const catPills = document.getElementById("catPills");
+      const presetPills = document.getElementById("presetPills");
       const subtipoList = document.getElementById("subtipoList");
       const extrasList = document.getElementById("extrasList");
       const inpLargo = document.getElementById("inpLargo");
@@ -495,12 +505,48 @@
         cadBtn.textContent = orig;
       });
 
+      function applyPreset(pr) {
+        state.categoria = pr.cat;
+        syncSlidersBounds();
+        state.subtipo = pr.sub;
+        state.largo = pr.largo;
+        state.alto = pr.alto;
+        state.fondo = pr.fondo;
+        state.extras = [...pr.extras];
+        inpLargo.value = state.largo;
+        inpAlto.value = state.alto;
+        inpFondo.value = state.fondo;
+        renderCatPills();
+        renderSubtipos();
+        renderExtras();
+        updateAll();
+      }
+
+      function renderPresets() {
+        if (!presetPills || !M.presets) return;
+        presetPills.innerHTML = "";
+        M.presets.forEach((pr) => {
+          const btn = document.createElement("button");
+          btn.type = "button";
+          btn.className = "preset-pill";
+          btn.textContent = pr.label;
+          btn.addEventListener("click", () => applyPreset(pr));
+          presetPills.appendChild(btn);
+        });
+      }
+
       // Inicializar estudio CAD
       syncSlidersBounds();
       renderCatPills();
-      renderSubtipos();
-      renderExtras();
-      updateAll();
+      renderPresets();
+      if (initPreset) {
+        const found = M.presets.find(p => p.id === initPreset);
+        if (found) applyPreset(found);
+      } else {
+        renderSubtipos();
+        renderExtras();
+        updateAll();
+      }
     })();
   </script>
 </body>

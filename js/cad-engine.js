@@ -278,6 +278,7 @@
     const L = Math.min(Number(p.largo || 3.6), 6.0);
     const H = Number(p.alto || 2.4);
     const sub = p.subtipo || "COCINA_L_PENINSULA";
+    const extras = p.extras || [];
     const bajosL = Math.max(1.8, L * 0.72);
     const nMod = Math.max(2, Math.round(bajosL / 0.75));
     const modW = bajosL / nMod;
@@ -286,23 +287,72 @@
     addCadBox(bajosL, 0.1, 0.56, -0.35, 0.05, -0.95);
     for (let i = 0; i < nMod; i++) {
       const mx = -0.35 - bajosL / 2 + modW / 2 + i * modW;
-      addCadBox(modW - 0.008, 0.76, 0.58, mx, 0.48, -0.95, { explode: [0, 0, 0.18] });
-      // Alacena superior (solo en módulos que no sean torre)
+      
+      // Si seleccionó cubiertero / caceroleros en primer módulo
+      if (i === 0 && extras.includes("cubiertero_cacerolero")) {
+        addCadBox(modW - 0.008, 0.18, 0.58, mx, 0.74, -0.95, { accent: true, explode: [0, 0, 0.32] });
+        addCadBox(modW - 0.008, 0.27, 0.58, mx, 0.49, -0.95, { explode: [0, 0, 0.26] });
+        addCadBox(modW - 0.008, 0.27, 0.58, mx, 0.20, -0.95, { explode: [0, 0, 0.20] });
+      } else if (i === 1 && extras.includes("lavavajillas")) {
+        // Lavavajillas 60cm con jaladera horizontal de acero
+        addCadBox(modW - 0.008, 0.76, 0.58, mx, 0.48, -0.95, { accent: true, explode: [0, 0, 0.18] });
+        addCadBox(modW * 0.7, 0.03, 0.03, mx, 0.82, -0.63, { accent: true, explode: [0, 0, 0.25] });
+      } else {
+        addCadBox(modW - 0.008, 0.76, 0.58, mx, 0.48, -0.95, { explode: [0, 0, 0.18] });
+      }
+
+      // Alacena superior
       addCadBox(modW - 0.008, 0.75, 0.34, mx, 1.85, -1.07, { explode: [0, 0.15, 0.18] });
     }
     // Cubierta continua 4cm
     addCadBox(bajosL + 0.04, 0.04, 0.62, -0.35, 0.88, -0.93, { accent: true, explode: [0, 0.25, 0] });
 
-    // Torre de hornos lateral
-    addCadBox(0.7, H, 0.62, -0.35 + bajosL / 2 + 0.36, H / 2, -0.93, { accent: true, explode: [0.25, 0, 0] });
+    // Tarja doble submontar y monomando si seleccionada
+    if (extras.includes("tarja_doble")) {
+      const sinkX = -0.35 - bajosL / 2 + modW * 1.5;
+      addCadBox(0.74, 0.02, 0.44, sinkX, 0.90, -0.93, { accent: true, explode: [0, 0.28, 0] });
+      addCadBox(0.03, 0.30, 0.03, sinkX, 1.07, -1.10, { accent: true });
+      addCadBox(0.12, 0.03, 0.03, sinkX, 1.22, -1.06, { accent: true });
+    }
 
-    // Isla o Península según subtipo
-    if (sub === "COCINA_L_PENINSULA") {
+    // Parrilla de 5 quemadores + campana
+    if (extras.includes("parrilla_campana")) {
+      const cookX = -0.35 - bajosL / 2 + modW * 0.5;
+      addCadBox(0.76, 0.02, 0.50, cookX, 0.90, -0.93, { accent: true, explode: [0, 0.28, 0] });
+      addCadBox(0.80, 0.12, 0.48, cookX, 1.62, -1.00, { accent: true, explode: [0, 0.15, 0] });
+      addCadBox(0.28, 0.45, 0.28, cookX, 1.90, -1.10, { accent: true });
+    }
+
+    // Torre lateral (Alacena Blum o Torre de hornos)
+    const towerX = -0.35 + bajosL / 2 + 0.36;
+    if (extras.includes("alacena_torre_blum")) {
+      addCadBox(0.7, H, 0.62, towerX, H / 2, -0.93, { accent: true, explode: [0.25, 0, 0] });
+      for (let g = 1; g <= 4; g++) {
+        addCadBox(0.62, 0.16, 0.52, towerX, 0.25 + g * 0.38, -0.93, { explode: [0.25, 0, 0.28] });
+      }
+    } else {
+      addCadBox(0.7, H, 0.62, towerX, H / 2, -0.93, { accent: true, explode: [0.25, 0, 0] });
+      if (extras.includes("torre_hornos")) {
+        addCadBox(0.58, 0.36, 0.03, towerX, 1.55, -0.61, { glass: true, accent: true, explode: [0.25, 0, 0.12] });
+        addCadBox(0.58, 0.54, 0.03, towerX, 1.05, -0.61, { glass: true, accent: true, explode: [0.25, 0, 0.12] });
+      }
+    }
+
+    // Disposición Inteligente de Isla y Península
+    const hasIsland = sub === "COCINA_ISLA" || extras.includes("isla_central");
+    const hasPeninsula = sub === "COCINA_L_PENINSULA" && !extras.includes("isla_central");
+
+    if (hasPeninsula) {
       addCadBox(0.65, 0.86, 1.8, -0.35 - bajosL / 2 + 0.325, 0.43, 0.26, { explode: [-0.2, 0, 0.2] });
       addCadBox(0.75, 0.04, 1.84, -0.35 - bajosL / 2 + 0.375, 0.88, 0.26, { accent: true, explode: [-0.2, 0.2, 0.2] });
-    } else if (sub === "COCINA_ISLA") {
-      addCadBox(2.0, 0.86, 0.9, 0, 0.43, 0.55, { explode: [0, 0, 0.3] });
-      addCadBox(2.08, 0.04, 0.98, 0, 0.88, 0.55, { accent: true, explode: [0, 0.25, 0.3] });
+    } else if (hasIsland) {
+      const islandX = -0.15;
+      const islandZ = 0.55;
+      const islandW = Math.min(2.2, Math.max(1.6, bajosL * 0.65));
+      const islandD = 0.90;
+      addCadBox(islandW, 0.86, islandD, islandX, 0.43, islandZ, { explode: [0, 0, 0.32] });
+      addCadBox(islandW + 0.08, 0.04, islandD + 0.08, islandX, 0.88, islandZ, { accent: true, explode: [0, 0.25, 0.32] });
+      addCadBox(0.04, 0.88, islandD + 0.08, islandX - islandW / 2 - 0.02, 0.44, islandZ, { accent: true, explode: [-0.15, 0, 0.32] });
     } else if (sub === "COCINA_U") {
       addCadBox(0.62, 0.86, 1.8, -0.35 - bajosL / 2 + 0.31, 0.43, 0.26);
       addCadBox(0.62, 0.86, 1.8, -0.35 + bajosL / 2 - 0.31, 0.43, 0.26);
@@ -373,6 +423,76 @@
     }
   }
 
+  function buildPuertasCAD(p) {
+    const L = Math.min(Number(p.largo || 1.0), 2.4);
+    const H = Number(p.alto || 2.2);
+    const sub = p.subtipo || "PUERTA_GRANERO_Z";
+    const railL = L * 2.1;
+    const yTrack = H + 0.08;
+
+    // Riel superior de acero forjado negro
+    addCadBox(railL, 0.05, 0.015, (railL - L) / 2 - 0.15, yTrack, 0.06, { accent: true });
+    // Anclajes espaciadores a muro
+    const nSpacers = 5;
+    for (let i = 0; i < nSpacers; i++) {
+      const sx = ((railL - L) / 2 - 0.15) - railL / 2 + 0.12 + i * ((railL - 0.24) / (nSpacers - 1));
+      addCadBox(0.03, 0.03, 0.045, sx, yTrack, 0.035, { accent: true });
+    }
+
+    function buildSingleDoorLeaf(w, h, posX, style, explodeVec) {
+      addCadBox(w, h, 0.045, posX, h / 2, 0.03, { explode: explodeVec });
+
+      // Ruedas y herrajes superiores de suspensión
+      const hangerW = 0.045, hangerH = 0.26;
+      [-w / 2 + 0.14, w / 2 - 0.14].forEach((hx) => {
+        addCadBox(hangerW, hangerH, 0.012, posX + hx, h + 0.04, 0.065, { accent: true, explode: explodeVec });
+        addCadBox(0.08, 0.08, 0.02, posX + hx, yTrack, 0.065, { accent: true, explode: explodeVec });
+      });
+
+      const frameW = 0.10;
+      if (style === "PUERTA_GRANERO_Z") {
+        addCadBox(w, frameW, 0.018, posX, frameW / 2, 0.055, { accent: true, explode: explodeVec });
+        addCadBox(w, frameW, 0.018, posX, h - frameW / 2, 0.055, { accent: true, explode: explodeVec });
+        addCadBox(w, frameW * 0.8, 0.018, posX, h / 2, 0.055, { accent: true, explode: explodeVec });
+        addCadBox(frameW, h, 0.018, posX - w / 2 + frameW / 2, h / 2, 0.055, { accent: true, explode: explodeVec });
+        addCadBox(frameW, h, 0.018, posX + w / 2 - frameW / 2, h / 2, 0.055, { accent: true, explode: explodeVec });
+        const nDuelas = Math.max(4, Math.round(w / 0.14));
+        for (let d = 0; d < nDuelas; d++) {
+          const dx = posX - w / 2 + (w / nDuelas) * (d + 0.5);
+          addCadBox(w / nDuelas - 0.006, h - frameW * 2, 0.012, dx, h / 2, 0.035, { explode: explodeVec });
+        }
+        addCadBox(0.08, (h / 2) * 1.12, 0.018, posX, (h / 4) * 1.05, 0.056, { accent: true, explode: explodeVec });
+        addCadBox(0.08, (h / 2) * 1.12, 0.018, posX, (h * 0.75) * 0.98, 0.056, { accent: true, explode: explodeVec });
+      } else if (style === "PUERTA_GRANERO_X") {
+        addCadBox(w, frameW, 0.018, posX, frameW / 2, 0.055, { accent: true, explode: explodeVec });
+        addCadBox(w, frameW, 0.018, posX, h - frameW / 2, 0.055, { accent: true, explode: explodeVec });
+        addCadBox(frameW, h, 0.018, posX - w / 2 + frameW / 2, h / 2, 0.055, { accent: true, explode: explodeVec });
+        addCadBox(frameW, h, 0.018, posX + w / 2 - frameW / 2, h / 2, 0.055, { accent: true, explode: explodeVec });
+        addCadBox(0.09, h * 1.04, 0.018, posX, h / 2, 0.056, { accent: true, explode: explodeVec });
+      } else {
+        addCadBox(w - 0.04, h - 0.04, 0.02, posX, h / 2, 0.04, { accent: true, explode: explodeVec });
+        const nLines = Math.max(5, Math.round(w / 0.14));
+        for (let l = 1; l < nLines; l++) {
+          const lx = posX - w / 2 + (w / nLines) * l;
+          addCadBox(0.008, h - 0.08, 0.022, lx, h / 2, 0.042, { explode: explodeVec });
+        }
+      }
+
+      // Jaladera de barra tubular 60cm
+      addCadBox(0.025, 0.60, 0.025, posX + w / 2 - 0.09, 1.05, 0.075, { accent: true, explode: explodeVec });
+      addCadBox(0.02, 0.02, 0.035, posX + w / 2 - 0.09, 1.30, 0.055, { accent: true, explode: explodeVec });
+      addCadBox(0.02, 0.02, 0.035, posX + w / 2 - 0.09, 0.80, 0.055, { accent: true, explode: explodeVec });
+    }
+
+    if (sub === "PUERTA_DOBLE_GRANERO") {
+      const doorW = L / 2 - 0.02;
+      buildSingleDoorLeaf(doorW, H, -L / 4, "PUERTA_GRANERO_Z", [-0.35, 0, 0]);
+      buildSingleDoorLeaf(doorW, H, L / 4, "PUERTA_GRANERO_Z", [0.35, 0, 0]);
+    } else {
+      buildSingleDoorLeaf(L, H, 0, sub, [0.75 * L, 0, 0]);
+    }
+  }
+
   function rebuild3D(params) {
     stateRef = params;
     refreshSceneTheme();
@@ -383,7 +503,8 @@
       WALKIN: buildWalkinCAD,
       COCINA: buildCocinaCAD,
       BANIO: buildVanityCAD,
-      TV_ROOM: buildTvRoomCAD
+      TV_ROOM: buildTvRoomCAD,
+      PUERTAS: buildPuertasCAD
     };
     (builders[params.categoria] || buildClosetCAD)(params);
     applyExplosion(explosionPct);
@@ -400,9 +521,9 @@
     });
   }
 
-  function setCameraPreset(preset) {
+    function setCameraPreset(preset) {
     if (!stateRef) return;
-    const targetY = stateRef.categoria === "BANIO" ? 0.8 : 1.2;
+    const targetY = stateRef.categoria === "BANIO" ? 0.8 : (stateRef.categoria === "PUERTAS" ? 1.1 : 1.2);
     controls.target.set(0, targetY, 0);
     if (preset === "front") {
       camera.position.set(0, targetY, 4.6);
@@ -433,8 +554,40 @@
     const bays = Math.max(2, Math.min(6, Math.round((Lcm / 100) / 0.85)));
     const bayPx = wPx / bays;
     const bayCm = Math.round(Lcm / bays);
+    const extras = p.extras || [];
 
-    if (p.categoria === "BANIO") {
+    if (p.categoria === "PUERTAS") {
+      const railOverhang = wPx * 0.55;
+      const rX1 = x0 - 20;
+      const rX2 = x0 + wPx + railOverhang;
+      const rY = y0 - 18;
+      // Riel superior
+      inner += `<line x1="${rX1}" y1="${rY}" x2="${rX2}" y2="${rY}" stroke="${pal.svgStroke}" stroke-width="4"/>`;
+      inner += `<circle cx="${x0 + wPx * 0.2}" cy="${rY}" r="7" fill="${pal.svgAccent}"/>`;
+      inner += `<circle cx="${x0 + wPx * 0.8}" cy="${rY}" r="7" fill="${pal.svgAccent}"/>`;
+      inner += `<line x1="${x0 + wPx * 0.2}" y1="${rY}" x2="${x0 + wPx * 0.2}" y2="${y0}" stroke="${pal.svgAccent}" stroke-width="2.5"/>`;
+      inner += `<line x1="${x0 + wPx * 0.8}" y1="${rY}" x2="${x0 + wPx * 0.8}" y2="${y0}" stroke="${pal.svgAccent}" stroke-width="2.5"/>`;
+      // Hoja
+      inner += `<rect x="${x0}" y="${y0}" width="${wPx}" height="${hPx}" fill="${pal.svgFill}" stroke="${pal.svgStroke}" stroke-width="2"/>`;
+      const fPx = Math.min(22, wPx * 0.12);
+      inner += `<rect x="${x0 + fPx}" y="${y0 + fPx}" width="${wPx - fPx * 2}" height="${hPx - fPx * 2}" fill="none" stroke="${pal.svgMuted}" stroke-width="1.2"/>`;
+      const sub = p.subtipo || "PUERTA_GRANERO_Z";
+      if (sub === "PUERTA_GRANERO_Z") {
+        inner += `<line x1="${x0 + fPx}" y1="${y0 + hPx / 2}" x2="${x0 + wPx - fPx}" y2="${y0 + hPx / 2}" stroke="${pal.svgMuted}" stroke-width="1.4"/>`;
+        inner += `<line x1="${x0 + fPx}" y1="${y0 + fPx}" x2="${x0 + wPx - fPx}" y2="${y0 + hPx / 2}" stroke="${pal.svgAccent}" stroke-width="2"/>`;
+        inner += `<line x1="${x0 + fPx}" y1="${y0 + hPx / 2}" x2="${x0 + wPx - fPx}" y2="${y0 + hPx - fPx}" stroke="${pal.svgAccent}" stroke-width="2"/>`;
+      } else if (sub === "PUERTA_GRANERO_X") {
+        inner += `<line x1="${x0 + fPx}" y1="${y0 + fPx}" x2="${x0 + wPx - fPx}" y2="${y0 + hPx - fPx}" stroke="${pal.svgAccent}" stroke-width="2"/>`;
+        inner += `<line x1="${x0 + wPx - fPx}" y1="${y0 + fPx}" x2="${x0 + fPx}" y2="${y0 + hPx - fPx}" stroke="${pal.svgAccent}" stroke-width="2"/>`;
+      } else {
+        for (let s = 1; s <= 5; s++) {
+          const sx = x0 + (wPx / 6) * s;
+          inner += `<line x1="${sx}" y1="${y0 + fPx}" x2="${sx}" y2="${y0 + hPx - fPx}" stroke="${pal.svgMuted}" stroke-width="1"/>`;
+        }
+      }
+      inner += `<rect x="${x0 + wPx - fPx - 10}" y="${y0 + hPx * 0.42}" width="5" height="${hPx * 0.22}" fill="${pal.svgStroke}"/>`;
+      inner += `<text x="${x0 + wPx / 2}" y="${y0 + hPx + 24}" fill="${pal.svgMuted}" font-family="JetBrains Mono" font-size="10" text-anchor="middle">SISTEMA CORREDIZO GRANERO · FRENO SOFT-CLOSE</text>`;
+    } else if (p.categoria === "BANIO") {
       // Espejo arriba + vanity flotante abajo
       const mirrorH = Math.min(130, hPx * 0.72);
       const mirrorY = Math.max(drawY, y0 - mirrorH - 18);
@@ -463,6 +616,20 @@
             inner += `<line x1="${bx}" y1="${by + (bajosH / 3) * d}" x2="${bx + bayPx}" y2="${by + (bajosH / 3) * d}" stroke="${pal.svgStroke}" stroke-width="1"/>`;
           }
         }
+      }
+      // Llamadas a electrodomésticos y herrajes Blum
+      if (extras.includes("parrilla_campana")) {
+        inner += `<text x="${x0 + bayPx * 0.5}" y="${y0 + alacenaH - 12}" fill="${pal.svgAccent}" font-family="JetBrains Mono" font-size="9" text-anchor="middle">CAMPANA</text>`;
+        inner += `<text x="${x0 + bayPx * 0.5}" y="${y0 + alacenaH + huecoH + 18}" fill="${pal.svgAccent}" font-family="JetBrains Mono" font-size="9" text-anchor="middle">PARRILLA 5Q</text>`;
+      }
+      if (extras.includes("tarja_doble")) {
+        inner += `<text x="${x0 + bayPx * 1.5}" y="${y0 + alacenaH + huecoH + 18}" fill="${pal.svgAccent}" font-family="JetBrains Mono" font-size="9" text-anchor="middle">TARJA DOBLE</text>`;
+      }
+      if (extras.includes("lavavajillas")) {
+        inner += `<text x="${x0 + bayPx * 1.5}" y="${y0 + alacenaH + huecoH + bajosH * 0.58}" fill="${pal.svgMuted}" font-family="JetBrains Mono" font-size="9" text-anchor="middle">LAVAVAJILLAS 60</text>`;
+      }
+      if (extras.includes("alacena_torre_blum")) {
+        inner += `<text x="${x0 + wPx - bayPx * 0.5}" y="${y0 + hPx * 0.42}" fill="${pal.svgAccent}" font-family="JetBrains Mono" font-size="9" text-anchor="middle">BLUM TOWER</text>`;
       }
       // Cubierta
       inner += `<rect x="${x0 - 4}" y="${y0 + alacenaH + huecoH - 7}" width="${wPx + 8}" height="7" fill="${pal.svgAccent}"/>`;
