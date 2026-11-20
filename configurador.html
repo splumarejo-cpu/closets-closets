@@ -1,0 +1,507 @@
+<!DOCTYPE html>
+<html lang="es">
+<head>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <title>Estudio CAD en Trazos | Closets-Closets Design &amp; More</title>
+  <meta name="description" content="Configura tu clóset, vestidor, cocina integral, mueble de baño o centro de TV en trazos arquitectónicos CAD y plano acotado 2D. Obtén tu rango estimado en Monterrey.">
+  <link rel="icon" type="image/png" href="assets/favicon.png">
+  <link rel="stylesheet" href="styles.css">
+  <script src="js/three.min.js"></script>
+  <script src="js/OrbitControls.js"></script>
+  <script src="js/catalogo-data.js"></script>
+</head>
+<body>
+
+  <!-- HEADER -->
+  <header class="site-header">
+    <div class="header-inner">
+      <a class="brand-link" href="index.html">
+        <img class="brand-logo" src="assets/logo-closets.png" alt="Closets-Closets Design &amp; More">
+        <div class="brand-meta">
+          <span class="brand-sub">Estudio CAD Conceptual</span>
+          <span class="brand-city">Sistema 32 · Monterrey &amp; SPGG</span>
+        </div>
+      </a>
+      <div class="nav-actions">
+        <a class="btn btn-outline btn-sm" href="index.html">← Volver al Catálogo</a>
+        <a class="btn btn-primary btn-sm" href="https://wa.me/528134575939" target="_blank" rel="noopener noreferrer">WhatsApp 81 3457 5939</a>
+      </div>
+    </div>
+  </header>
+
+  <main class="studio-shell">
+    <!-- BARRA DE CATEGORÍAS -->
+    <div class="studio-topbar">
+      <div>
+        <span class="eyebrow" style="margin-bottom:4px;">Configurador de Anteproyecto Técnico</span>
+        <h1 class="display-title" style="font-size:clamp(26px, 3vw, 36px);">Diseño Conceptual en Líneas &amp; Plano Acotado</h1>
+      </div>
+      <div class="cat-pills" id="catPills"></div>
+    </div>
+
+    <div class="studio-grid">
+      <!-- PANEL IZQUIERDO DE PARÁMETROS -->
+      <aside class="studio-sidebar">
+        <div class="studio-block">
+          <span class="studio-label">1. Gama de Fabricación</span>
+          <div class="gama-toggle" id="gamaToggle">
+            <button type="button" class="gama-btn active" data-gama="taller_mty">
+              <strong>Línea Taller MTY</strong>
+              <small>Melamina 16mm · Fórmula X3</small>
+            </button>
+            <button type="button" class="gama-btn" data-gama="boutique_spgg">
+              <strong>Boutique / San Pedro</strong>
+              <small>Egger / Alvic · Herrajes Blum</small>
+            </button>
+          </div>
+          <p id="gamaDescNote" style="font-size:11px; color:var(--ink-soft); margin-top:8px;"></p>
+        </div>
+
+        <div class="studio-block">
+          <span class="studio-label">2. Tipología del Mueble</span>
+          <div class="subtipo-list" id="subtipoList"></div>
+        </div>
+
+        <div class="studio-block">
+          <span class="studio-label">3. Dimensiones Generales (cm)</span>
+          <div class="range-row">
+            <div class="range-head">
+              <span>Ancho / Largo Total</span>
+              <span class="range-val" id="valLargo">200 cm</span>
+            </div>
+            <input type="range" id="inpLargo" min="1.2" max="5.0" step="0.1" value="2.0">
+          </div>
+          <div class="range-row">
+            <div class="range-head">
+              <span>Altura Total</span>
+              <span class="range-val" id="valAlto">240 cm</span>
+            </div>
+            <input type="range" id="inpAlto" min="1.8" max="2.7" step="0.05" value="2.4">
+          </div>
+          <div class="range-row" style="margin-bottom:0;">
+            <div class="range-head">
+              <span>Fondo / Profundidad</span>
+              <span class="range-val" id="valFondo">60 cm</span>
+            </div>
+            <input type="range" id="inpFondo" min="0.35" max="0.7" step="0.05" value="0.6">
+          </div>
+        </div>
+
+        <div class="studio-block">
+          <span class="studio-label">4. Equipamiento &amp; Extras</span>
+          <div class="extras-check-list" id="extrasList"></div>
+        </div>
+
+        <div class="studio-block">
+          <span class="studio-label">5. Zona de Instalación (MTY)</span>
+          <div class="field" style="margin-bottom:0;">
+            <select id="inpZona"></select>
+          </div>
+        </div>
+      </aside>
+
+      <!-- LIENZO DERECHO: CAD 3D + ALZADO 2D + RANGO + ENVÍO -->
+      <section class="studio-stage">
+        <div class="cad-card">
+          <div class="cad-toolbar">
+            <div class="cad-view-tabs">
+              <button type="button" class="cad-btn active" id="btnView3D">Perspectiva 3D Trazos</button>
+              <button type="button" class="cad-btn" id="btnView2D">Plano Alzado 2D (Cotas cm)</button>
+            </div>
+            <div class="cad-tool-btns">
+              <button type="button" class="cad-btn" id="btnCamIso">3/4 Iso</button>
+              <button type="button" class="cad-btn" id="btnCamFront">Frontal</button>
+              <button type="button" class="cad-btn" id="btnCamTop">Planta</button>
+              <button type="button" class="cad-btn" id="btnBlueprint">Blueprint Azul</button>
+              <button type="button" class="cad-btn" id="btnAutoRotate">Auto-Giro</button>
+              <button type="button" class="cad-btn" id="btnDescargarLamina" style="border-color:var(--brass); color:var(--brass-dark); font-weight:600;">⬇ Lámina PNG</button>
+            </div>
+          </div>
+
+          <div class="cad-viewport" id="cadViewport">
+            <canvas id="cadCanvas3D"></canvas>
+            <div id="svgElevationWrap"></div>
+
+            <div class="cad-hud-corner">
+              <div id="hudCatTitle" style="font-weight:700;">CLÓSET RESIDENCIAL</div>
+              <div id="hudDimSummary" style="opacity:0.8;">200 × 240 × 60 cm · Sistema 32</div>
+            </div>
+
+            <div class="cad-hud-bottom" style="display:flex; align-items:center; gap:10px; pointer-events:auto;">
+              <span>Despiece:</span>
+              <input type="range" id="inpExplosion" min="0" max="100" value="0" style="width:90px; accent-color:var(--brass);">
+              <span id="valExplosion">0%</span>
+              <span style="opacity:0.5;">|</span>
+              <span>Arrastra para rotar</span>
+            </div>
+          </div>
+        </div>
+
+        <!-- RESUMEN + FORMULARIO DOBLE RESPALDO -->
+        <div class="studio-summary-grid">
+          <div class="quote-box">
+            <span class="studio-label" style="color:#E6BF73;">Rango Preliminar Estimado</span>
+            <div class="quote-range" id="outRange">$17,000 – $23,500 MXN</div>
+            <div id="outGamaLabel" style="font-size:13px; color:#E2E8F0;">Línea Taller MTY · Incluye flete e instalación base</div>
+
+            <div class="quote-split">
+              <div>
+                <span>60% Anticipo (Apartado / Material)</span>
+                <strong id="outAnticipo">$10,200 – $14,100 MXN</strong>
+              </div>
+              <div>
+                <span>40% Finiquito (Contra Entrega)</span>
+                <strong>Saldo al instalar</strong>
+              </div>
+            </div>
+
+            <p class="quote-disclaimer">
+              * Rango estimado preliminar sujeto a rectificación milimétrica en sitio y elección final de gama y materiales. Precios más IVA en caso de requerir factura fiscal. Entrega estándar: <strong id="outEntrega">12 a 18 días hábiles</strong>.
+            </p>
+
+            <button type="button" class="btn btn-brass" id="btnDownloadSheetSecondary" style="width:100%;">
+              ⬇ Descargar Lámina Técnica (.png) con Plano 2D + 3D
+            </button>
+          </div>
+
+          <form id="cadSubmitForm" name="anteproyecto-cad" method="POST" data-netlify="true" netlify-honeypot="bot-field" enctype="multipart/form-data" class="send-box">
+            <input type="hidden" name="form-name" value="anteproyecto-cad">
+            <input type="hidden" name="folio" id="fFolio" value="">
+            <input type="hidden" name="resumen_tecnico" id="fResumen" value="">
+            <input type="hidden" name="rango_estimado_mxn" id="fRango" value="">
+            <p hidden><label>No llenar: <input name="bot-field"></label></p>
+            <input type="file" name="lamina_plano" id="fFileInput" hidden accept="image/png">
+
+            <span class="studio-label">Enviar Anteproyecto al Taller (Samuel / Buba)</span>
+            <div class="field-grid">
+              <div class="field">
+                <label for="cliNombre">Tu Nombre *</label>
+                <input id="cliNombre" name="nombre" type="text" placeholder="Nombre completo" required>
+              </div>
+              <div class="field">
+                <label for="cliTel">WhatsApp *</label>
+                <input id="cliTel" name="telefono" type="tel" placeholder="81..." required>
+              </div>
+            </div>
+            <div class="field">
+              <label for="cliNotas">Notas para el taller (opcional)</label>
+              <textarea id="cliNotas" name="notas" rows="2" placeholder="Ej. Me interesa color nogal claro, muro con ventana derecha, o agendar rectificación..."></textarea>
+            </div>
+            <div id="cadStatus" class="status-banner" role="status" aria-live="polite"></div>
+            <button id="cadSubmitBtn" type="submit" class="btn btn-primary" style="width:100%;">
+              Guardar Plano en Panel &amp; Cotizar por WhatsApp
+            </button>
+          </form>
+        </div>
+      </section>
+    </div>
+  </main>
+
+  <script src="js/cad-engine.js"></script>
+  <script>
+    (function () {
+      const M = window.CLOSETS_MASTER;
+      const urlParams = new URLSearchParams(window.location.search);
+      const initCat = M.categorias[urlParams.get("cat")] ? urlParams.get("cat") : "CLOSET";
+      const initGama = M.gamas[urlParams.get("gama")] ? urlParams.get("gama") : "taller_mty";
+
+      const state = {
+        folio: "CAD-" + String(Date.now()).slice(-5),
+        categoria: initCat,
+        gama: initGama,
+        subtipo: M.categorias[initCat].subtipos[0].id,
+        largo: M.categorias[initCat].largoDefault,
+        alto: M.categorias[initCat].altoDefault,
+        fondo: M.categorias[initCat].fondoDefault,
+        extras: [],
+        zona: M.zonas[0].id
+      };
+
+      const catPills = document.getElementById("catPills");
+      const subtipoList = document.getElementById("subtipoList");
+      const extrasList = document.getElementById("extrasList");
+      const inpLargo = document.getElementById("inpLargo");
+      const inpAlto = document.getElementById("inpAlto");
+      const inpFondo = document.getElementById("inpFondo");
+      const inpZona = document.getElementById("inpZona");
+
+      // Poblar zonas ZMM
+      M.zonas.forEach((z) => {
+        const opt = document.createElement("option");
+        opt.value = z.id;
+        opt.textContent = z.label;
+        inpZona.appendChild(opt);
+      });
+
+      function renderCatPills() {
+        catPills.innerHTML = "";
+        Object.values(M.categorias).forEach((cat) => {
+          const btn = document.createElement("button");
+          btn.type = "button";
+          btn.className = "cat-pill" + (state.categoria === cat.id ? " active" : "");
+          btn.textContent = cat.nombre;
+          btn.addEventListener("click", () => selectCategory(cat.id));
+          catPills.appendChild(btn);
+        });
+      }
+
+      function renderSubtipos() {
+        const cat = M.categorias[state.categoria];
+        subtipoList.innerHTML = "";
+        cat.subtipos.forEach((sub) => {
+          const btn = document.createElement("button");
+          btn.type = "button";
+          btn.className = "subtipo-item" + (state.subtipo === sub.id ? " active" : "");
+          btn.innerHTML = `<strong>${sub.nombre}</strong><small>${sub.desc}</small>`;
+          btn.addEventListener("click", () => {
+            state.subtipo = sub.id;
+            renderSubtipos();
+            updateAll();
+          });
+          subtipoList.appendChild(btn);
+        });
+      }
+
+      function renderExtras() {
+        const cat = M.categorias[state.categoria];
+        extrasList.innerHTML = "";
+        cat.opcionesExtra.forEach((ext) => {
+          const lbl = document.createElement("label");
+          lbl.className = "extra-check";
+          const checked = state.extras.includes(ext.id) ? "checked" : "";
+          lbl.innerHTML = `<input type="checkbox" value="${ext.id}" ${checked}><span>${ext.nombre}</span>`;
+          lbl.querySelector("input").addEventListener("change", (e) => {
+            if (e.target.checked) {
+              if (!state.extras.includes(ext.id)) state.extras.push(ext.id);
+            } else {
+              state.extras = state.extras.filter((x) => x !== ext.id);
+            }
+            updateAll();
+          });
+          extrasList.appendChild(lbl);
+        });
+      }
+
+      function syncSlidersBounds() {
+        const cat = M.categorias[state.categoria];
+        inpLargo.min = cat.largoMin;
+        inpLargo.max = cat.largoMax;
+        inpLargo.value = state.largo;
+
+        inpAlto.min = cat.altoMin;
+        inpAlto.max = cat.altoMax;
+        inpAlto.value = state.alto;
+
+        inpFondo.value = state.fondo;
+      }
+
+      function selectCategory(catId) {
+        const cat = M.categorias[catId];
+        if (!cat) return;
+        state.categoria = catId;
+        state.subtipo = cat.subtipos[0].id;
+        state.largo = cat.largoDefault;
+        state.alto = cat.altoDefault;
+        state.fondo = cat.fondoDefault;
+        state.extras = [];
+        syncSlidersBounds();
+        renderCatPills();
+        renderSubtipos();
+        renderExtras();
+        updateAll();
+      }
+
+      function currentPayload() {
+        const cat = M.categorias[state.categoria];
+        const sub = cat.subtipos.find((s) => s.id === state.subtipo) || cat.subtipos[0];
+        return {
+          folio: state.folio,
+          categoria: state.categoria,
+          categoriaNombre: cat.nombre,
+          gama: state.gama,
+          subtipo: state.subtipo,
+          subtipoNombre: sub.nombre,
+          largo: state.largo,
+          alto: state.alto,
+          fondo: state.fondo,
+          extras: state.extras,
+          zona: state.zona,
+          clienteNombre: (document.getElementById("cliNombre").value || "").trim(),
+          clienteTel: (document.getElementById("cliTel").value || "").trim(),
+          notas: (document.getElementById("cliNotas").value || "").trim()
+        };
+      }
+
+      function updateAll() {
+        const p = currentPayload();
+        const r = M.calcularRango(p);
+        const gamaObj = M.gamas[state.gama];
+
+        document.getElementById("valLargo").textContent = Math.round(state.largo * 100) + " cm";
+        document.getElementById("valAlto").textContent = Math.round(state.alto * 100) + " cm";
+        document.getElementById("valFondo").textContent = Math.round(state.fondo * 100) + " cm";
+
+        document.getElementById("hudCatTitle").textContent = p.categoriaNombre.toUpperCase() + " — " + p.subtipoNombre.toUpperCase();
+        document.getElementById("hudDimSummary").textContent = `${Math.round(state.largo * 100)} × ${Math.round(state.alto * 100)} × ${Math.round(state.fondo * 100)} cm · ${gamaObj.nombre}`;
+        document.getElementById("gamaDescNote").textContent = `${gamaObj.material} · ${gamaObj.herraje}.`;
+
+        document.getElementById("outRange").textContent = `$${r.minMXN.toLocaleString("es-MX")} – $${r.maxMXN.toLocaleString("es-MX")} MXN`;
+        document.getElementById("outGamaLabel").textContent = `${r.gamaNombre} · Flete est. ${r.fleteTexto}`;
+        document.getElementById("outAnticipo").textContent = `$${r.anticipoMin60.toLocaleString("es-MX")} – $${r.anticipoMax60.toLocaleString("es-MX")} MXN`;
+        document.getElementById("outEntrega").textContent = gamaObj.entrega;
+
+        if (window.CAD_ENGINE) {
+          window.CAD_ENGINE.rebuild(p);
+        }
+      }
+
+      // Gama buttons
+      document.querySelectorAll("#gamaToggle .gama-btn").forEach((btn) => {
+        btn.classList.toggle("active", btn.getAttribute("data-gama") === state.gama);
+        btn.addEventListener("click", () => {
+          state.gama = btn.getAttribute("data-gama");
+          document.querySelectorAll("#gamaToggle .gama-btn").forEach((b) =>
+            b.classList.toggle("active", b.getAttribute("data-gama") === state.gama)
+          );
+          updateAll();
+        });
+      });
+
+      // Sliders & select
+      inpLargo.addEventListener("input", () => { state.largo = Number(inpLargo.value); updateAll(); });
+      inpAlto.addEventListener("input", () => { state.alto = Number(inpAlto.value); updateAll(); });
+      inpFondo.addEventListener("input", () => { state.fondo = Number(inpFondo.value); updateAll(); });
+      inpZona.addEventListener("change", () => { state.zona = inpZona.value; updateAll(); });
+
+      // CAD toolbar actions
+      const btn3D = document.getElementById("btnView3D");
+      const btn2D = document.getElementById("btnView2D");
+      btn3D.addEventListener("click", () => {
+        btn3D.classList.add("active");
+        btn2D.classList.remove("active");
+        window.CAD_ENGINE.setViewMode("3d");
+      });
+      btn2D.addEventListener("click", () => {
+        btn2D.classList.add("active");
+        btn3D.classList.remove("active");
+        window.CAD_ENGINE.setViewMode("2d");
+      });
+
+      document.getElementById("btnCamIso").addEventListener("click", () => window.CAD_ENGINE.setCameraPreset("iso"));
+      document.getElementById("btnCamFront").addEventListener("click", () => window.CAD_ENGINE.setCameraPreset("front"));
+      document.getElementById("btnCamTop").addEventListener("click", () => window.CAD_ENGINE.setCameraPreset("top"));
+
+      let bp = false;
+      const btnBp = document.getElementById("btnBlueprint");
+      btnBp.addEventListener("click", () => {
+        bp = !bp;
+        btnBp.classList.toggle("active", bp);
+        window.CAD_ENGINE.setBlueprintMode(bp);
+      });
+
+      let rot = false;
+      const btnRot = document.getElementById("btnAutoRotate");
+      btnRot.addEventListener("click", () => {
+        rot = !rot;
+        btnRot.classList.toggle("active", rot);
+        window.CAD_ENGINE.setAutoRotate(rot);
+      });
+
+      const inpExp = document.getElementById("inpExplosion");
+      inpExp.addEventListener("input", () => {
+        document.getElementById("valExplosion").textContent = inpExp.value + "%";
+        window.CAD_ENGINE.setExplosion(Number(inpExp.value));
+      });
+
+      async function triggerSheetDownload() {
+        const p = currentPayload();
+        const r = M.calcularRango(p);
+        const { dataUrl } = await window.CAD_ENGINE.exportLaminaPNG(p, r);
+        const a = document.createElement("a");
+        a.href = dataUrl;
+        a.download = `Lamina_${p.folio}_${p.categoria}.png`;
+        document.body.appendChild(a);
+        a.click();
+        a.remove();
+      }
+      document.getElementById("btnDescargarLamina").addEventListener("click", triggerSheetDownload);
+      document.getElementById("btnDownloadSheetSecondary").addEventListener("click", triggerSheetDownload);
+
+      // Submit doble respaldo: Netlify Forms (con Lámina PNG adjunta) + WhatsApp con resumen completo
+      const cadForm = document.getElementById("cadSubmitForm");
+      const cadStatus = document.getElementById("cadStatus");
+      const cadBtn = document.getElementById("cadSubmitBtn");
+
+      cadForm.addEventListener("submit", async (e) => {
+        e.preventDefault();
+        const p = currentPayload();
+        if (!p.clienteNombre || !p.clienteTel) {
+          cadStatus.className = "status-banner err";
+          cadStatus.textContent = "Por favor anota tu nombre y número de WhatsApp.";
+          return;
+        }
+        cadBtn.disabled = true;
+        const orig = cadBtn.textContent;
+        cadBtn.textContent = "Generando Lámina CAD y enviando...";
+
+        const r = M.calcularRango(p);
+        const rangoStr = `$${r.minMXN.toLocaleString("es-MX")} – $${r.maxMXN.toLocaleString("es-MX")} MXN`;
+        const resumenTxt = [
+          `Folio: ${p.folio}`,
+          `Categoría: ${p.categoriaNombre} (${p.subtipoNombre})`,
+          `Gama: ${r.gamaNombre}`,
+          `Medidas: ${Math.round(p.largo * 100)} × ${Math.round(p.alto * 100)} × ${Math.round(p.fondo * 100)} cm`,
+          `Zona: ${p.zona}`,
+          `Extras: ${r.extrasDetalle.length ? r.extrasDetalle.join(", ") : "Configuración base"}`,
+          `Rango preliminar: ${rangoStr}`,
+          p.notas ? `Notas: ${p.notas}` : ""
+        ].filter(Boolean).join(" | ");
+
+        document.getElementById("fFolio").value = p.folio;
+        document.getElementById("fResumen").value = resumenTxt;
+        document.getElementById("fRango").value = rangoStr;
+
+        // Adjuntar Lámina PNG al FormData para Netlify Forms
+        const fd = new FormData(cadForm);
+        fd.set("form-name", "anteproyecto-cad");
+        try {
+          const { blob } = await window.CAD_ENGINE.exportLaminaPNG(p, r);
+          if (blob) {
+            fd.set("lamina_plano", blob, `Lamina_${p.folio}_${p.categoria}.png`);
+          }
+          await fetch("/", { method: "POST", body: fd });
+        } catch (_) {
+          // Modo preview local sin servidor Netlify
+        }
+
+        const waMsg = [
+          `Hola Ing. Samuel / Buba, generé este anteproyecto CAD en Closets-Closets (${p.folio}):`,
+          `• Cliente: ${p.clienteNombre} (${p.clienteTel})`,
+          `• Mueble: ${p.categoriaNombre} — ${p.subtipoNombre}`,
+          `• Gama: ${r.gamaNombre}`,
+          `• Medidas: ${Math.round(p.largo * 100)} × ${Math.round(p.alto * 100)} × ${Math.round(p.fondo * 100)} cm`,
+          `• Zona: ${p.zona}`,
+          `• Adicionales: ${r.extrasDetalle.length ? r.extrasDetalle.join(", ") : "Base estándar"}`,
+          `• Rango preliminar: ${rangoStr} (sujeto a rectificación)`,
+          p.notas ? `• Notas: ${p.notas}` : ""
+        ].filter(Boolean).join("\n");
+        const waUrl = `https://wa.me/528134575939?text=${encodeURIComponent(waMsg)}`;
+
+        cadStatus.className = "status-banner ok";
+        cadStatus.innerHTML = `¡Anteproyecto <strong>${p.folio}</strong> listo! <a href="${waUrl}" target="_blank" rel="noopener noreferrer" style="font-weight:700; text-decoration:underline;">Abrir WhatsApp ahora →</a>`;
+        window.open(waUrl, "_blank", "noopener");
+        cadBtn.disabled = false;
+        cadBtn.textContent = orig;
+      });
+
+      // Inicializar estudio CAD
+      syncSlidersBounds();
+      renderCatPills();
+      renderSubtipos();
+      renderExtras();
+      updateAll();
+    })();
+  </script>
+</body>
+</html>
