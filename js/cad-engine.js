@@ -1,6 +1,6 @@
 /**
  * Motor CAD Conceptual en Líneas y Trazos (3D EdgesGeometry + Alzado 2D SVG + Exportador de Lámina PNG)
- * Cero texturas PNG pesadas: corre fluido a 60 FPS en móvil y genera planos técnicos para Samuel/Buba.
+ * Cero texturas PNG pesadas: corre fluido a 60 FPS en móvil y genera planos técnicos para el equipo de taller.
  */
 (function () {
   const container = document.getElementById("cadViewport");

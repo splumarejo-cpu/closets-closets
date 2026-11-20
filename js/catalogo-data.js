@@ -7,13 +7,13 @@ window.CLOSETS_MASTER = {
     nombre: "Closets-Closets Design & More",
     corto: "Closets-Closets",
     subtitulo: "Diseño Arquitectónico, Carpintería Modular & Interiorismo",
-    director: "Ing. Samuel Plumarejo Copado",
+    director: "Closets-Closets Design & More",
     domicilio: "Calle Julio A. Roca 9417, Col. Fomerrey 87, Monterrey, N.L.",
     whatsappE164: "528134575939",
     whatsappDisplay: "81 3457 5939",
     whatsappUrl: "https://wa.me/528134575939",
     facebookUrl: "https://www.facebook.com/profile.php?id=61573131999253",
-    email: "splumarejo@gmail.com",
+    email: "contacto@closets-closets.com",
     leyendaLegal: "Rango estimado preliminar sujeto a rectificación milimétrica de medidas, visita en obra y elección definitiva de materiales. Precios más IVA en caso de requerir factura fiscal."
   },
 
