@@ -353,6 +353,12 @@
       addCadBox(islandW, 0.86, islandD, islandX, 0.43, islandZ, { explode: [0, 0, 0.32] });
       addCadBox(islandW + 0.08, 0.04, islandD + 0.08, islandX, 0.88, islandZ, { accent: true, explode: [0, 0.25, 0.32] });
       addCadBox(0.04, 0.88, islandD + 0.08, islandX - islandW / 2 - 0.02, 0.44, islandZ, { accent: true, explode: [-0.15, 0, 0.32] });
+      // Detalle acanalado fluted frontal en isla
+      const nSlats = Math.round(islandW / 0.09);
+      for (let s = 0; s < nSlats; s++) {
+        const sx = islandX - islandW / 2 + 0.045 + s * 0.09;
+        addCadBox(0.025, 0.80, 0.015, sx, 0.43, islandZ + islandD / 2 + 0.01, { accent: true });
+      }
     } else if (sub === "COCINA_U") {
       addCadBox(0.62, 0.86, 1.8, -0.35 - bajosL / 2 + 0.31, 0.43, 0.26);
       addCadBox(0.62, 0.86, 1.8, -0.35 + bajosL / 2 - 0.31, 0.43, 0.26);
@@ -413,6 +419,18 @@
       addCadBox(L, 0.86, 0.52, 0, 0.43, -0.18, { explode: [0, 0, 0.2] });
       addCadBox(L + 0.04, 0.04, 0.56, 0, 0.88, -0.16, { accent: true });
       addCadBox(L * 0.4, 1.35, 0.36, L * 0.25, 1.58, -0.25, { glass: true, accent: true });
+      // Cuadrícula arquitectónica para botellas de vino
+      const gridW = L * 0.45;
+      const gridH = 0.55;
+      const gridX = -L * 0.22;
+      const gridY = 1.85;
+      addCadBox(gridW, gridH, 0.32, gridX, gridY, -0.28, { accent: true });
+      for (let r = 1; r < 4; r++) {
+        addCadBox(gridW, 0.015, 0.30, gridX, gridY - gridH / 2 + r * (gridH / 4), -0.28);
+      }
+      for (let c = 1; c < 5; c++) {
+        addCadBox(0.015, gridH, 0.30, gridX - gridW / 2 + c * (gridW / 5), gridY, -0.28);
+      }
     } else {
       // Consola flotante + Pantalla TV
       addCadBox(L * 0.92, 0.32, 0.38, 0, 0.48, -0.25, { accent: true, explode: [0, 0, 0.28] });

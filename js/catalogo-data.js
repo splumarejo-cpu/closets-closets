@@ -292,64 +292,319 @@ window.CLOSETS_MASTER = {
   },
 
   presets: [
+    // === COCINAS (10 MODELOS) ===
+    // Nivel 1: Esencial / Clásico
     {
-      id: "cocina_l_isla",
-      label: "🍳 Cocina en 'L' + Isla Central",
+      id: "cocina_lineal_esencial",
+      label: "🍳 Cocina Lineal Esencial (2.4m)",
+      cat: "COCINA",
+      sub: "COCINA_LINEAL",
+      tier: "esencial",
+      tierLabel: "Esencial",
+      largo: 2.4,
+      alto: 2.3,
+      fondo: 0.6,
+      extras: ["tarja_doble", "cubiertero_cacerolero"]
+    },
+    {
+      id: "cocina_l_tradicional",
+      label: "🍳 Cocina en 'L' Tradicional",
       cat: "COCINA",
       sub: "COCINA_L_PENINSULA",
+      tier: "esencial",
+      tierLabel: "Esencial",
+      largo: 3.2,
+      alto: 2.3,
+      fondo: 0.6,
+      extras: ["tarja_doble", "cubiertero_cacerolero", "cubierta_granito"]
+    },
+    {
+      id: "cocina_barra_volada",
+      label: "🍳 Cocina Lineal c/ Barra Volada",
+      cat: "COCINA",
+      sub: "COCINA_LINEAL",
+      tier: "esencial",
+      tierLabel: "Esencial",
+      largo: 3.0,
+      alto: 2.3,
+      fondo: 0.6,
+      extras: ["tarja_doble", "parrilla_campana"]
+    },
+    // Nivel 2: Contemporáneo
+    {
+      id: "cocina_l_torre_hornos",
+      label: "🍳 Cocina en 'L' + Torre de Hornos",
+      cat: "COCINA",
+      sub: "COCINA_L_PENINSULA",
+      tier: "contemporaneo",
+      tierLabel: "Contemporáneo",
+      largo: 4.0,
+      alto: 2.4,
+      fondo: 0.6,
+      extras: ["torre_hornos", "tarja_doble", "parrilla_campana", "cubiertero_cacerolero", "led_alacena"]
+    },
+    {
+      id: "cocina_peninsula_cuarzo",
+      label: "🍳 Cocina en L + Península Cuarzo",
+      cat: "COCINA",
+      sub: "COCINA_L_PENINSULA",
+      tier: "contemporaneo",
+      tierLabel: "Contemporáneo",
       largo: 4.2,
       alto: 2.4,
       fondo: 0.6,
-      extras: ["isla_central", "parrilla_campana", "tarja_doble", "cubiertero_cacerolero", "led_alacena"]
+      extras: ["isla_central", "cubierta_cuarzo", "tarja_doble", "cubiertero_cacerolero", "led_alacena"]
     },
     {
-      id: "cocina_chef_completa",
-      label: "💎 Cocina Integral Alta Gama + Blum",
+      id: "cocina_u_ergonomica",
+      label: "🍳 Cocina en 'U' Ergonómica",
+      cat: "COCINA",
+      sub: "COCINA_U",
+      tier: "contemporaneo",
+      tierLabel: "Contemporáneo",
+      largo: 4.5,
+      alto: 2.4,
+      fondo: 0.6,
+      extras: ["esquinero_lemans", "tarja_doble", "parrilla_campana", "torre_hornos", "led_alacena"]
+    },
+    {
+      id: "cocina_alacenas_techo_botes",
+      label: "🍳 Cocina Techo Alto + Botes Ocultos",
+      cat: "COCINA",
+      sub: "COCINA_LINEAL",
+      tier: "contemporaneo",
+      tierLabel: "Contemporáneo",
+      largo: 3.6,
+      alto: 2.4,
+      fondo: 0.6,
+      extras: ["bote_doble", "tarja_doble", "cubiertero_cacerolero", "led_alacena"]
+    },
+    // Nivel 3: Signature
+    {
+      id: "cocina_chef_suite_fluted",
+      label: "💎 Chef Suite: Gran Isla Fluted en Cascada",
       cat: "COCINA",
       sub: "COCINA_ISLA",
+      tier: "signature",
+      tierLabel: "Signature SP",
+      largo: 5.2,
+      alto: 2.4,
+      fondo: 0.6,
+      extras: ["isla_central", "cubierta_cuarzo", "alacena_torre_blum", "esquinero_lemans", "torre_hornos", "lavavajillas", "tarja_doble", "bote_doble", "led_alacena"]
+    },
+    {
+      id: "cocina_hidden_pantry",
+      label: "💎 The Hidden Pantry (Pocket Doors)",
+      cat: "COCINA",
+      sub: "COCINA_ISLA",
+      tier: "signature",
+      tierLabel: "Signature SP",
       largo: 4.8,
       alto: 2.4,
       fondo: 0.6,
-      extras: ["isla_central", "alacena_torre_blum", "esquinero_lemans", "torre_hornos", "lavavajillas", "tarja_doble", "bote_doble", "cubierta_cuarzo"]
+      extras: ["isla_central", "alacena_torre_blum", "torre_hornos", "cubierta_cuarzo", "lavavajillas"]
     },
     {
-      id: "walkin_master_isla",
-      label: "👔 Vestidor Walk-in c/ Isla Joyero",
+      id: "cocina_vitrinas_gala_fume",
+      label: "💎 Cocina de Gala: Vitrinas Fumé & LED",
+      cat: "COCINA",
+      sub: "COCINA_ISLA",
+      tier: "signature",
+      tierLabel: "Signature SP",
+      largo: 5.0,
+      alto: 2.4,
+      fondo: 0.6,
+      extras: ["isla_central", "alacena_torre_blum", "cubierta_cuarzo", "led_alacena", "tarja_doble", "parrilla_campana"]
+    },
+
+    // === CLÓSETS & VESTIDORES (6 MODELOS) ===
+    // Nivel 1: Esencial
+    {
+      id: "closet_clasico_abatible",
+      label: "✨ Clóset Clásico Piso a Techo",
+      cat: "CLOSET",
+      sub: "CLOSET_ABATIBLE",
+      tier: "esencial",
+      tierLabel: "Esencial",
+      largo: 2.0,
+      alto: 2.4,
+      fondo: 0.6,
+      extras: ["zapatera"]
+    },
+    {
+      id: "closet_corredizo_compact",
+      label: "✨ Clóset 2 Puertas Corredizas",
+      cat: "CLOSET",
+      sub: "CLOSET_CORREDIZO",
+      tier: "esencial",
+      tierLabel: "Esencial",
+      largo: 1.8,
+      alto: 2.3,
+      fondo: 0.6,
+      extras: ["zapatera"]
+    },
+    // Nivel 2: Contemporáneo
+    {
+      id: "closet_12cajones_modular",
+      label: "✨ Ropero Modular c/ 12 Cajones",
+      cat: "CLOSET",
+      sub: "CLOSET_MIXTO",
+      tier: "contemporaneo",
+      tierLabel: "Contemporáneo",
+      largo: 2.6,
+      alto: 2.4,
+      fondo: 0.6,
+      extras: ["zapatera", "pantalonero", "joyero"]
+    },
+    {
+      id: "walkin_escuadra_abierto",
+      label: "👔 Vestidor Walk-in Abierto en 'L'",
+      cat: "WALKIN",
+      sub: "WALKIN_L",
+      tier: "contemporaneo",
+      tierLabel: "Contemporáneo",
+      largo: 3.4,
+      alto: 2.4,
+      fondo: 0.6,
+      extras: ["zapateras_pro", "led_vertical"]
+    },
+    // Nivel 3: Signature
+    {
+      id: "walkin_master_boutique_isla",
+      label: "💎 Master Boutique c/ Isla Joyero Cristal",
       cat: "WALKIN",
       sub: "WALKIN_ISLA",
-      largo: 4.0,
+      tier: "signature",
+      tierLabel: "Signature SP",
+      largo: 4.2,
       alto: 2.4,
       fondo: 0.6,
       extras: ["isla", "led_vertical", "zapateras_pro"]
     },
     {
-      id: "closet_3modulos_espejo",
-      label: "✨ Clóset 3 Módulos c/ Espejo & LED",
-      cat: "CLOSET",
-      sub: "CLOSET_MIXTO",
-      largo: 2.4,
+      id: "walkin_espejo_infinito_fume",
+      label: "💎 Vestidor Signature Cancelería & Fumé",
+      cat: "WALKIN",
+      sub: "WALKIN_CRISTAL",
+      tier: "signature",
+      tierLabel: "Signature SP",
+      largo: 4.0,
       alto: 2.4,
       fondo: 0.6,
-      extras: ["espejo", "zapatera", "led", "joyero"]
+      extras: ["led_vertical", "zapateras_pro", "isla"]
+    },
+
+    // === MUROS TV, BARES & LAMBRÍN (4 MODELOS) ===
+    {
+      id: "tv_consola_flotante_clasica",
+      label: "🪵 Consola Flotante TV con Pasacables",
+      cat: "TV_ROOM",
+      sub: "TV_LAMBRIN",
+      tier: "esencial",
+      tierLabel: "Esencial",
+      largo: 1.8,
+      alto: 0.5,
+      fondo: 0.4,
+      extras: ["pasacables"]
     },
     {
-      id: "puerta_granero_rustica",
-      label: "🚪 Puerta Granero Rústica Artesanal",
+      id: "tv_panel_respaldo_nogal",
+      label: "🪵 Muro Respaldo Nogal + Consola Push",
+      cat: "TV_ROOM",
+      sub: "TV_LAMBRIN",
+      tier: "contemporaneo",
+      tierLabel: "Contemporáneo",
+      largo: 2.4,
+      alto: 2.4,
+      fondo: 0.4,
+      extras: ["halo_led", "pasacables"]
+    },
+    {
+      id: "tv_lambrin_acanalado_cantilever",
+      label: "💎 Muro Lambrín Acanalado + Cantilever",
+      cat: "TV_ROOM",
+      sub: "TV_LAMBRIN",
+      tier: "signature",
+      tierLabel: "Signature SP",
+      largo: 3.2,
+      alto: 2.4,
+      fondo: 0.4,
+      extras: ["halo_led", "pasacables"]
+    },
+    {
+      id: "cava_bar_lounge_poker",
+      label: "💎 Bar Residencial & Cava Lounge",
+      cat: "TV_ROOM",
+      sub: "BAR_CAVA",
+      tier: "signature",
+      tierLabel: "Signature SP",
+      largo: 3.0,
+      alto: 2.4,
+      fondo: 0.55,
+      extras: ["halo_led"]
+    },
+
+    // === BAÑOS & VANITIES RH (3 MODELOS) ===
+    {
+      id: "banio_bajolavabo_clasico",
+      label: "🚿 Bajolavabo Clásico 1 Puerta/Cajón",
+      cat: "BANIO",
+      sub: "VANITY_1_SENO",
+      tier: "esencial",
+      tierLabel: "Esencial",
+      largo: 0.8,
+      alto: 0.65,
+      fondo: 0.5,
+      extras: []
+    },
+    {
+      id: "banio_vanity_nicho_abierto",
+      label: "🚿 Vanity Flotado Nogal c/ Nicho Toallero",
+      cat: "BANIO",
+      sub: "VANITY_REPISA",
+      tier: "contemporaneo",
+      tierLabel: "Contemporáneo",
+      largo: 1.2,
+      alto: 0.65,
+      fondo: 0.5,
+      extras: ["cubierta_piedra_bn"]
+    },
+    {
+      id: "banio_vanity_curvo_doble_rh",
+      label: "💎 Vanity Flotante Doble Seno RH + Espejo Touch",
+      cat: "BANIO",
+      sub: "VANITY_DOBLE",
+      tier: "signature",
+      tierLabel: "Signature SP",
+      largo: 1.8,
+      alto: 0.65,
+      fondo: 0.5,
+      extras: ["cubierta_piedra_bn", "espejo_led_bn"]
+    },
+
+    // === PUERTAS & RECIBIDORES (2 MODELOS) ===
+    {
+      id: "puerta_granero_rustica_z",
+      label: "🚪 Puerta Granero Rústica con Riel Forjado",
       cat: "PUERTAS",
       sub: "PUERTA_GRANERO_Z",
+      tier: "contemporaneo",
+      tierLabel: "Contemporáneo",
       largo: 1.0,
       alto: 2.2,
       fondo: 0.05,
       extras: ["soft_close_puerta", "acabado_poliuretano", "jaladera_forjada"]
     },
     {
-      id: "muro_tv_lambrin_cava",
-      label: "🪵 Muro TV Lambrín + Bar Cava",
+      id: "recibidor_dropzone_lambrin",
+      label: "💎 Drop-Zone Recibidor Lambrín & Espejo",
       cat: "TV_ROOM",
-      sub: "TV_LAMBRIN",
-      largo: 3.2,
+      sub: "CELOSIA",
+      tier: "signature",
+      tierLabel: "Signature SP",
+      largo: 1.6,
       alto: 2.4,
-      fondo: 0.4,
+      fondo: 0.35,
       extras: ["halo_led", "pasacables"]
     }
   ]

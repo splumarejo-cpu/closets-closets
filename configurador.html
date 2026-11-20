@@ -40,9 +40,17 @@
       <div class="cat-pills" id="catPills"></div>
     </div>
 
-    <!-- PREAJUSTES DE INSPIRACIÓN RÁPIDA (1 CLIC) -->
+    <!-- PREAJUSTES DE INSPIRACIÓN RÁPIDA: MATRIZ DE 25 ARQUETIPOS -->
     <div class="preset-strip-wrap">
-      <span class="preset-strip-title">⚡ Inspiración Rápida:</span>
+      <div class="preset-tier-nav">
+        <span class="preset-strip-title">🏛️ 25 Arquetipos:</span>
+        <div class="tier-filter-pills" id="tierFilterPills">
+          <button type="button" class="tier-pill active" data-tier="all">⚡ Todos (25)</button>
+          <button type="button" class="tier-pill tier-pill-esencial" data-tier="esencial">🟢 Esencial &amp; Clásico (7)</button>
+          <button type="button" class="tier-pill tier-pill-contempo" data-tier="contemporaneo">🔵 Contemporáneo (9)</button>
+          <button type="button" class="tier-pill tier-pill-sign" data-tier="signature">⚫ Signature San Pedro (9)</button>
+        </div>
+      </div>
       <div class="preset-pills" id="presetPills"></div>
     </div>
 
@@ -522,18 +530,33 @@
         updateAll();
       }
 
+      let currentTierFilter = "all";
+
       function renderPresets() {
         if (!presetPills || !M.presets) return;
         presetPills.innerHTML = "";
-        M.presets.forEach((pr) => {
+        const filtered = currentTierFilter === "all"
+          ? M.presets
+          : M.presets.filter(p => p.tier === currentTierFilter);
+
+        filtered.forEach((pr) => {
           const btn = document.createElement("button");
           btn.type = "button";
           btn.className = "preset-pill";
-          btn.textContent = pr.label;
+          btn.innerHTML = `${pr.label} <span class="preset-badge badge-${pr.tier}">${pr.tierLabel || pr.tier}</span>`;
           btn.addEventListener("click", () => applyPreset(pr));
           presetPills.appendChild(btn);
         });
       }
+
+      document.querySelectorAll("#tierFilterPills .tier-pill").forEach((btn) => {
+        btn.addEventListener("click", () => {
+          document.querySelectorAll("#tierFilterPills .tier-pill").forEach(b => b.classList.remove("active"));
+          btn.classList.add("active");
+          currentTierFilter = btn.getAttribute("data-tier");
+          renderPresets();
+        });
+      });
 
       // Inicializar estudio CAD
       syncSlidersBounds();
