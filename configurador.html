@@ -110,8 +110,19 @@
           <div class="extras-check-list" id="extrasList"></div>
         </div>
 
+        <div class="studio-block" id="blockModulosDetalle">
+          <div style="display:flex; justify-content:space-between; align-items:center; margin-bottom:8px;">
+            <span class="studio-label" style="margin-bottom:0;">5. Configuración por Módulo</span>
+            <span style="font-size:10px; color:var(--brass-dark); font-weight:700;">INTERACTIVO 3D</span>
+          </div>
+          <p style="font-size:11px; color:var(--ink-soft); margin-top:0; margin-bottom:10px;">
+            Pasa el mouse o haz clic sobre cualquier módulo en el 3D para cambiar entrepaños, cajones o función a tu gusto:
+          </p>
+          <div id="moduleInspectorList"></div>
+        </div>
+
         <div class="studio-block">
-          <span class="studio-label">5. Zona de Instalación (MTY)</span>
+          <span class="studio-label">6. Zona de Instalación (MTY)</span>
           <div class="field" style="margin-bottom:0;">
             <select id="inpZona"></select>
           </div>
@@ -144,6 +155,8 @@
           <div class="cad-viewport" id="cadViewport">
             <canvas id="cadCanvas3D"></canvas>
             <div id="svgElevationWrap"></div>
+            <div id="cadHoverCard" class="cad-hover-card"></div>
+            <div id="cadModulePopover" class="cad-module-popover"></div>
 
             <div class="cad-hud-bottom" style="display:flex; align-items:center; gap:10px; pointer-events:auto;">
               <span>Despiece:</span>
@@ -215,7 +228,7 @@
     </div>
   </main>
 
-  <script src="js/cad-engine.js?v=20261120_v3"></script>
+  <script src="js/cad-engine.js?v=20261120_v4"></script>
   <script>
     (function () {
       const M = window.CLOSETS_MASTER;
@@ -561,10 +574,182 @@
         });
       });
 
+      // -------------------------------------------------------
+      // SIDEBAR DE MÓDULOS INTERACTIVOS (sincronizado con 3D)
+      // -------------------------------------------------------
+      const moduleInspectorList = document.getElementById("moduleInspectorList");
+
+      const TYPE_LABELS = {
+        cajones: "🗄️ Cajonera",
+        entrepanos: "📚 Entrepaños",
+        colgador_doble: "👔 Doble Tubo",
+        colgador_largo: "👗 Colgador Largo",
+        zapatera: "👠 Zapatera",
+        corner_hanging: "📐 Esquinero"
+      };
+
+      const COUNT_OPTIONS = {
+        cajones: [
+          { val: 2, txt: "2 Gavetas Profundas" },
+          { val: 3, txt: "3 Cajones Estándar" },
+          { val: 4, txt: "4 Cajones (Recomendado)" },
+          { val: 5, txt: "5 Cajones Slim" }
+        ],
+        entrepanos: [
+          { val: 3, txt: "3 Entrepaños Espaciosos" },
+          { val: 4, txt: "4 Entrepaños Estándar" },
+          { val: 5, txt: "5 Entrepaños (Recomendado)" },
+          { val: 6, txt: "6 Entrepaños Alta Densidad" }
+        ],
+        zapatera: [
+          { val: 4, txt: "4 Niveles Inclinados" },
+          { val: 5, txt: "5 Niveles Estándar" },
+          { val: 6, txt: "6 Niveles Alta Capacidad" }
+        ]
+      };
+
+      function renderModuleInspector(modules) {
+        if (!moduleInspectorList) return;
+        if (!modules || modules.length === 0) {
+          moduleInspectorList.innerHTML = `<p style="font-size:11px;color:var(--ink-soft);text-align:center;padding:12px 0;">
+            Selecciona un tipo de mueble para ver sus módulos configurables.
+          </p>`;
+          return;
+        }
+
+        moduleInspectorList.innerHTML = "";
+
+        modules.forEach(function(mod) {
+          const isFixed = mod.isCorner ||
+            mod.type === "corner_hanging" ||
+            mod.id === "walkin_maletero" ||
+            mod.id === "closet_maletero";
+
+          const card = document.createElement("div");
+          card.className = "module-item-card";
+          card.setAttribute("data-mod-id", mod.id);
+
+          const badgeLabel = TYPE_LABELS[mod.type] || mod.type || "Módulo";
+
+          if (isFixed) {
+            card.innerHTML = `
+              <div class="module-item-head">
+                <span class="module-item-title">${mod.title}</span>
+                <span class="module-item-badge" style="background:#E0F2FE;color:#0369A1;">FIJO</span>
+              </div>
+              <div class="module-item-desc">${mod.desc || "Elemento estructural del mueble."}</div>
+            `;
+          } else {
+            const countOpts = COUNT_OPTIONS[mod.type] || null;
+            const needsCount = !!countOpts;
+            const currentCount = mod.count || 4;
+
+            let countHtml = "";
+            if (needsCount) {
+              const opts = countOpts.map(o =>
+                `<option value="${o.val}"${o.val === currentCount ? " selected" : ""}>${o.txt}</option>`
+              ).join("");
+              const countLabel = mod.type === "cajones"
+                ? "Gavetas:" : mod.type === "entrepanos"
+                ? "Entrepaños:" : "Niveles:";
+              countHtml = `
+                <span style="font-size:11px;font-weight:600;color:#475569;white-space:nowrap;">${countLabel}</span>
+                <select class="mod-count-sel" data-mod-id="${mod.id}" style="flex:1;">
+                  ${opts}
+                </select>
+              `;
+            }
+
+            const typeOptsHtml = Object.entries(TYPE_LABELS)
+              .filter(([k]) => k !== "corner_hanging")
+              .map(([k, v]) => `<option value="${k}"${k === mod.type ? " selected" : ""}>${v}</option>`)
+              .join("");
+
+            card.innerHTML = `
+              <div class="module-item-head">
+                <span class="module-item-title">${mod.title}</span>
+                <span class="module-item-badge">${badgeLabel}</span>
+              </div>
+              <div class="module-item-desc">${mod.desc || ""}</div>
+              <div class="module-config-row" style="flex-wrap:wrap;gap:6px;margin-top:8px;">
+                <select class="mod-type-sel" data-mod-id="${mod.id}" style="width:100%;">
+                  ${typeOptsHtml}
+                </select>
+                <div class="module-config-row" style="margin-top:4px;width:100%;padding:0;" data-count-row="${mod.id}"
+                  ${!needsCount ? 'hidden' : ''}>
+                  ${countHtml}
+                </div>
+              </div>
+            `;
+          }
+
+          moduleInspectorList.appendChild(card);
+        });
+
+        // Eventos: cambio de tipo → actualiza count select visibility + dispara engine
+        moduleInspectorList.querySelectorAll(".mod-type-sel").forEach(function(sel) {
+          sel.addEventListener("change", function() {
+            const modId = this.getAttribute("data-mod-id");
+            const newType = this.value;
+            const countRow = moduleInspectorList.querySelector(`[data-count-row="${modId}"]`);
+            const countSel = moduleInspectorList.querySelector(`.mod-count-sel[data-mod-id="${modId}"]`);
+
+            const opts = COUNT_OPTIONS[newType];
+            if (opts && countRow && countSel) {
+              countRow.removeAttribute("hidden");
+              countSel.innerHTML = opts.map(o =>
+                `<option value="${o.val}">${o.txt}</option>`
+              ).join("");
+              const def = opts[Math.floor(opts.length / 2)];
+              countSel.value = def.val;
+            } else if (countRow) {
+              countRow.setAttribute("hidden", "");
+            }
+
+            const c = countSel ? parseInt(countSel.value) || 4 : 4;
+            if (window.CAD_ENGINE) {
+              window.CAD_ENGINE.setModuleCustomization(modId, { type: newType, count: c });
+            }
+          });
+        });
+
+        // Eventos: cambio de cantidad → dispara engine
+        moduleInspectorList.querySelectorAll(".mod-count-sel").forEach(function(sel) {
+          sel.addEventListener("change", function() {
+            const modId = this.getAttribute("data-mod-id");
+            const typeSel = moduleInspectorList.querySelector(`.mod-type-sel[data-mod-id="${modId}"]`);
+            const newType = typeSel ? typeSel.value : "cajones";
+            const c = parseInt(this.value) || 4;
+            if (window.CAD_ENGINE) {
+              window.CAD_ENGINE.setModuleCustomization(modId, { type: newType, count: c });
+            }
+          });
+        });
+
+        // Click en la tarjeta: abre el popover 3D en el centro del viewport
+        moduleInspectorList.querySelectorAll(".module-item-card").forEach(function(card) {
+          card.addEventListener("click", function(e) {
+            if (e.target.tagName === "SELECT" || e.target.tagName === "OPTION") return;
+            const modId = this.getAttribute("data-mod-id");
+            if (window.CAD_ENGINE && window.CAD_ENGINE.openModuleEditor) {
+              window.CAD_ENGINE.openModuleEditor(modId);
+            }
+          });
+        });
+      }
+
+      // Registrar el callback en CAD_ENGINE para que se llame cada vez que el motor redibuja
+      function wireModuleCallback() {
+        if (window.CAD_ENGINE && window.CAD_ENGINE.onModulesUpdated) {
+          window.CAD_ENGINE.onModulesUpdated(renderModuleInspector);
+        }
+      }
+
       // Inicializar estudio CAD
       syncSlidersBounds();
       renderCatPills();
       renderPresets();
+      wireModuleCallback();
       if (initPreset) {
         const found = M.presets.find(p => p.id === initPreset);
         if (found) applyPreset(found);

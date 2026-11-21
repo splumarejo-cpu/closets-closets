@@ -1495,3 +1495,181 @@ img { max-width: 100%; display: block; }
   border-color: var(--navy);
   transform: translateY(-1px);
 }
+
+/* ------------------------------------------------------------------
+   TOOLTIP & POPOVER DE MÓDULOS INTERACTIVOS (HOVER & CLICK 3D)
+------------------------------------------------------------------ */
+.cad-hover-card {
+  position: absolute;
+  pointer-events: none;
+  background: rgba(16, 32, 54, 0.94);
+  color: #F8FAFC;
+  padding: 10px 14px;
+  border-radius: 8px;
+  box-shadow: 0 10px 25px rgba(0, 0, 0, 0.35);
+  border: 1px solid rgba(212, 175, 55, 0.5);
+  backdrop-filter: blur(8px);
+  z-index: 100;
+  max-width: 280px;
+  opacity: 0;
+  transform: translate(-50%, -120%);
+  transition: opacity 0.15s ease, transform 0.15s ease;
+}
+.cad-hover-card.visible {
+  opacity: 1;
+}
+.cad-hover-card .hover-badge {
+  font-size: 9px;
+  font-weight: 800;
+  text-transform: uppercase;
+  color: #FBBF24;
+  letter-spacing: 0.05em;
+  margin-bottom: 2px;
+}
+.cad-hover-card .hover-title {
+  font-size: 13px;
+  font-weight: 700;
+  line-height: 1.25;
+  color: #FFF;
+}
+.cad-hover-card .hover-spec {
+  font-size: 11px;
+  color: #94A3B8;
+  margin-top: 4px;
+  line-height: 1.3;
+}
+.cad-hover-card .hover-action {
+  font-size: 10px;
+  color: #38BDF8;
+  margin-top: 6px;
+  font-weight: 600;
+}
+
+/* Popover desplegable al hacer clic */
+.cad-module-popover {
+  position: absolute;
+  background: #FFFDF8;
+  color: #1E293B;
+  padding: 16px;
+  border-radius: 10px;
+  box-shadow: 0 14px 35px rgba(0, 0, 0, 0.28);
+  border: 1px solid #CBD5E1;
+  z-index: 110;
+  width: 310px;
+  display: none;
+}
+.cad-module-popover.active {
+  display: block;
+}
+.cad-module-popover .pop-head {
+  display: flex;
+  justify-content: space-between;
+  align-items: center;
+  margin-bottom: 12px;
+  padding-bottom: 8px;
+  border-bottom: 1px solid #E2E8F0;
+}
+.cad-module-popover .pop-title {
+  font-size: 13px;
+  font-weight: 700;
+  color: #0F172A;
+}
+.cad-module-popover .pop-close {
+  background: none;
+  border: none;
+  font-size: 16px;
+  cursor: pointer;
+  color: #64748B;
+  padding: 2px 6px;
+}
+.cad-module-popover .pop-field {
+  margin-bottom: 10px;
+}
+.cad-module-popover label {
+  display: block;
+  font-size: 11px;
+  font-weight: 600;
+  color: #475569;
+  margin-bottom: 4px;
+}
+.cad-module-popover select {
+  width: 100%;
+  padding: 6px 10px;
+  font-size: 12px;
+  border: 1px solid #CBD5E1;
+  border-radius: 6px;
+  background: #FFF;
+  color: #0F172A;
+}
+.cad-module-popover .pop-apply-btn {
+  width: 100%;
+  margin-top: 8px;
+  background: #0F172A;
+  color: #FFF;
+  padding: 8px;
+  font-size: 12px;
+  font-weight: 600;
+  border: none;
+  border-radius: 6px;
+  cursor: pointer;
+}
+.cad-module-popover .pop-apply-btn:hover {
+  background: #1E293B;
+}
+
+/* Desglose por módulos en el sidebar */
+.module-item-card {
+  background: #FFF;
+  border: 1px solid #E2E8F0;
+  border-radius: 8px;
+  padding: 10px 12px;
+  margin-bottom: 8px;
+  transition: all 0.15s ease;
+}
+.module-item-card:hover {
+  border-color: #0F172A;
+  box-shadow: 0 4px 12px rgba(0,0,0,0.06);
+}
+.module-item-card.active {
+  border-color: #B48327;
+  background: #FFFDF9;
+}
+.module-item-head {
+  display: flex;
+  justify-content: space-between;
+  align-items: center;
+}
+.module-item-title {
+  font-size: 12px;
+  font-weight: 700;
+  color: #0F172A;
+}
+.module-item-badge {
+  font-size: 10px;
+  font-weight: 600;
+  color: #475569;
+  background: #F1F5F9;
+  padding: 2px 6px;
+  border-radius: 4px;
+}
+.module-item-desc {
+  font-size: 11px;
+  color: #64748B;
+  margin-top: 4px;
+  line-height: 1.3;
+}
+.module-config-row {
+  margin-top: 8px;
+  display: flex;
+  gap: 6px;
+  align-items: center;
+}
+.module-config-row select {
+  flex: 1;
+  padding: 5px 8px;
+  font-size: 11px;
+  border: 1px solid #CBD5E1;
+  border-radius: 4px;
+  background: #FFF;
+  color: #0F172A;
+}

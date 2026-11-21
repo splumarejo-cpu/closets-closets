@@ -36,6 +36,17 @@
   let autoRotate = false;
   let activeView = "3d"; // "3d" | "2d"
 
+  // Estado del sistema interactivo de módulos
+  let interactiveMeshes = [];
+  let currentModulesCatalog = [];
+  let bayCustomizations = {};
+  let hoveredInfo = null;
+  let onModulesUpdatedCallback = null;
+  let mouseDownPos = { x: 0, y: 0 };
+
+  const hoverCard = document.getElementById("cadHoverCard");
+  const popover = document.getElementById("cadModulePopover");
+
   function resize() {
     const w = container.clientWidth || 800;
     const h = container.clientHeight || 480;
@@ -124,7 +135,99 @@
       mesh.userData.explodeVec = new THREE.Vector3(opts.explode[0], opts.explode[1], opts.explode[2]);
       explodables.push(mesh);
     }
+    if (opts.moduleInfo) {
+      mesh.userData.moduleInfo = opts.moduleInfo;
+      interactiveMeshes.push(mesh);
+    }
     return mesh;
+  }
+
+  function registerModule(mod) {
+    if (!currentModulesCatalog.some(m => m.id === mod.id)) {
+      currentModulesCatalog.push(mod);
+    }
+  }
+
+  /**
+   * Genera los interiores configurables de una bahía (Cajonera c/ N gavetas, Entrepaños c/ K niveles, Colgadores, Zapatera)
+   */
+  function buildBayInterior(cx, cyBase, bayW, bayH, bayD, bayKey, defaultCfg, isCorner, explodeVec = [0, 0, 0.22]) {
+    const cfg = bayCustomizations[bayKey] || defaultCfg;
+    const type = cfg.type || "colgador_doble";
+    const count = Number(cfg.count || (type === "cajones" ? 4 : (type === "entrepanos" ? 4 : 5)));
+
+    const modInfo = {
+      id: bayKey,
+      title: cfg.title || "Módulo " + bayKey,
+      type: type,
+      count: count,
+      isCorner: isCorner,
+      desc: cfg.desc || ""
+    };
+
+    if (isCorner) {
+      modInfo.title = cfg.title || "Esquinero Continuo 'L'";
+      modInfo.desc = "Doble tubo de colgado cromado (sin cajones por apertura libre)";
+      addCadBox(bayW - 0.02, 0.02, 0.02, cx, cyBase + bayH - 0.14, bayD / 2 - 0.04, { accent: true, moduleInfo: modInfo });
+      addCadBox(bayW - 0.02, 0.02, 0.02, cx, cyBase + 0.95, bayD / 2 - 0.04, { accent: true, moduleInfo: modInfo });
+      addCadBox(bayW - 0.01, 0.018, bayD - 0.04, cx, cyBase + 1.05, 0, { moduleInfo: modInfo });
+      registerModule(modInfo);
+      return;
+    }
+
+    if (type === "cajones") {
+      modInfo.title = `Cajonera Soft-Close (${count} Gavetas)`;
+      modInfo.desc = `${count} gavetas con correderas telescópicas cierre suave Blum/Häfele + repisas superiores`;
+      const totalDrawersH = Math.min(bayH * 0.55, count * 0.22);
+      const singleH = (totalDrawersH - (count + 1) * 0.015) / count;
+      for (let c = 0; c < count; c++) {
+        const dy = cyBase + 0.08 + c * (singleH + 0.015) + singleH / 2;
+        addCadBox(bayW - 0.02, singleH - 0.005, bayD - 0.06, cx, dy, 0.02, {
+          accent: true,
+          explode: [explodeVec[0], explodeVec[1], explodeVec[2] + c * 0.05],
+          moduleInfo: modInfo
+        });
+      }
+      // Repisa superior sobre cajonera
+      addCadBox(bayW - 0.01, 0.018, bayD - 0.04, cx, cyBase + totalDrawersH + 0.08, 0, { moduleInfo: modInfo });
+      // Entrepaños superiores
+      const remH = bayH - (totalDrawersH + 0.10);
+      if (remH > 0.5) {
+        addCadBox(bayW - 0.01, 0.018, bayD - 0.04, cx, cyBase + totalDrawersH + 0.08 + remH * 0.45, 0, { moduleInfo: modInfo });
+      }
+      if (remH > 0.9) {
+        addCadBox(bayW - 0.01, 0.018, bayD - 0.04, cx, cyBase + totalDrawersH + 0.08 + remH * 0.80, 0, { moduleInfo: modInfo });
+      }
+    } else if (type === "entrepanos") {
+      modInfo.title = `Torre de Entrepaños (${count} Niveles)`;
+      modInfo.desc = `${count} repisas regulables en Sistema 32 para ropa doblada, bolsas o toallas`;
+      const step = bayH / (count + 1);
+      for (let s = 1; s <= count; s++) {
+        const sy = cyBase + s * step;
+        addCadBox(bayW - 0.01, 0.018, bayD - 0.05, cx, sy, 0, { moduleInfo: modInfo });
+      }
+    } else if (type === "zapatera") {
+      modInfo.title = `Torre Zapatera (${count} Niveles)`;
+      modInfo.desc = `${count} repisas inclinadas con tope frontal de aluminio para exhibición de calzado`;
+      const step = Math.min(0.35, bayH / (count + 1));
+      for (let s = 1; s <= count; s++) {
+        const sy = cyBase + s * step;
+        addCadBox(bayW - 0.01, 0.018, bayD - 0.06, cx, sy, 0, { moduleInfo: modInfo });
+        addCadBox(bayW - 0.03, 0.03, 0.015, cx, sy + 0.015, bayD / 2 - 0.04, { accent: true, moduleInfo: modInfo });
+      }
+    } else if (type === "colgador_largo") {
+      modInfo.title = "Colgador Largo (Vestidos & Abrigos)";
+      modInfo.desc = "Espacio vertical libre de 1.40 m para prendas largas y trajes de gala";
+      addCadBox(bayW - 0.02, 0.02, 0.02, cx, cyBase + bayH - 0.14, bayD / 2 - 0.04, { accent: true, moduleInfo: modInfo });
+    } else {
+      modInfo.title = "Doble Tubo de Colgado";
+      modInfo.desc = "Tubo ovalado cromado superior (sacos/camisas) e inferior (pantalones/faldas)";
+      addCadBox(bayW - 0.02, 0.02, 0.02, cx, cyBase + bayH - 0.14, bayD / 2 - 0.04, { accent: true, moduleInfo: modInfo });
+      addCadBox(bayW - 0.02, 0.02, 0.02, cx, cyBase + 0.95, bayD / 2 - 0.04, { accent: true, moduleInfo: modInfo });
+      addCadBox(bayW - 0.01, 0.018, bayD - 0.04, cx, cyBase + 1.05, 0, { moduleInfo: modInfo });
+    }
+
+    registerModule(modInfo);
   }
 
   function addCadLine(points, isAccent = true) {
@@ -149,6 +252,8 @@
       });
     }
     explodables = [];
+    interactiveMeshes = [];
+    currentModulesCatalog = [];
   }
 
   function buildClosetCAD(p) {
@@ -182,27 +287,23 @@
     const tieneEspejo = (p.extras || []).includes("espejo");
     const sub = p.subtipo || "CLOSET_ABATIBLE";
 
+    registerModule({
+      id: "closet_maletero",
+      title: "Maletero Superior Continuo",
+      desc: "Espacio corrido a techo con puertas abatibles para maletas y edredones",
+      isCorner: true
+    });
+
     for (let b = 0; b < nBays; b++) {
       const cx = -L / 2 + t + bayW / 2 + b * (bayW + t);
-      if (b === Math.floor(nBays / 2)) {
-        // Bahía central con cajonera (4 cajones) + entrepaños superiores
-        for (let c = 0; c < 4; c++) {
-          const cy = zoclo + 0.12 + c * 0.21;
-          addCadBox(bayW - 0.01, 0.19, D - 0.08, cx, cy, 0.02, { accent: true, explode: [0, 0, 0.25 + c * 0.06] });
-        }
-        addCadBox(bayW - 0.01, t, D - 0.05, cx, zoclo + 0.96, 0);
-        addCadBox(bayW - 0.01, t, D - 0.05, cx, zoclo + 1.32, 0);
-      } else if (b === nBays - 1) {
-        // Entrepaños / zapatera
-        for (let r = 1; r <= 4; r++) {
-          const ry = zoclo + r * ((maleteroY - zoclo) / 5);
-          addCadBox(bayW - 0.01, t, D - 0.06, cx, ry, 0);
-        }
-      } else {
-        // Tubo de colgado superior e inferior
-        addCadBox(bayW - 0.02, 0.02, 0.02, cx, maleteroY - 0.12, 0.02, { accent: true });
-        addCadBox(bayW - 0.02, 0.02, 0.02, cx, zoclo + 0.95, 0.02, { accent: true });
-      }
+      const bayKey = `closet_bay_${b}`;
+      const isCenter = (b === Math.floor(nBays / 2));
+      const isLast = (b === nBays - 1);
+      const defaultCfg = isCenter
+        ? { type: "cajones", count: 4, title: `Bahía ${b + 1} (Central · Cajonera)` }
+        : (isLast ? { type: "entrepanos", count: 4, title: `Bahía ${b + 1} (Entrepaños)` } : { type: "colgador_doble", count: 2, title: `Bahía ${b + 1} (Doble Tubo)` });
+
+      buildBayInterior(cx, zoclo, bayW, maleteroY - zoclo, D, bayKey, defaultCfg, false);
 
       // Puertas exteriores (salvo abierto o cajones vistos)
       if (sub !== "CLOSET_ABIERTO" && !(sub === "CLOSET_MIXTO" && b === Math.floor(nBays / 2))) {
@@ -251,6 +352,13 @@
     addCadBox(wallW, t, D, 0, H - t / 2, -1.0);
     addCadBox(wallW, 0.08, D, 0, 0.04, -1.0, { accent: true });
 
+    registerModule({
+      id: "walkin_maletero",
+      title: "Maletero Superior Continuo",
+      desc: "Almacenamiento corrido de 2.40m a 2.70m para edredones y maletas",
+      isCorner: true
+    });
+
     // Modulación de bahías del muro posterior
     for (let b = 0; b < nBays; b++) {
       const cx = -wallW / 2 + t + bayW / 2 + b * (bayW + t);
@@ -262,33 +370,19 @@
       const isCornerBay = isLeftCorner || isRightCorner;
       const isDrawerBay = (sub === "WALKIN_L" ? b === 1 : b === Math.floor(nBays / 2));
 
+      const bayKey = `walkin_wall_${b}`;
+      let defaultCfg = { type: "colgador_doble", count: 2, title: `Muro Posterior · Bahía ${b + 1}` };
       if (isCornerBay) {
-        // EN ESQUINAS NUNCA VA CAJONERA: Módulo de doble tubo de colgado continuo
-        addCadBox(bayW - 0.02, 0.02, 0.02, cx, H - 0.58, -1.0 + D / 2, { accent: true });
-        addCadBox(bayW - 0.02, 0.02, 0.02, cx, 0.95, -1.0 + D / 2, { accent: true });
-        addCadBox(bayW - 0.01, t, D - 0.04, cx, 1.05, -1.0);
+        defaultCfg = { type: "corner_hanging", count: 2, title: `Muro Posterior · Esquina ${b === 0 ? 'Izquierda' : 'Derecha'}` };
       } else if (isDrawerBay && tieneCajonera) {
-        // Cajonera en pared recta (100% libre para abrirse sin chocar con nada)
-        for (let c = 0; c < 4; c++) {
-          addCadBox(bayW - 0.02, 0.18, D - 0.06, cx, 0.14 + c * 0.20, -1.0 + 0.01, { accent: true, explode: [0, 0, 0.25 + c * 0.05] });
-        }
-        addCadBox(bayW - 0.01, t, D - 0.04, cx, 0.96, -1.0);
-        addCadBox(bayW - 0.01, t, D - 0.04, cx, 1.34, -1.0);
-        addCadBox(bayW - 0.01, t, D - 0.04, cx, 1.68, -1.0);
+        defaultCfg = { type: "cajones", count: 4, title: `Muro Posterior · Cajonera Central` };
       } else if (b === nBays - 1 && tieneZapateras && sub !== "WALKIN_ISLA") {
-        // Torre de repisas zapateras
-        for (let s = 1; s <= 5; s++) {
-          addCadBox(bayW - 0.01, t, D - 0.06, cx, 0.25 + s * 0.30, -1.0);
-          addCadBox(bayW - 0.03, 0.03, 0.015, cx, 0.25 + s * 0.30 + 0.015, -1.0 + D / 2 - 0.04, { accent: true });
-        }
+        defaultCfg = { type: "zapatera", count: 5, title: `Muro Posterior · Torre Zapatera` };
       } else if (tieneVestidos && b === nBays - 1 && sub !== "WALKIN_ISLA") {
-        // Colgador largo exclusivo para vestidos / abrigos
-        addCadBox(bayW - 0.02, 0.02, 0.02, cx, H - 0.58, -1.0 + D / 2, { accent: true });
-      } else {
-        // Doble tubo estándar
-        addCadBox(bayW - 0.02, 0.02, 0.02, cx, H - 0.58, -1.0 + D / 2, { accent: true });
-        addCadBox(bayW - 0.02, 0.02, 0.02, cx, 0.95, -1.0 + D / 2, { accent: true });
+        defaultCfg = { type: "colgador_largo", count: 1, title: `Muro Posterior · Colgador Vestidos` };
       }
+
+      buildBayInterior(cx, 0.08, bayW, H - 0.45 - 0.08, D, bayKey, defaultCfg, isCornerBay);
     }
 
     // Longitud ergonómica de las alas laterales en escuadra
@@ -300,7 +394,7 @@
     const wingBayL = (wingL - (nWingBays + 1) * t) / nWingBays;
 
     // Función constructora de alas articuladas completas (cero cajas vacías)
-    function buildWingModules(posX, signX) {
+    function buildWingModules(posX, signX, wingPrefix) {
       // Muro posterior del ala
       addCadBox(t, H, wingL, posX - (signX * (D / 2 - t / 2)), H / 2, centerZ, {
         explode: [signX * -0.2, 0, 0]
@@ -324,18 +418,13 @@
       // Equipamiento interior de cada bahía del ala
       for (let wb = 0; wb < nWingBays; wb++) {
         const wz = wingZStart + t + wingBayL / 2 + wb * (wingBayL + t);
-        if (wb === 0) {
-          // Bahía de colgado continuo en L (doble tubo)
-          addCadBox(0.02, 0.02, wingBayL - 0.04, posX, H - 0.58, wz, { accent: true });
-          addCadBox(0.02, 0.02, wingBayL - 0.04, posX, 0.95, wz, { accent: true });
-          addCadBox(D - t, t, wingBayL - 0.02, posX, 1.05, wz);
-        } else {
-          // Bahía frontal de torre zapatera con repisas inclinadas y topes
-          for (let s = 1; s <= 5; s++) {
-            addCadBox(D - t - 0.03, t, wingBayL - 0.02, posX, 0.25 + s * 0.30, wz);
-            addCadBox(0.015, 0.03, wingBayL - 0.04, posX + (signX * (D / 2 - 0.03)), 0.25 + s * 0.30 + 0.015, wz, { accent: true });
-          }
-        }
+        const bayKey = `${wingPrefix}_bay_${wb}`;
+        const wingName = wingPrefix === "left_wing" ? "Ala Izquierda" : "Ala Derecha";
+        let defaultCfg = wb === 0
+          ? { type: "colgador_doble", count: 2, title: `${wingName} · Bahía 1 (Colgado)` }
+          : { type: "zapatera", count: 5, title: `${wingName} · Bahía 2 (Zapatera)` };
+
+        buildBayInterior(posX, 0.08, D, H - 0.45 - 0.08, wingBayL, bayKey, defaultCfg, false, [signX * 0.22, 0, 0]);
 
         // Si es cancelería boutique con puertas de cristal fumé
         if (sub === "WALKIN_CRISTAL") {
@@ -350,11 +439,11 @@
 
     // Ala izquierda si es L, U o cancelería cristal
     if (sub === "WALKIN_L" || sub === "WALKIN_ISLA" || sub === "WALKIN_CRISTAL") {
-      buildWingModules(-wallW / 2 + D / 2, -1);
+      buildWingModules(-wallW / 2 + D / 2, -1, "left_wing");
     }
     // Ala derecha si es perimetral en U
     if (sub === "WALKIN_ISLA") {
-      buildWingModules(wallW / 2 - D / 2, 1);
+      buildWingModules(wallW / 2 - D / 2, 1, "right_wing");
     }
 
     // Muro opuesto en caso de pasillo lineal doble
@@ -642,8 +731,13 @@
 
   function rebuild3D(params) {
     const prevSub = stateRef ? stateRef.subtipo : null;
+    const prevCat = stateRef ? stateRef.categoria : null;
     stateRef = params;
     refreshSceneTheme();
+    // Resetear customizaciones al cambiar categoría o subtipo (nuevo diseño = tabla rasa)
+    if (prevCat !== params.categoria || prevSub !== params.subtipo) {
+      bayCustomizations = {};
+    }
     clearFurniture();
 
     const builders = {
@@ -658,8 +752,12 @@
     applyExplosion(explosionPct);
     render2DElevation(params);
 
-    if (prevSub !== params.subtipo) {
+    if (prevCat !== params.categoria || prevSub !== params.subtipo) {
       setCameraPreset("iso");
+    }
+
+    if (onModulesUpdatedCallback) {
+      onModulesUpdatedCallback(currentModulesCatalog);
     }
   }
 
@@ -1011,6 +1109,190 @@
     });
   }
 
+  // -------------------------------------------------------------
+  // INTERACCIÓN RAYCASTER 3D (HOVER CARD + POPOVER DESPLEGABLE)
+  // -------------------------------------------------------------
+  const raycaster = new THREE.Raycaster();
+  const mouse = new THREE.Vector2();
+
+  function showHoverCard(clientX, clientY, info) {
+    if (!hoverCard) return;
+    const rect = container.getBoundingClientRect();
+    const x = Math.max(12, Math.min(rect.width - 290, clientX + 16));
+    const y = Math.max(12, Math.min(rect.height - 120, clientY - 35));
+
+    hoverCard.style.left = x + "px";
+    hoverCard.style.top = y + "px";
+    hoverCard.innerHTML = `
+      <div class="hover-badge">✨ MÓDULO INTERACTIVO</div>
+      <div class="hover-title">${info.title}</div>
+      <div class="hover-spec">${info.desc}</div>
+      ${info.isCorner ? '' : '<div class="hover-action">👆 Clic para cambiar cajones o entrepaños</div>'}
+    `;
+    hoverCard.classList.add("visible");
+  }
+
+  function hideHoverCard() {
+    if (hoverCard) hoverCard.classList.remove("visible");
+  }
+
+  function openModulePopover(clientX, clientY, info) {
+    if (!popover || info.isCorner) return;
+    hideHoverCard();
+
+    const rect = container.getBoundingClientRect();
+    const x = Math.max(15, Math.min(rect.width - 325, clientX - 155));
+    const y = Math.max(15, Math.min(rect.height - 250, clientY - 90));
+
+    popover.style.left = x + "px";
+    popover.style.top = y + "px";
+
+    const currentType = (bayCustomizations[info.id] && bayCustomizations[info.id].type) || info.type || "colgador_doble";
+    const currentCount = (bayCustomizations[info.id] && bayCustomizations[info.id].count) || info.count || 4;
+
+    popover.innerHTML = `
+      <div class="pop-head">
+        <span class="pop-title">🛠️ ${info.title}</span>
+        <button type="button" class="pop-close" id="btnPopClose">✕</button>
+      </div>
+      <div class="pop-field">
+        <label>Tipo de Módulo:</label>
+        <select id="popSelectType">
+          <option value="cajones" ${currentType === "cajones" ? "selected" : ""}>🗄️ Cajonera con Gavetas Soft-Close</option>
+          <option value="entrepanos" ${currentType === "entrepanos" ? "selected" : ""}>📚 Torre de Entrepaños Regulables</option>
+          <option value="colgador_doble" ${currentType === "colgador_doble" ? "selected" : ""}>👔 Doble Tubo (Camisas / Sacos)</option>
+          <option value="colgador_largo" ${currentType === "colgador_largo" ? "selected" : ""}>👗 Colgador Largo (Vestidos / Abrigos)</option>
+          <option value="zapatera" ${currentType === "zapatera" ? "selected" : ""}>👠 Torre Zapatera Inclinada</option>
+        </select>
+      </div>
+      <div class="pop-field" id="popCountContainer">
+        <label id="popCountLabel">${currentType === "cajones" ? "Número de Gavetas / Cajones:" : (currentType === "entrepanos" ? "Número de Entrepaños:" : "Niveles de Zapatera:")}</label>
+        <select id="popSelectCount"></select>
+      </div>
+      <button type="button" class="pop-apply-btn" id="btnPopApply">Aplicar al Mueble 3D</button>
+    `;
+
+    function updateCountOptions(type) {
+      const cntBox = document.getElementById("popCountContainer");
+      const cntLabel = document.getElementById("popCountLabel");
+      const cntSelect = document.getElementById("popSelectCount");
+      if (!cntBox || !cntSelect) return;
+
+      if (type === "colgador_doble" || type === "colgador_largo") {
+        cntBox.style.display = "none";
+        return;
+      }
+      cntBox.style.display = "block";
+      cntSelect.innerHTML = "";
+
+      if (type === "cajones") {
+        cntLabel.textContent = "Número de Gavetas / Cajones:";
+        [
+          { val: 2, txt: "2 Gavetas Profundas (38 cm c/u)" },
+          { val: 3, txt: "3 Cajones Estándar" },
+          { val: 4, txt: "4 Cajones Estándar (Recomendado)" },
+          { val: 5, txt: "5 Cajones Slim (17 cm c/u)" }
+        ].forEach(opt => {
+          const o = document.createElement("option");
+          o.value = opt.val;
+          o.textContent = opt.txt;
+          if (opt.val === currentCount) o.selected = true;
+          cntSelect.appendChild(o);
+        });
+      } else if (type === "entrepanos") {
+        cntLabel.textContent = "Número de Entrepaños Regulables:";
+        [
+          { val: 3, txt: "3 Entrepaños Espaciosos" },
+          { val: 4, txt: "4 Entrepaños Estándar" },
+          { val: 5, txt: "5 Entrepaños (Recomendado)" },
+          { val: 6, txt: "6 Entrepaños Alta Densidad" }
+        ].forEach(opt => {
+          const o = document.createElement("option");
+          o.value = opt.val;
+          o.textContent = opt.txt;
+          if (opt.val === currentCount) o.selected = true;
+          cntSelect.appendChild(o);
+        });
+      } else if (type === "zapatera") {
+        cntLabel.textContent = "Niveles de Zapatera con Topes:";
+        [
+          { val: 4, txt: "4 Niveles Inclinados" },
+          { val: 5, txt: "5 Niveles Estándar" },
+          { val: 6, txt: "6 Niveles Alta Capacidad" }
+        ].forEach(opt => {
+          const o = document.createElement("option");
+          o.value = opt.val;
+          o.textContent = opt.txt;
+          if (opt.val === currentCount) o.selected = true;
+          cntSelect.appendChild(o);
+        });
+      }
+    }
+
+    const selType = document.getElementById("popSelectType");
+    selType.addEventListener("change", (e) => updateCountOptions(e.target.value));
+    updateCountOptions(currentType);
+
+    document.getElementById("btnPopClose").addEventListener("click", closeModulePopover);
+    document.getElementById("btnPopApply").addEventListener("click", () => {
+      const t = selType.value;
+      const countEl = document.getElementById("popSelectCount");
+      const c = countEl && countEl.value ? parseInt(countEl.value) : 4;
+      bayCustomizations[info.id] = { type: t, count: c };
+      closeModulePopover();
+      rebuild3D(stateRef);
+      if (onModulesUpdatedCallback) onModulesUpdatedCallback(currentModulesCatalog);
+    });
+
+    popover.classList.add("active");
+  }
+
+  function closeModulePopover() {
+    if (popover) popover.classList.remove("active");
+  }
+
+  renderer.domElement.addEventListener("pointermove", (e) => {
+    if (activeView !== "3d" || interactiveMeshes.length === 0) return;
+    const rect = renderer.domElement.getBoundingClientRect();
+    mouse.x = ((e.clientX - rect.left) / rect.width) * 2 - 1;
+    mouse.y = -((e.clientY - rect.top) / rect.height) * 2 + 1;
+
+    raycaster.setFromCamera(mouse, camera);
+    const hits = raycaster.intersectObjects(interactiveMeshes, false);
+    if (hits.length > 0) {
+      const hitObj = hits[0].object;
+      if (hitObj.userData && hitObj.userData.moduleInfo) {
+        hoveredInfo = hitObj.userData.moduleInfo;
+        showHoverCard(e.clientX - rect.left, e.clientY - rect.top, hoveredInfo);
+        container.style.cursor = "pointer";
+        return;
+      }
+    }
+    hoveredInfo = null;
+    hideHoverCard();
+    container.style.cursor = "default";
+  });
+
+  renderer.domElement.addEventListener("pointerdown", (e) => {
+    mouseDownPos = { x: e.clientX, y: e.clientY };
+  });
+
+  renderer.domElement.addEventListener("pointerup", (e) => {
+    const dist = Math.hypot(e.clientX - mouseDownPos.x, e.clientY - mouseDownPos.y);
+    if (dist > 8) return;
+    if (hoveredInfo) {
+      const rect = renderer.domElement.getBoundingClientRect();
+      openModulePopover(e.clientX - rect.left, e.clientY - rect.top, hoveredInfo);
+    } else {
+      closeModulePopover();
+    }
+  });
+
+  renderer.domElement.addEventListener("mouseleave", () => {
+    hoveredInfo = null;
+    hideHoverCard();
+  });
+
   function animate() {
     requestAnimationFrame(animate);
     if (autoRotate && activeView === "3d") {
@@ -1039,6 +1321,27 @@
       if (activeView === "3d") resize();
     },
     setCameraPreset: setCameraPreset,
-    exportLaminaPNG: generarLaminaCombinadaPNG
+    exportLaminaPNG: generarLaminaCombinadaPNG,
+    getActiveModules: function () {
+      return currentModulesCatalog;
+    },
+    setModuleCustomization: function (id, config) {
+      bayCustomizations[id] = config;
+      if (stateRef) rebuild3D(stateRef);
+      if (onModulesUpdatedCallback) onModulesUpdatedCallback(currentModulesCatalog);
+    },
+    onModulesUpdated: function (cb) {
+      onModulesUpdatedCallback = cb;
+    },
+    openModuleEditor: function (id) {
+      const mod = currentModulesCatalog.find(m => m.id === id);
+      if (mod) {
+        const rect = container.getBoundingClientRect();
+        openModulePopover(rect.width / 2, rect.height / 2, mod);
+      }
+    },
+    resetCustomizations: function () {
+      bayCustomizations = {};
+    }
   };
 })();
