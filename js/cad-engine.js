@@ -223,86 +223,84 @@
   }
 
   function buildWalkinCAD(p) {
-    const L = Math.min(Number(p.largo || 3.6), 5.6);
+    const L = Math.max(2.6, Math.min(Number(p.largo || 3.6), 6.5));
     const H = Number(p.alto || 2.4);
-    const D = 0.55;
+    const D = Number(p.fondo || 0.55);
     const sub = p.subtipo || "WALKIN_LINEAL_DOBLE";
     const t = 0.018;
     const extras = p.extras || [];
 
-    const tieneDobleColgador = extras.includes("colgadores_dobles") || true;
     const tieneVestidos = extras.includes("colgador_vestidos");
     const tieneCajonera = extras.includes("cajonera_softclose") || true;
     const tieneZapateras = extras.includes("zapateras_pro") || extras.includes("zapatera");
     const tieneLED = extras.includes("led_vertical") || extras.includes("led");
 
-    // Muro posterior principal
-    const wallW = Math.max(2.2, L * 0.72);
-    const nBays = Math.max(3, Math.round(wallW / 0.8));
+    // En escuadra y perimetral U, el ancho del muro posterior es el ancho total configurado
+    const wallW = L;
+    const nBays = Math.max(3, Math.round(wallW / 0.85));
     const bayW = (wallW - (nBays + 1) * t) / nBays;
 
-    // Costados divisorios verticales del muro principal
+    // Costados divisorios verticales del muro posterior
     for (let i = 0; i <= nBays; i++) {
       addCadBox(t, H, D, -wallW / 2 + t / 2 + i * (bayW + t), H / 2, -1.0, { explode: [0, 0, -0.2] });
       if (tieneLED && i > 0 && i < nBays) {
         addCadBox(0.012, H - 0.45, 0.012, -wallW / 2 + t / 2 + i * (bayW + t) + 0.015, H / 2 - 0.1, -1.0 + D / 2 - 0.02, { accent: true });
       }
     }
-    // Techo y zócalo del muro principal
+    // Techo y zócalo corrido del muro posterior
     addCadBox(wallW, t, D, 0, H - t / 2, -1.0);
     addCadBox(wallW, 0.08, D, 0, 0.04, -1.0, { accent: true });
 
-    // Modulación de bahías del muro principal
+    // Modulación de bahías del muro posterior
     for (let b = 0; b < nBays; b++) {
       const cx = -wallW / 2 + t + bayW / 2 + b * (bayW + t);
-      // Maletero superior continuo
+      // Maletero superior corrido
       addCadBox(bayW - 0.01, t, D - 0.03, cx, H - 0.45, -1.0);
 
-      const isCornerBay = (b === 0 && (sub === "WALKIN_L" || sub === "WALKIN_ISLA" || sub === "WALKIN_CRISTAL"));
+      const isLeftCorner = (b === 0 && (sub === "WALKIN_L" || sub === "WALKIN_ISLA" || sub === "WALKIN_CRISTAL"));
+      const isRightCorner = (b === nBays - 1 && sub === "WALKIN_ISLA");
+      const isCornerBay = isLeftCorner || isRightCorner;
       const isDrawerBay = (sub === "WALKIN_L" ? b === 1 : b === Math.floor(nBays / 2));
 
       if (isCornerBay) {
-        // REGLA DE ESTADO MAYOR (CARPINTERÍA REAL):
-        // En la esquina NUNCA va cajonera (chocaría con el ala en escuadra).
-        // En la esquina va DOBLE COLGADOR ESQUINERO CONTINUO o COLGADOR LARGO.
+        // EN ESQUINAS NUNCA VA CAJONERA: Módulo de doble tubo de colgado continuo
         addCadBox(bayW - 0.02, 0.02, 0.02, cx, H - 0.58, -1.0 + D / 2, { accent: true });
         addCadBox(bayW - 0.02, 0.02, 0.02, cx, 0.95, -1.0 + D / 2, { accent: true });
-        // Repisa intermedia esquinera de apoyo
         addCadBox(bayW - 0.01, t, D - 0.04, cx, 1.05, -1.0);
       } else if (isDrawerBay && tieneCajonera) {
-        // La cajonera se manda a la pared recta (lejos de la esquina para apertura libre 100%)
+        // Cajonera en pared recta (100% libre para abrirse sin chocar con nada)
         for (let c = 0; c < 4; c++) {
           addCadBox(bayW - 0.02, 0.18, D - 0.06, cx, 0.14 + c * 0.20, -1.0 + 0.01, { accent: true, explode: [0, 0, 0.25 + c * 0.05] });
         }
-        // Repisa de remate sobre cajonera y entrepaños superiores
         addCadBox(bayW - 0.01, t, D - 0.04, cx, 0.96, -1.0);
         addCadBox(bayW - 0.01, t, D - 0.04, cx, 1.34, -1.0);
         addCadBox(bayW - 0.01, t, D - 0.04, cx, 1.68, -1.0);
-      } else if (b === nBays - 1 && tieneZapateras) {
+      } else if (b === nBays - 1 && tieneZapateras && sub !== "WALKIN_ISLA") {
         // Torre de repisas zapateras
         for (let s = 1; s <= 5; s++) {
           addCadBox(bayW - 0.01, t, D - 0.06, cx, 0.25 + s * 0.30, -1.0);
           addCadBox(bayW - 0.03, 0.03, 0.015, cx, 0.25 + s * 0.30 + 0.015, -1.0 + D / 2 - 0.04, { accent: true });
         }
-      } else if (tieneVestidos && b === nBays - 1) {
+      } else if (tieneVestidos && b === nBays - 1 && sub !== "WALKIN_ISLA") {
         // Colgador largo exclusivo para vestidos / abrigos
         addCadBox(bayW - 0.02, 0.02, 0.02, cx, H - 0.58, -1.0 + D / 2, { accent: true });
       } else {
-        // Doble tubo de colgado estándar (camisas arriba, pantalones abajo)
+        // Doble tubo estándar
         addCadBox(bayW - 0.02, 0.02, 0.02, cx, H - 0.58, -1.0 + D / 2, { accent: true });
         addCadBox(bayW - 0.02, 0.02, 0.02, cx, 0.95, -1.0 + D / 2, { accent: true });
       }
     }
 
-    // Construcción de ala lateral articulada (cero cajas vacías)
-    function buildWingModules(posX, signX) {
-      const wingL = Math.max(1.5, Math.min(2.2, L * 0.5));
-      const wingZStart = -1.0 + D;
-      const wingZEnd = wingZStart + wingL;
-      const centerZ = (wingZStart + wingZEnd) / 2;
-      const nWingBays = 2;
-      const wingBayL = (wingL - (nWingBays + 1) * t) / nWingBays;
+    // Longitud ergonómica de las alas laterales en escuadra
+    const wingL = Math.max(1.8, Math.min(2.8, L * 0.58));
+    const wingZStart = -1.0 + D;
+    const wingZEnd = wingZStart + wingL;
+    const centerZ = (wingZStart + wingZEnd) / 2;
+    const nWingBays = Math.max(2, Math.round(wingL / 0.9));
+    const wingBayL = (wingL - (nWingBays + 1) * t) / nWingBays;
 
+    // Función constructora de alas articuladas completas (cero cajas vacías)
+    function buildWingModules(posX, signX) {
       // Muro posterior del ala
       addCadBox(t, H, wingL, posX - (signX * (D / 2 - t / 2)), H / 2, centerZ, {
         explode: [signX * -0.2, 0, 0]
@@ -312,7 +310,7 @@
       addCadBox(D, 0.08, wingL, posX, 0.04, centerZ, { accent: true });
       addCadBox(D - t, t, wingL, posX, H - 0.45, centerZ);
 
-      // Costado divisor intermedio y costado frontal del ala
+      // Costados divisorios de las bahías del ala
       for (let wb = 0; wb <= nWingBays; wb++) {
         const wz = wingZStart + t / 2 + wb * (wingBayL + t);
         addCadBox(D, H - 0.08 - t, t, posX, 0.08 + (H - 0.08) / 2, wz, {
@@ -323,7 +321,7 @@
         }
       }
 
-      // Interiores de las bahías del ala
+      // Equipamiento interior de cada bahía del ala
       for (let wb = 0; wb < nWingBays; wb++) {
         const wz = wingZStart + t + wingBayL / 2 + wb * (wingBayL + t);
         if (wb === 0) {
@@ -332,14 +330,14 @@
           addCadBox(0.02, 0.02, wingBayL - 0.04, posX, 0.95, wz, { accent: true });
           addCadBox(D - t, t, wingBayL - 0.02, posX, 1.05, wz);
         } else {
-          // Bahía frontal de repisas zapateras / exhibidor
+          // Bahía frontal de torre zapatera con repisas inclinadas y topes
           for (let s = 1; s <= 5; s++) {
             addCadBox(D - t - 0.03, t, wingBayL - 0.02, posX, 0.25 + s * 0.30, wz);
             addCadBox(0.015, 0.03, wingBayL - 0.04, posX + (signX * (D / 2 - 0.03)), 0.25 + s * 0.30 + 0.015, wz, { accent: true });
           }
         }
 
-        // Si es estilo cancelería boutique con puertas de cristal
+        // Si es cancelería boutique con puertas de cristal fumé
         if (sub === "WALKIN_CRISTAL") {
           addCadBox(0.02, H - 0.5, wingBayL - 0.01, posX + signX * (D / 2 + 0.01), (H - 0.5) / 2 + 0.08, wz, {
             glass: true,
@@ -350,10 +348,11 @@
       }
     }
 
-    // Ala lateral si es L o U o cancelería
+    // Ala izquierda si es L, U o cancelería cristal
     if (sub === "WALKIN_L" || sub === "WALKIN_ISLA" || sub === "WALKIN_CRISTAL") {
       buildWingModules(-wallW / 2 + D / 2, -1);
     }
+    // Ala derecha si es perimetral en U
     if (sub === "WALKIN_ISLA") {
       buildWingModules(wallW / 2 - D / 2, 1);
     }
@@ -363,23 +362,44 @@
       const oppW = wallW * 0.85;
       const nOppBays = Math.max(2, Math.round(oppW / 0.85));
       const oppBayW = (oppW - (nOppBays + 1) * t) / nOppBays;
-      addCadBox(oppW, t, D, 0, H - t / 2, 1.0);
-      addCadBox(oppW, 0.08, D, 0, 0.04, 1.0, { accent: true });
+      addCadBox(oppW, t, D, 0, H - t / 2, 1.1);
+      addCadBox(oppW, 0.08, D, 0, 0.04, 1.1, { accent: true });
       for (let oi = 0; oi <= nOppBays; oi++) {
-        addCadBox(t, H, D, -oppW / 2 + t / 2 + oi * (oppBayW + t), H / 2, 1.0, { explode: [0, 0, 0.2] });
+        addCadBox(t, H, D, -oppW / 2 + t / 2 + oi * (oppBayW + t), H / 2, 1.1, { explode: [0, 0, 0.2] });
       }
       for (let ob = 0; ob < nOppBays; ob++) {
         const ox = -oppW / 2 + t + oppBayW / 2 + ob * (oppBayW + t);
-        addCadBox(oppBayW - 0.01, t, D - 0.03, ox, H - 0.45, 1.0);
-        addCadBox(oppBayW - 0.02, 0.02, 0.02, ox, H - 0.58, 1.0 - D / 2, { accent: true });
-        addCadBox(oppBayW - 0.02, 0.02, 0.02, ox, 0.95, 1.0 - D / 2, { accent: true });
+        addCadBox(oppBayW - 0.01, t, D - 0.03, ox, H - 0.45, 1.1);
+        addCadBox(oppBayW - 0.02, 0.02, 0.02, ox, H - 0.58, 1.1 - D / 2, { accent: true });
+        addCadBox(oppBayW - 0.02, 0.02, 0.02, ox, 0.95, 1.1 - D / 2, { accent: true });
       }
     }
 
-    // Isla Joyera central si aplica
+    // DISTRIBUCIÓN ERGONÓMICA DE PASILLOS E ISLA JOYERA CENTRAL (ESTÁNDAR SAN PEDRO):
+    // Distancia interior libre entre el frente del ala izquierda y el frente del ala derecha:
+    // clearWidth = wallW - 2 * D (ej. 3.6m - 1.1m = 2.50m de espacio libre).
+    // Con pasillos de 90 cm a cada lado, la isla queda de 70 cm de ancho exactos.
     if (sub === "WALKIN_ISLA" || extras.includes("isla")) {
-      addCadBox(1.3, 0.88, 0.65, 0, 0.44, 0, { accent: true, explode: [0, 0.2, 0] });
-      addCadBox(1.34, 0.03, 0.69, 0, 0.90, 0, { glass: true, accent: true, explode: [0, 0.35, 0] });
+      const clearW = wallW - 2 * D;
+      // Ancho de isla calibrado para garantizar pasillos mínimos de 85 a 95 cm
+      const islandW = Math.max(0.60, Math.min(0.75, clearW - 1.70));
+      const islandL = Math.max(1.10, Math.min(1.50, wingL - 0.70));
+
+      // Pasillo al fondo entre la pared posterior y el inicio de la isla: 95 cm libres
+      const islandBackZ = -1.0 + D + 0.95;
+      const islandCenterZ = islandBackZ + islandL / 2;
+
+      // Cuerpo principal de la isla joyera (orientada a lo largo del pasillo)
+      addCadBox(islandW, 0.84, islandL, 0, 0.42, islandCenterZ, { accent: true, explode: [0, 0.15, 0] });
+      // Zócalo de la isla
+      addCadBox(islandW - 0.04, 0.06, islandL - 0.04, 0, 0.03, islandCenterZ);
+      // Cubierta de cristal templado superior para joyero exhibidor
+      addCadBox(islandW + 0.03, 0.02, islandL + 0.03, 0, 0.85, islandCenterZ, { glass: true, accent: true, explode: [0, 0.28, 0] });
+      // Gavetas joyeras interiores vistas bajo el cristal
+      for (let g = 0; g < 3; g++) {
+        const gz = islandBackZ + 0.20 + g * ((islandL - 0.40) / 2);
+        addCadBox(islandW - 0.06, 0.14, (islandL - 0.40) / 3, 0, 0.72, gz, { accent: true });
+      }
     }
   }
 
@@ -621,6 +641,7 @@
   }
 
   function rebuild3D(params) {
+    const prevSub = stateRef ? stateRef.subtipo : null;
     stateRef = params;
     refreshSceneTheme();
     clearFurniture();
@@ -636,6 +657,10 @@
     (builders[params.categoria] || buildClosetCAD)(params);
     applyExplosion(explosionPct);
     render2DElevation(params);
+
+    if (prevSub !== params.subtipo) {
+      setCameraPreset("iso");
+    }
   }
 
   function applyExplosion(pct) {
@@ -648,16 +673,22 @@
     });
   }
 
-    function setCameraPreset(preset) {
+  function setCameraPreset(preset) {
     if (!stateRef) return;
-    const targetY = stateRef.categoria === "BANIO" ? 0.8 : (stateRef.categoria === "PUERTAS" ? 1.1 : 1.2);
-    controls.target.set(0, targetY, 0);
+    const isWalkinU = stateRef.subtipo === "WALKIN_ISLA" || stateRef.subtipo === "WALKIN_L" || stateRef.subtipo === "WALKIN_CRISTAL";
+    const targetY = stateRef.categoria === "BANIO" ? 0.8 : (stateRef.categoria === "PUERTAS" ? 1.1 : 1.15);
+    const targetZ = isWalkinU ? 0.35 : 0;
+    controls.target.set(0, targetY, targetZ);
     if (preset === "front") {
-      camera.position.set(0, targetY, 4.6);
+      camera.position.set(0, targetY + (isWalkinU ? 0.25 : 0), isWalkinU ? 5.4 : 4.6);
     } else if (preset === "top") {
-      camera.position.set(0, 5.2, 0.8);
+      camera.position.set(0, 5.8, isWalkinU ? 0.4 : 0.8);
     } else {
-      camera.position.set(3.2, 2.2, 4.0);
+      if (isWalkinU) {
+        camera.position.set(3.8, 2.8, 4.6);
+      } else {
+        camera.position.set(3.2, 2.2, 4.0);
+      }
     }
     controls.update();
   }
