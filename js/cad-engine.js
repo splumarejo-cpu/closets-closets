@@ -228,47 +228,156 @@
     const D = 0.55;
     const sub = p.subtipo || "WALKIN_LINEAL_DOBLE";
     const t = 0.018;
+    const extras = p.extras || [];
+
+    const tieneDobleColgador = extras.includes("colgadores_dobles") || true;
+    const tieneVestidos = extras.includes("colgador_vestidos");
+    const tieneCajonera = extras.includes("cajonera_softclose") || true;
+    const tieneZapateras = extras.includes("zapateras_pro") || extras.includes("zapatera");
+    const tieneLED = extras.includes("led_vertical") || extras.includes("led");
 
     // Muro posterior principal
     const wallW = Math.max(2.2, L * 0.72);
     const nBays = Math.max(3, Math.round(wallW / 0.8));
     const bayW = (wallW - (nBays + 1) * t) / nBays;
 
+    // Costados divisorios verticales del muro principal
     for (let i = 0; i <= nBays; i++) {
       addCadBox(t, H, D, -wallW / 2 + t / 2 + i * (bayW + t), H / 2, -1.0, { explode: [0, 0, -0.2] });
+      if (tieneLED && i > 0 && i < nBays) {
+        addCadBox(0.012, H - 0.45, 0.012, -wallW / 2 + t / 2 + i * (bayW + t) + 0.015, H / 2 - 0.1, -1.0 + D / 2 - 0.02, { accent: true });
+      }
     }
+    // Techo y zócalo del muro principal
     addCadBox(wallW, t, D, 0, H - t / 2, -1.0);
     addCadBox(wallW, 0.08, D, 0, 0.04, -1.0, { accent: true });
 
+    // Modulación de bahías del muro principal
     for (let b = 0; b < nBays; b++) {
       const cx = -wallW / 2 + t + bayW / 2 + b * (bayW + t);
+      // Maletero superior continuo
       addCadBox(bayW - 0.01, t, D - 0.03, cx, H - 0.45, -1.0);
-      if (b % 2 === 0) {
-        addCadBox(bayW - 0.02, 0.02, 0.02, cx, H - 0.58, -0.95, { accent: true });
-        for (let c = 0; c < 3; c++) {
-          addCadBox(bayW - 0.02, 0.18, D - 0.08, cx, 0.18 + c * 0.2, -0.98, { accent: true, explode: [0, 0, 0.22] });
+
+      const isCornerBay = (b === 0 && (sub === "WALKIN_L" || sub === "WALKIN_ISLA" || sub === "WALKIN_CRISTAL"));
+      const isDrawerBay = (sub === "WALKIN_L" ? b === 1 : b === Math.floor(nBays / 2));
+
+      if (isCornerBay) {
+        // REGLA DE ESTADO MAYOR (CARPINTERÍA REAL):
+        // En la esquina NUNCA va cajonera (chocaría con el ala en escuadra).
+        // En la esquina va DOBLE COLGADOR ESQUINERO CONTINUO o COLGADOR LARGO.
+        addCadBox(bayW - 0.02, 0.02, 0.02, cx, H - 0.58, -1.0 + D / 2, { accent: true });
+        addCadBox(bayW - 0.02, 0.02, 0.02, cx, 0.95, -1.0 + D / 2, { accent: true });
+        // Repisa intermedia esquinera de apoyo
+        addCadBox(bayW - 0.01, t, D - 0.04, cx, 1.05, -1.0);
+      } else if (isDrawerBay && tieneCajonera) {
+        // La cajonera se manda a la pared recta (lejos de la esquina para apertura libre 100%)
+        for (let c = 0; c < 4; c++) {
+          addCadBox(bayW - 0.02, 0.18, D - 0.06, cx, 0.14 + c * 0.20, -1.0 + 0.01, { accent: true, explode: [0, 0, 0.25 + c * 0.05] });
         }
-      } else {
+        // Repisa de remate sobre cajonera y entrepaños superiores
+        addCadBox(bayW - 0.01, t, D - 0.04, cx, 0.96, -1.0);
+        addCadBox(bayW - 0.01, t, D - 0.04, cx, 1.34, -1.0);
+        addCadBox(bayW - 0.01, t, D - 0.04, cx, 1.68, -1.0);
+      } else if (b === nBays - 1 && tieneZapateras) {
+        // Torre de repisas zapateras
         for (let s = 1; s <= 5; s++) {
-          addCadBox(bayW - 0.01, t, D - 0.06, cx, 0.28 + s * 0.3, -1.0);
+          addCadBox(bayW - 0.01, t, D - 0.06, cx, 0.25 + s * 0.30, -1.0);
+          addCadBox(bayW - 0.03, 0.03, 0.015, cx, 0.25 + s * 0.30 + 0.015, -1.0 + D / 2 - 0.04, { accent: true });
+        }
+      } else if (tieneVestidos && b === nBays - 1) {
+        // Colgador largo exclusivo para vestidos / abrigos
+        addCadBox(bayW - 0.02, 0.02, 0.02, cx, H - 0.58, -1.0 + D / 2, { accent: true });
+      } else {
+        // Doble tubo de colgado estándar (camisas arriba, pantalones abajo)
+        addCadBox(bayW - 0.02, 0.02, 0.02, cx, H - 0.58, -1.0 + D / 2, { accent: true });
+        addCadBox(bayW - 0.02, 0.02, 0.02, cx, 0.95, -1.0 + D / 2, { accent: true });
+      }
+    }
+
+    // Construcción de ala lateral articulada (cero cajas vacías)
+    function buildWingModules(posX, signX) {
+      const wingL = Math.max(1.5, Math.min(2.2, L * 0.5));
+      const wingZStart = -1.0 + D;
+      const wingZEnd = wingZStart + wingL;
+      const centerZ = (wingZStart + wingZEnd) / 2;
+      const nWingBays = 2;
+      const wingBayL = (wingL - (nWingBays + 1) * t) / nWingBays;
+
+      // Muro posterior del ala
+      addCadBox(t, H, wingL, posX - (signX * (D / 2 - t / 2)), H / 2, centerZ, {
+        explode: [signX * -0.2, 0, 0]
+      });
+      // Techo, zócalo y maletero corrido del ala
+      addCadBox(D, t, wingL, posX, H - t / 2, centerZ);
+      addCadBox(D, 0.08, wingL, posX, 0.04, centerZ, { accent: true });
+      addCadBox(D - t, t, wingL, posX, H - 0.45, centerZ);
+
+      // Costado divisor intermedio y costado frontal del ala
+      for (let wb = 0; wb <= nWingBays; wb++) {
+        const wz = wingZStart + t / 2 + wb * (wingBayL + t);
+        addCadBox(D, H - 0.08 - t, t, posX, 0.08 + (H - 0.08) / 2, wz, {
+          explode: [signX * 0.15, 0, 0]
+        });
+        if (tieneLED && wb > 0 && wb < nWingBays) {
+          addCadBox(0.012, H - 0.45, 0.012, posX + (signX * (D / 2 - 0.02)), H / 2 - 0.1, wz, { accent: true });
+        }
+      }
+
+      // Interiores de las bahías del ala
+      for (let wb = 0; wb < nWingBays; wb++) {
+        const wz = wingZStart + t + wingBayL / 2 + wb * (wingBayL + t);
+        if (wb === 0) {
+          // Bahía de colgado continuo en L (doble tubo)
+          addCadBox(0.02, 0.02, wingBayL - 0.04, posX, H - 0.58, wz, { accent: true });
+          addCadBox(0.02, 0.02, wingBayL - 0.04, posX, 0.95, wz, { accent: true });
+          addCadBox(D - t, t, wingBayL - 0.02, posX, 1.05, wz);
+        } else {
+          // Bahía frontal de repisas zapateras / exhibidor
+          for (let s = 1; s <= 5; s++) {
+            addCadBox(D - t - 0.03, t, wingBayL - 0.02, posX, 0.25 + s * 0.30, wz);
+            addCadBox(0.015, 0.03, wingBayL - 0.04, posX + (signX * (D / 2 - 0.03)), 0.25 + s * 0.30 + 0.015, wz, { accent: true });
+          }
+        }
+
+        // Si es estilo cancelería boutique con puertas de cristal
+        if (sub === "WALKIN_CRISTAL") {
+          addCadBox(0.02, H - 0.5, wingBayL - 0.01, posX + signX * (D / 2 + 0.01), (H - 0.5) / 2 + 0.08, wz, {
+            glass: true,
+            accent: true,
+            explode: [signX * 0.35, 0, 0]
+          });
         }
       }
     }
 
-    // Ala lateral si es L o U o paralelo
+    // Ala lateral si es L o U o cancelería
     if (sub === "WALKIN_L" || sub === "WALKIN_ISLA" || sub === "WALKIN_CRISTAL") {
-      const wingL = 1.8;
-      addCadBox(D, H, wingL, -wallW / 2 + D / 2, H / 2, -1.0 + D / 2 + wingL / 2, {
-        glass: sub === "WALKIN_CRISTAL",
-        explode: [-0.25, 0, 0]
-      });
+      buildWingModules(-wallW / 2 + D / 2, -1);
     }
-    if (sub === "WALKIN_LINEAL_DOBLE" || sub === "WALKIN_ISLA") {
-      // Muro opuesto / paralelo
-      addCadBox(wallW * 0.8, H, D, 0, H / 2, 1.0, { explode: [0, 0, 0.25] });
+    if (sub === "WALKIN_ISLA") {
+      buildWingModules(wallW / 2 - D / 2, 1);
     }
+
+    // Muro opuesto en caso de pasillo lineal doble
+    if (sub === "WALKIN_LINEAL_DOBLE") {
+      const oppW = wallW * 0.85;
+      const nOppBays = Math.max(2, Math.round(oppW / 0.85));
+      const oppBayW = (oppW - (nOppBays + 1) * t) / nOppBays;
+      addCadBox(oppW, t, D, 0, H - t / 2, 1.0);
+      addCadBox(oppW, 0.08, D, 0, 0.04, 1.0, { accent: true });
+      for (let oi = 0; oi <= nOppBays; oi++) {
+        addCadBox(t, H, D, -oppW / 2 + t / 2 + oi * (oppBayW + t), H / 2, 1.0, { explode: [0, 0, 0.2] });
+      }
+      for (let ob = 0; ob < nOppBays; ob++) {
+        const ox = -oppW / 2 + t + oppBayW / 2 + ob * (oppBayW + t);
+        addCadBox(oppBayW - 0.01, t, D - 0.03, ox, H - 0.45, 1.0);
+        addCadBox(oppBayW - 0.02, 0.02, 0.02, ox, H - 0.58, 1.0 - D / 2, { accent: true });
+        addCadBox(oppBayW - 0.02, 0.02, 0.02, ox, 0.95, 1.0 - D / 2, { accent: true });
+      }
+    }
+
     // Isla Joyera central si aplica
-    if (sub === "WALKIN_ISLA" || (p.extras || []).includes("isla")) {
+    if (sub === "WALKIN_ISLA" || extras.includes("isla")) {
       addCadBox(1.3, 0.88, 0.65, 0, 0.44, 0, { accent: true, explode: [0, 0.2, 0] });
       addCadBox(1.34, 0.03, 0.69, 0, 0.90, 0, { glass: true, accent: true, explode: [0, 0.35, 0] });
     }
@@ -687,11 +796,23 @@
         // Símbolos interiores de alzado
         const bodyTop = y0 + malPx;
         const bodyH = hPx - malPx - zPx;
-        if (i === Math.floor(bays / 2)) {
+        const isCorner2D = (i === 0 && (p.subtipo === "WALKIN_L" || p.subtipo === "WALKIN_ISLA"));
+        const isDrawer2D = (p.subtipo === "WALKIN_L" ? i === 1 : i === Math.floor(bays / 2));
+
+        if (isCorner2D) {
+          // Esquinero continuo: doble tubo de colgado, cero cajones
+          inner += `<line x1="${bx + 8}" y1="${bodyTop + 20}" x2="${bx + bayPx - 8}" y2="${bodyTop + 20}" stroke="${pal.svgAccent}" stroke-width="2"/>`;
+          inner += `<line x1="${bx + 8}" y1="${bodyTop + bodyH * 0.52}" x2="${bx + bayPx - 8}" y2="${bodyTop + bodyH * 0.52}" stroke="${pal.svgAccent}" stroke-width="2"/>`;
+          inner += `<text x="${bx + bayPx / 2}" y="${bodyTop + bodyH * 0.46}" fill="${pal.svgMuted}" font-family="JetBrains Mono" font-size="8.5" text-anchor="middle">ESQUINERO CONTINUO</text>`;
+          inner += `<text x="${bx + bayPx / 2}" y="${bodyTop + bodyH * 0.58}" fill="${pal.svgMuted}" font-family="JetBrains Mono" font-size="8.5" text-anchor="middle">DOBLE TUBO</text>`;
+        } else if (isDrawer2D) {
+          // Cajonera en pared recta (fuera de esquina)
           for (let c = 1; c <= 4; c++) {
             const cy = bodyTop + bodyH - (bodyH * 0.12) * c;
             inner += `<rect x="${bx + 6}" y="${cy}" width="${bayPx - 12}" height="${bodyH * 0.1}" fill="none" stroke="${pal.svgAccent}" stroke-width="1.2"/>`;
           }
+          inner += `<line x1="${bx + 6}" y1="${bodyTop + bodyH * 0.48}" x2="${bx + bayPx - 6}" y2="${bodyTop + bodyH * 0.48}" stroke="${pal.svgStroke}" stroke-width="1.1"/>`;
+          inner += `<text x="${bx + bayPx / 2}" y="${bodyTop + bodyH * 0.38}" fill="${pal.svgMuted}" font-family="JetBrains Mono" font-size="8.5" text-anchor="middle">4 CAJONES C/ SUAVE</text>`;
         } else if (i === bays - 1) {
           for (let s = 1; s <= 4; s++) {
             const sy = bodyTop + (bodyH / 5) * s;

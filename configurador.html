@@ -322,7 +322,7 @@
         state.largo = cat.largoDefault;
         state.alto = cat.altoDefault;
         state.fondo = cat.fondoDefault;
-        state.extras = [];
+        state.extras = (cat.opcionesExtra || []).filter((e) => e.defaultActive).map((e) => e.id);
         syncSlidersBounds();
         renderCatPills();
         renderSubtipos();

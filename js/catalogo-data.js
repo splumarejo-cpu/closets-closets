@@ -99,9 +99,13 @@ window.CLOSETS_MASTER = {
         { id: "WALKIN_CRISTAL", nombre: "Vitrinas Cancelería Aluminio & Cristal", desc: "Módulos cerrados antipolvo estilo boutique" }
       ],
       opcionesExtra: [
-        { id: "isla", nombre: "Isla Central con Cajones & Exhibidor Cristal", minMty: 9500, maxMty: 14000, minBou: 18500, maxBou: 28000 },
+        { id: "colgadores_dobles", nombre: "Módulos con Doble Tubo de Colgado (Sacos / Camisas)", minMty: 1800, maxMty: 2800, minBou: 3200, maxBou: 4800, defaultActive: true },
+        { id: "colgador_vestidos", nombre: "Módulo Especial Colgador Largo (Vestidos & Abrigos)", minMty: 1500, maxMty: 2400, minBou: 2800, maxBou: 4200 },
+        { id: "cajonera_softclose", nombre: "Cajonera 4 Gavetas Cierre Suave (Fuera de Esquina)", minMty: 3600, maxMty: 5400, minBou: 6800, maxBou: 9800, defaultActive: true },
+        { id: "pantografo", nombre: "Pantógrafo Elevador Hidráulico para Colgado Alto", minMty: 2800, maxMty: 4200, minBou: 4800, maxBou: 7200 },
+        { id: "zapateras_pro", nombre: "Torre Doble Zapatera Extraíble Telescópica", minMty: 3200, maxMty: 4800, minBou: 6800, maxBou: 9500 },
         { id: "led_vertical", nombre: "Tiras LED COB Verticales Empotradas 3000K", minMty: 3800, maxMty: 5800, minBou: 7500, maxBou: 11000 },
-        { id: "zapateras_pro", nombre: "Torre Doble Zapatera Extraíble Telescópica", minMty: 3200, maxMty: 4800, minBou: 6800, maxBou: 9500 }
+        { id: "isla", nombre: "Isla Central con Cajones & Exhibidor Cristal", minMty: 9500, maxMty: 14000, minBou: 18500, maxBou: 28000 }
       ],
       rangosBase: {
         taller_mty: { min: 25000, max: 45000, refLargo: 3.5, minM2Extra: 5200, maxM2Extra: 7200 },
@@ -466,7 +470,7 @@ window.CLOSETS_MASTER = {
       largo: 3.4,
       alto: 2.4,
       fondo: 0.6,
-      extras: ["zapateras_pro", "led_vertical"]
+      extras: ["colgadores_dobles", "cajonera_softclose", "zapateras_pro", "led_vertical"]
     },
     // Nivel 3: Signature
     {
