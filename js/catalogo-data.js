@@ -140,7 +140,7 @@ window.CLOSETS_MASTER = {
       id: "COCINA",
       nombre: "Cocina Integral",
       iconoLabel: "CC-91",
-      desc: "Ingeniería de cocina Sistema 32: altura 91 cm a melamina (casco 81 cm + patas niveladoras 100/120 mm c/ tapeta aluminio anti-plagas), manguete 5.5 cm con Gola a 45° y cubierta de cuarzo o granito.",
+      desc: "Cocina integral modular a la medida con cierre suave, frentes Gola 45° y cubierta de cuarzo o granito.",
       largoDefault: 3.6,
       largoMin: 1.8,
       largoMax: 8.5,
@@ -155,9 +155,9 @@ window.CLOSETS_MASTER = {
         { id: "COCINA_U", nombre: "Perimetral en 'U' (3 Muros)", desc: "Máximo almacenamiento continuo con 2 esquinas protegidas" }
       ],
       opcionesExtra: [
-        { id: "sobrealacena_42cm", nombre: "2° Piso Sobrealacena Escalonada a Techo (1° Piso 32cm → 2° Piso 42cm Fondo)", minMty: 3800, maxMty: 6400, minBou: 6200, maxBou: 9800, defaultActive: true },
-        { id: "gola_manguete45", nombre: "Sistema Gola Corte 45° + Manguete Superior 5.5cm (P/ Faldón de Piedra)", minMty: 1800, maxMty: 3200, minBou: 2800, maxBou: 4800, defaultActive: true },
-        { id: "zoclo_12cm", nombre: "Upgrade Patas Niveladoras 120mm (Ajuste 14-15cm + Tapeta Aluminio Anti-Bichos)", minMty: 900, maxMty: 1500, minBou: 1200, maxBou: 2000 },
+        { id: "sobrealacena_42cm", nombre: "Alacena de 2 Pisos hasta Techo (Almacenamiento Superior Extra)", minMty: 3800, maxMty: 6400, minBou: 6200, maxBou: 9800, defaultActive: true },
+        { id: "gola_manguete45", nombre: "Frentes sin Jaladera (Perfil Gola 45°)", minMty: 1800, maxMty: 3200, minBou: 2800, maxBou: 4800, defaultActive: true },
+        { id: "zoclo_12cm", nombre: "Barra Alta (93 cm) con Zoclo Sellado de Aluminio", minMty: 900, maxMty: 1500, minBou: 1200, maxBou: 2000 },
         { id: "cubiertero_cacerolero", nombre: "Bajo Parrilla: 2 Cajones Medianos Cubierteros + 1 Gaveta Cacerolera Grande", minMty: 2400, maxMty: 4200, minBou: 3800, maxBou: 6200, defaultActive: true },
         { id: "esquinero_lemans", nombre: "Esquinero en Escuadra: Herraje Extraíble Articulado (LeMans / Magic Corner)", minMty: 5200, maxMty: 8500, minBou: 10500, maxBou: 16500 },
         { id: "cubierta_granito", nombre: "Cubierta Granito Natural (San Gabriel / Gris Oxford) — Llave en Mano Instalada", minMty: 23500, maxMty: 29500, minBou: 26000, maxBou: 34000 },

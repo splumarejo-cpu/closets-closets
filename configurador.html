@@ -123,10 +123,10 @@
   }
 }
   </script>
-  <link rel="stylesheet" href="styles.css?v=20261122_v18">
+  <link rel="stylesheet" href="styles.css?v=20261123_v19">
   <script src="js/three.min.js"></script>
   <script src="js/OrbitControls.js"></script>
-  <script src="js/catalogo-data.js?v=20261122_v18"></script>
+  <script src="js/catalogo-data.js?v=20261123_v19"></script>
 </head>
 <body>
 
@@ -157,16 +157,16 @@
       <div class="cat-pills" id="catPills"></div>
     </div>
 
-    <!-- GALERÍA DE 25 ARQUETIPOS: TABS POR CATEGORÍA + CARDS -->
+    <!-- TIRA COMPACTA DE DISEÑOS BASE -->
     <div class="preset-gallery-wrap" id="presetGalleryWrap">
       <div class="preset-gallery-header">
-        <span class="preset-gallery-label">🏛️ 25 Arquetipos</span>
+        <span class="preset-gallery-label">✨ Ideas Rápidas</span>
         <div class="preset-cat-tabs" id="presetCatTabs">
           <button type="button" class="pcat-tab active" data-cat="COCINA">🍳 Cocina</button>
           <button type="button" class="pcat-tab" data-cat="CLOSET">🚪 Clóset</button>
           <button type="button" class="pcat-tab" data-cat="WALKIN">👗 Vestidor</button>
           <button type="button" class="pcat-tab" data-cat="TV_ROOM">📺 TV / Perchero</button>
-          <button type="button" class="pcat-tab" data-cat="BANIO">🚿 Vanity RH</button>
+          <button type="button" class="pcat-tab" data-cat="BANIO">🚿 Vanity</button>
         </div>
         <div class="preset-tier-filter" id="presetTierFilter">
           <button type="button" class="ptier-btn active" data-tier="all">Todos</button>
@@ -179,181 +179,190 @@
     </div>
 
     <div class="studio-grid">
-      <!-- PANEL IZQUIERDO DE PARÁMETROS -->
+      <!-- PANEL GUIADO DE CONFIGURACIÓN -->
       <aside class="studio-sidebar">
-        <div class="studio-block">
-          <span class="studio-label">1. Gama de Fabricación</span>
-          <div class="gama-toggle" id="gamaToggle">
-            <button type="button" class="gama-btn active" data-gama="taller_mty">
-              <strong>Línea Taller MTY</strong>
-              <small>Melamina 16mm · Cierre Suave</small>
-            </button>
-            <button type="button" class="gama-btn" data-gama="boutique_spgg">
-              <strong>Boutique / San Pedro</strong>
-              <small>Egger / Alvic · Herrajes Blum</small>
-            </button>
-          </div>
-          <p id="gamaDescNote" style="font-size:11px; color:var(--ink-soft); margin-top:8px;"></p>
-          <div class="gama-brands-strip" id="gamaBrandsStrip"></div>
-        </div>
-
-        <div class="studio-block studio-block-season" id="blockTemporada">
-          <div class="season-head-bar">
-            <span class="season-pill" id="seasonBadgePill">🍂 TENDENCIA INVIERNO 2027</span>
-            <span class="season-selected-name" id="valAcabadoNombre">Roble Santana</span>
-          </div>
-          <span class="studio-label" style="margin-bottom:4px;">1B. Paleta de Acabados &amp; Marcas</span>
-          <p id="acabadoDescNote" style="font-size:11px; color:var(--ink-soft); margin:0 0 8px 0;"></p>
-          <div class="swatch-grid" id="swatchCarpinteriaGrid"></div>
-
-          <div id="piedraSwatchWrap" class="piedra-swatch-wrap" style="display:none;">
-            <div class="piedra-swatch-head">
-              <span class="studio-label" style="margin:0;">🪨 Tono de Cubierta (Cuarzo / Granito)</span>
-              <span class="season-selected-name" id="valPiedraNombre">Cuarzo Calacatta Light</span>
+        <details class="studio-step" open>
+          <summary class="studio-step-summary">
+            <span class="studio-label">1. Gama &amp; Color</span>
+            <span class="step-badge" id="stepBadgeGama">Roble Santana · Taller MTY</span>
+          </summary>
+          <div class="studio-step-body">
+            <div class="gama-toggle" id="gamaToggle">
+              <button type="button" class="gama-btn active" data-gama="taller_mty">
+                <strong>Línea Taller MTY</strong>
+                <small>Melamina 16mm · Cierre Suave</small>
+              </button>
+              <button type="button" class="gama-btn" data-gama="boutique_spgg">
+                <strong>Boutique / San Pedro</strong>
+                <small>Egger / Alvic · Herrajes Blum</small>
+              </button>
             </div>
-            <div class="swatch-grid-stone" id="swatchPiedraGrid"></div>
-          </div>
-        </div>
+            <p id="gamaDescNote" style="font-size:11px; color:var(--ink-soft); margin:8px 0 4px;"></p>
+            <div class="gama-brands-strip" id="gamaBrandsStrip"></div>
 
-        <div class="studio-block">
-          <span class="studio-label">2. Tipología del Mueble</span>
-          <div class="subtipo-list" id="subtipoList"></div>
-        </div>
-
-        <div class="studio-block" id="blockDimensiones">
-          <div style="display:flex; justify-content:space-between; align-items:center; margin-bottom:8px;">
-            <span class="studio-label" style="margin-bottom:0;">3. Dimensiones &amp; Muros (A · B · C)</span>
-            <span id="badgeTotalML" style="font-size:11px; background:#1B365D; color:#FBBF24; padding:2px 8px; border-radius:4px; font-weight:700; font-family:monospace;">3.60 ML</span>
-          </div>
-
-          <!-- Muro A: Frontal / Principal -->
-          <div class="muro-config-card is-active" id="cardMuroA">
-            <div class="muro-config-head">
-              <div style="display:flex; align-items:center; gap:6px;">
-                <span class="muro-tag muro-tag-a">MURO A</span>
-                <strong style="font-size:12px; color:#1E293B;">Principal / Fondo</strong>
+            <div class="studio-block-season" id="blockTemporada" style="margin-top:12px;">
+              <div class="season-head-bar">
+                <span class="season-pill" id="seasonBadgePill">🍂 TENDENCIA INVIERNO 2027</span>
+                <span class="season-selected-name" id="valAcabadoNombre">Roble Santana</span>
               </div>
-              <span class="range-val" id="valMuroA">360 cm</span>
-            </div>
-            <div class="muro-quick-pills" id="pillsMuroA">
-              <button type="button" class="quick-pill" data-val="2.4">240 cm</button>
-              <button type="button" class="quick-pill" data-val="3.0">300 cm</button>
-              <button type="button" class="quick-pill active" data-val="3.6">360 cm</button>
-              <button type="button" class="quick-pill" data-val="4.2">420 cm</button>
-            </div>
-            <input type="range" id="inpMuroA" min="1.2" max="6.0" step="0.1" value="3.6">
-          </div>
+              <p id="acabadoDescNote" style="font-size:11px; color:var(--ink-soft); margin:4px 0 8px 0;"></p>
+              <div class="swatch-grid" id="swatchCarpinteriaGrid"></div>
 
-          <!-- Muro B: Lateral Izquierdo / Escuadra 'L' -->
-          <div class="muro-config-card" id="cardMuroB">
-            <div class="muro-config-head">
-              <label class="muro-toggle-label">
-                <input type="checkbox" id="chkMuroB">
-                <span class="muro-tag muro-tag-b">MURO B</span>
-                <span>Ala Izq. (Escuadra 'L')</span>
-              </label>
-              <span class="range-val" id="valMuroB">240 cm</span>
-            </div>
-            <div class="muro-sub-controls" id="subMuroB" style="display:none;">
-              <div class="muro-quick-pills" id="pillsMuroB">
-                <button type="button" class="quick-pill" data-val="1.5">150 cm</button>
-                <button type="button" class="quick-pill" data-val="1.8">180 cm</button>
-                <button type="button" class="quick-pill" data-val="2.1">210 cm</button>
-                <button type="button" class="quick-pill active" data-val="2.4">240 cm</button>
+              <div id="piedraSwatchWrap" class="piedra-swatch-wrap" style="display:none;">
+                <div class="piedra-swatch-head">
+                  <span class="studio-label" style="margin:0;">🪨 Cubierta (Cuarzo / Granito)</span>
+                  <span class="season-selected-name" id="valPiedraNombre">Cuarzo Calacatta Light</span>
+                </div>
+                <div class="swatch-grid-stone" id="swatchPiedraGrid"></div>
               </div>
-              <input type="range" id="inpMuroB" min="1.2" max="3.6" step="0.1" value="2.4">
             </div>
           </div>
+        </details>
 
-          <!-- Muro C: Lateral Derecho / Cierre en 'U' -->
-          <div class="muro-config-card" id="cardMuroC">
-            <div class="muro-config-head">
-              <label class="muro-toggle-label">
-                <input type="checkbox" id="chkMuroC">
-                <span class="muro-tag muro-tag-c">MURO C</span>
-                <span>Ala Der. (Cierre en 'U')</span>
-              </label>
-              <span class="range-val" id="valMuroC">240 cm</span>
-            </div>
-            <div class="muro-sub-controls" id="subMuroC" style="display:none;">
-              <div class="muro-quick-pills" id="pillsMuroC">
-                <button type="button" class="quick-pill" data-val="1.5">150 cm</button>
-                <button type="button" class="quick-pill" data-val="1.8">180 cm</button>
-                <button type="button" class="quick-pill" data-val="2.1">210 cm</button>
-                <button type="button" class="quick-pill active" data-val="2.4">240 cm</button>
+        <details class="studio-step" open>
+          <summary class="studio-step-summary">
+            <span class="studio-label">2. Diseño &amp; Medidas</span>
+            <span class="step-badge" id="badgeTotalML">3.60 ML</span>
+          </summary>
+          <div class="studio-step-body" id="blockDimensiones">
+            <div class="subtipo-list" id="subtipoList" style="margin-bottom:12px;"></div>
+
+            <!-- Muro A: Frontal / Principal -->
+            <div class="muro-config-card is-active" id="cardMuroA">
+              <div class="muro-config-head">
+                <div style="display:flex; align-items:center; gap:6px;">
+                  <span class="muro-tag muro-tag-a">MURO A</span>
+                  <strong style="font-size:12px; color:#1E293B;">Principal</strong>
+                </div>
+                <span class="range-val" id="valMuroA">360 cm</span>
               </div>
-              <input type="range" id="inpMuroC" min="1.2" max="3.6" step="0.1" value="2.4">
+              <div class="muro-quick-pills" id="pillsMuroA">
+                <button type="button" class="quick-pill" data-val="2.4">240 cm</button>
+                <button type="button" class="quick-pill" data-val="3.0">300 cm</button>
+                <button type="button" class="quick-pill active" data-val="3.6">360 cm</button>
+                <button type="button" class="quick-pill" data-val="4.2">420 cm</button>
+              </div>
+              <input type="range" id="inpMuroA" min="1.2" max="6.0" step="0.1" value="3.6">
+            </div>
+
+            <!-- Muro B: Lateral Izquierdo / Escuadra 'L' -->
+            <div class="muro-config-card" id="cardMuroB">
+              <div class="muro-config-head">
+                <label class="muro-toggle-label">
+                  <input type="checkbox" id="chkMuroB">
+                  <span class="muro-tag muro-tag-b">MURO B</span>
+                  <span>Escuadra 'L'</span>
+                </label>
+                <span class="range-val" id="valMuroB">240 cm</span>
+              </div>
+              <div class="muro-sub-controls" id="subMuroB" style="display:none;">
+                <div class="muro-quick-pills" id="pillsMuroB">
+                  <button type="button" class="quick-pill" data-val="1.5">150 cm</button>
+                  <button type="button" class="quick-pill" data-val="1.8">180 cm</button>
+                  <button type="button" class="quick-pill" data-val="2.1">210 cm</button>
+                  <button type="button" class="quick-pill active" data-val="2.4">240 cm</button>
+                </div>
+                <input type="range" id="inpMuroB" min="1.2" max="3.6" step="0.1" value="2.4">
+              </div>
+            </div>
+
+            <!-- Muro C: Lateral Derecho / Cierre en 'U' -->
+            <div class="muro-config-card" id="cardMuroC">
+              <div class="muro-config-head">
+                <label class="muro-toggle-label">
+                  <input type="checkbox" id="chkMuroC">
+                  <span class="muro-tag muro-tag-c">MURO C</span>
+                  <span>Cierre 'U'</span>
+                </label>
+                <span class="range-val" id="valMuroC">240 cm</span>
+              </div>
+              <div class="muro-sub-controls" id="subMuroC" style="display:none;">
+                <div class="muro-quick-pills" id="pillsMuroC">
+                  <button type="button" class="quick-pill" data-val="1.5">150 cm</button>
+                  <button type="button" class="quick-pill" data-val="1.8">180 cm</button>
+                  <button type="button" class="quick-pill" data-val="2.1">210 cm</button>
+                  <button type="button" class="quick-pill active" data-val="2.4">240 cm</button>
+                </div>
+                <input type="range" id="inpMuroC" min="1.2" max="3.6" step="0.1" value="2.4">
+              </div>
+            </div>
+
+            <!-- Altura y Fondo -->
+            <div class="range-row" style="margin-top:10px;">
+              <div class="range-head">
+                <span>Altura Total</span>
+                <span class="range-val" id="valAlto">240 cm</span>
+              </div>
+              <input type="range" id="inpAlto" min="1.8" max="2.8" step="0.05" value="2.4">
+            </div>
+            <div class="range-row" style="margin-bottom:0;">
+              <div class="range-head">
+                <span>Fondo / Profundidad</span>
+                <span class="range-val" id="valFondo">60 cm</span>
+              </div>
+              <input type="range" id="inpFondo" min="0.35" max="0.7" step="0.05" value="0.6">
             </div>
           </div>
+        </details>
 
-          <!-- Altura y Fondo -->
-          <div class="range-row" style="margin-top:10px;">
-            <div class="range-head">
-              <span>Altura Total</span>
-              <span class="range-val" id="valAlto">240 cm</span>
+        <details class="studio-step" open>
+          <summary class="studio-step-summary">
+            <span class="studio-label">3. Adicionales &amp; Zona</span>
+            <span class="step-badge" id="stepBadgeExtras">Base + extras</span>
+          </summary>
+          <div class="studio-step-body">
+            <div style="display:flex; justify-content:flex-end; margin-bottom:8px;">
+              <button type="button" id="btnClearExtras" class="btn-clear-extras" title="Desmarcar adicionales">Dejar solo Base</button>
             </div>
-            <input type="range" id="inpAlto" min="1.8" max="2.8" step="0.05" value="2.4">
-          </div>
-          <div class="range-row" style="margin-bottom:0;">
-            <div class="range-head">
-              <span>Fondo / Profundidad</span>
-              <span class="range-val" id="valFondo">60 cm</span>
+            <div class="extras-check-list" id="extrasList"></div>
+            <div class="field" style="margin-top:12px; margin-bottom:0;">
+              <label for="inpZona" class="studio-label" style="margin-bottom:6px;">Zona de Entrega / Instalación</label>
+              <select id="inpZona"></select>
             </div>
-            <input type="range" id="inpFondo" min="0.35" max="0.7" step="0.05" value="0.6">
           </div>
-        </div>
+        </details>
 
-        <div class="studio-block">
-          <div style="display:flex; justify-content:space-between; align-items:center; margin-bottom:6px;">
-            <span class="studio-label" style="margin-bottom:0;">4. Checklist de Adicionales</span>
-            <button type="button" id="btnClearExtras" class="btn-clear-extras" title="Desmarcar todos los adicionales para ver solo el precio base">Dejar solo Base</button>
+        <details class="studio-step" id="blockModulosDetalle">
+          <summary class="studio-step-summary">
+            <span class="studio-label">4. Editar Módulos (Lista)</span>
+            <span class="step-badge" style="color:var(--brass-dark);">O toca el 3D</span>
+          </summary>
+          <div class="studio-step-body">
+            <div id="moduleInspectorList"></div>
           </div>
-          <p style="font-size:11px; color:var(--ink-soft); margin-top:0; margin-bottom:10px;">
-            Palomea lo que quieras agregar a tu mueble base; cada elemento actualiza tu precio al instante:
-          </p>
-          <div class="extras-check-list" id="extrasList"></div>
-        </div>
-
-        <div class="studio-block" id="blockModulosDetalle">
-          <div style="display:flex; justify-content:space-between; align-items:center; margin-bottom:8px;">
-            <span class="studio-label" style="margin-bottom:0;">5. Configuración por Módulo</span>
-            <span style="font-size:10px; color:var(--brass-dark); font-weight:700;">INTERACTIVO 3D</span>
-          </div>
-          <p style="font-size:11px; color:var(--ink-soft); margin-top:0; margin-bottom:10px;">
-            Pasa el mouse o haz clic sobre cualquier módulo en el 3D para cambiar entrepaños, cajones o función a tu gusto:
-          </p>
-          <div id="moduleInspectorList"></div>
-        </div>
-
-        <div class="studio-block">
-          <span class="studio-label">6. Zona de Instalación (MTY)</span>
-          <div class="field" style="margin-bottom:0;">
-            <select id="inpZona"></select>
-          </div>
-        </div>
+        </details>
       </aside>
 
-      <!-- LIENZO DERECHO: CAD 3D + ALZADO 2D + RANGO + ENVÍO -->
+      <!-- LIENZO PRINCIPAL: PRECIO MÓVIL + CAD 3D + CONTROLES COCINA + COTIZACIÓN -->
       <section class="studio-stage">
+        <!-- Barra rápida móvil pegada al 3D -->
+        <div class="mobile-live-price" id="mobileLivePrice">
+          <div>
+            <small>Estimado actual (<span id="mobileLiveML">3.60 ML</span>)</small>
+            <strong id="mobileLivePriceVal">$48,500 MXN</strong>
+          </div>
+          <a href="#quoteSection" class="btn-mini-quote">Desglose &amp; Cotizar ↓</a>
+        </div>
+
         <div class="cad-card">
           <div class="cad-toolbar">
             <div class="cad-view-tabs">
-              <button type="button" class="cad-btn active" id="btnView3D">Perspectiva 3D Trazos</button>
-              <button type="button" class="cad-btn" id="btnView2D">Plano Alzado 2D (Cotas cm)</button>
+              <button type="button" class="cad-btn active" id="btnView3D">Vista 3D</button>
+              <button type="button" class="cad-btn" id="btnView2D">Plano 2D (cm)</button>
             </div>
             <div class="cad-tool-btns">
               <button type="button" class="cad-btn" id="btnCamIso">3/4 Iso</button>
               <button type="button" class="cad-btn" id="btnCamFront">Frontal</button>
               <button type="button" class="cad-btn" id="btnCamTop">Planta</button>
-              <button type="button" class="cad-btn" id="btnBlueprint">Blueprint Azul</button>
-              <button type="button" class="cad-btn" id="btnAutoRotate">Auto-Giro</button>
+              <button type="button" class="cad-btn" id="btnBlueprint">Blueprint</button>
+              <button type="button" class="cad-btn" id="btnAutoRotate">Girar</button>
               <button type="button" class="cad-btn" id="btnDescargarLamina" style="border-color:var(--brass); color:var(--brass-dark); font-weight:600;">⬇ Lámina PNG</button>
             </div>
           </div>
 
           <div class="cad-infobar">
             <strong id="hudCatTitle">CLÓSET RESIDENCIAL</strong>
-            <span class="muted" id="hudDimSummary">200 × 240 × 60 cm · Sistema 32</span>
+            <span class="muted" id="hudDimSummary">200 × 240 × 60 cm · Roble Santana</span>
           </div>
 
           <div class="cad-viewport" id="cadViewport">
@@ -363,81 +372,72 @@
             <div id="cadModulePopover" class="cad-module-popover"></div>
 
             <div class="cad-hud-bottom" style="display:flex; align-items:center; gap:10px; pointer-events:auto;">
-              <span>Despiece:</span>
-              <input type="range" id="inpExplosion" min="0" max="100" value="0" style="width:90px; accent-color:var(--brass);">
+              <span>Abrir puertas:</span>
+              <input type="range" id="inpExplosion" min="0" max="100" value="0" style="width:82px; accent-color:var(--brass);">
               <span id="valExplosion">0%</span>
-              <span style="opacity:0.5;">|</span>
-              <span>Arrastra para rotar</span>
+              <span class="hide-sm" style="opacity:0.5;">|</span>
+              <span class="hide-sm">Toca un módulo para editar</span>
             </div>
           </div>
         </div>
 
-        <!-- AGENTE DISEÑADOR SENIOR SISTEMA 32: REGLAS DE TALLER & CONTROLES RÁPIDOS EN VIVO -->
-        <div class="senior-agent-card" id="seniorAgentCard">
-          <div class="senior-agent-header">
-            <div>
-              <span class="senior-agent-kicker">🧠 AGENTE DISEÑADOR SENIOR · INGENIERÍA SISTEMA 32 EN VIVO</span>
-              <h3 class="senior-agent-title" id="seniorTitle">Dictamen Técnico de Taller &amp; Modulación Milimétrica</h3>
-            </div>
-            <span class="senior-agent-badge" id="seniorSummaryBadge">Melamina 91 cm · Gola 45° · Regla ≥60cm = 2 Puertas</span>
+        <!-- CONTROLES RÁPIDOS DE COCINA (LIMPIO PARA CLIENTE, SIN TEXTO INTERNO DE TALLER) -->
+        <div class="kitchen-quick-card" id="seniorKitchenControls" style="display:none;">
+          <div class="kitchen-quick-head">
+            <span>🎛️ Ajustes Rápidos de Cocina</span>
+            <small>Toca cualquier mueble en el 3D o usa estas opciones</small>
           </div>
-
-          <!-- Controles Rápidos de Ingeniería de Cocina (se muestran cuando Categoría === COCINA) -->
-          <div class="senior-quick-controls" id="seniorKitchenControls" style="display:none;">
-            <div class="sqc-row-2">
-              <div class="sqc-group">
-                <span class="sqc-label">🚰 Cambiar Tarja de Lugar (Única · Intercambio Automático Sin Duplicar):</span>
-                <div class="sqc-pills" id="sqcSinkPosPills"></div>
-              </div>
-              <div class="sqc-group">
-                <span class="sqc-label">🔥 Cambiar Parrilla / Estufa de Lugar (Única · La Campana la Sigue):</span>
-                <div class="sqc-pills" id="sqcCookPosPills"></div>
-              </div>
-            </div>
-
+          <div class="sqc-row-2">
             <div class="sqc-group">
-              <span class="sqc-label">🔥 Tipo &amp; Dimensionamiento de Cocción (En su ubicación actual):</span>
-              <div class="sqc-pills" id="sqcCookMode">
-                <button type="button" class="sqc-pill" data-type="parrilla_cajones" data-count="60">Parrilla 60cm (4 Flamas) + 2 Cub. + 1 Cac.</button>
-                <button type="button" class="sqc-pill active" data-type="parrilla_cajones" data-count="75">Parrilla 75cm (5 Flamas) + 2 Cub. + 1 Cac.</button>
-                <button type="button" class="sqc-pill" data-type="parrilla_cajones" data-count="90">Parrilla 90cm (6 Flamas) + 2 Cub. + 1 Cac.</button>
-                <button type="button" class="sqc-pill" data-type="parrilla_horno" data-count="1">Parrilla + Horno Empotrado</button>
-                <button type="button" class="sqc-pill sqc-pill-warn" data-type="estufa_piso" data-count="1">🍳 Estufa de Piso 76cm (Corta Barra)</button>
+              <span class="sqc-label">🚰 Ubicación de Tarja</span>
+              <div class="sqc-pills" id="sqcSinkPosPills"></div>
+            </div>
+            <div class="sqc-group">
+              <span class="sqc-label">🔥 Ubicación de Parrilla / Estufa</span>
+              <div class="sqc-pills" id="sqcCookPosPills"></div>
+            </div>
+          </div>
+
+          <div class="sqc-group">
+            <span class="sqc-label">🍳 Tipo de Cocción</span>
+            <div class="sqc-pills" id="sqcCookMode">
+              <button type="button" class="sqc-pill" data-type="parrilla_cajones" data-count="60">Parrilla 60cm</button>
+              <button type="button" class="sqc-pill active" data-type="parrilla_cajones" data-count="75">Parrilla 75cm</button>
+              <button type="button" class="sqc-pill" data-type="parrilla_cajones" data-count="90">Parrilla 90cm</button>
+              <button type="button" class="sqc-pill" data-type="parrilla_horno" data-count="1">Parrilla + Horno</button>
+              <button type="button" class="sqc-pill sqc-pill-warn" data-type="estufa_piso" data-count="1">Estufa de Piso 76cm</button>
+            </div>
+          </div>
+
+          <div class="sqc-row-2">
+            <div class="sqc-group">
+              <span class="sqc-label">🏛️ Alacenas Superiores</span>
+              <div class="sqc-pills" id="sqcUpperTierMode">
+                <button type="button" class="sqc-pill active" data-sobre="on">2 Pisos hasta Techo</button>
+                <button type="button" class="sqc-pill" data-sobre="off">1 Piso Estándar</button>
               </div>
             </div>
-
-            <div class="sqc-row-2">
-              <div class="sqc-group">
-                <span class="sqc-label">🏛️ Volumen Alacenas (&gt;80cm = 2° Piso Escalonado 32 → 42 cm Fondo):</span>
-                <div class="sqc-pills" id="sqcUpperTierMode">
-                  <button type="button" class="sqc-pill active" data-sobre="on">2° Piso Escalonado: 1° Piso 32cm + 2° Piso 42cm (+10cm Voladizo)</button>
-                  <button type="button" class="sqc-pill" data-sobre="off">1 Solo Piso (32cm Fondo)</button>
-                </div>
-              </div>
-              <div class="sqc-group">
-                <span class="sqc-label">🦿 Patas Niveladoras + Tapeta Aluminio (Anti-Bichos / Fumigación):</span>
-                <div class="sqc-pills" id="sqcZocloMode">
-                  <button type="button" class="sqc-pill active" data-zoclo="10">10 cm (100 mm: 9.5–11.8 cm) · Melamina a 91 cm</button>
-                  <button type="button" class="sqc-pill" data-zoclo="12">12 cm (120 mm: hasta 14–15 cm) · Melamina a 93 cm</button>
-                </div>
-              </div>
-            </div>
-
-            <div class="sqc-group" id="sqcCornerGroup">
-              <span class="sqc-label">📐 Esquinero en Escuadra ('L' / 'U'):</span>
-              <div class="sqc-pills" id="sqcCornerMode">
-                <button type="button" class="sqc-pill active" data-corner="esquinero_lemans">⚙️ Extraíble Articulado (LeMans)</button>
-                <button type="button" class="sqc-pill" data-corner="esquinero_entrepanos">📐 Entrepaños Corridos</button>
-                <button type="button" class="sqc-pill" data-corner="esquinero_cajon_entrepano">🗄️ 1 Cajón + Entrepaños</button>
+            <div class="sqc-group">
+              <span class="sqc-label">📏 Altura de Barra</span>
+              <div class="sqc-pills" id="sqcZocloMode">
+                <button type="button" class="sqc-pill active" data-zoclo="10">Estándar (91 cm)</button>
+                <button type="button" class="sqc-pill" data-zoclo="12">Alta (93 cm)</button>
               </div>
             </div>
           </div>
 
-          <div class="senior-rules-grid" id="seniorRulesGrid"></div>
+          <div class="sqc-group" id="sqcCornerGroup">
+            <span class="sqc-label">📐 Esquinero</span>
+            <div class="sqc-pills" id="sqcCornerMode">
+              <button type="button" class="sqc-pill active" data-corner="esquinero_lemans">Extraíble LeMans</button>
+              <button type="button" class="sqc-pill" data-corner="esquinero_entrepanos">Entrepaños Corridos</button>
+              <button type="button" class="sqc-pill" data-corner="esquinero_cajon_entrepano">Cajón + Entrepaños</button>
+            </div>
+          </div>
         </div>
 
         <!-- RESUMEN + FORMULARIO DOBLE RESPALDO -->
-        <div class="studio-summary-grid">
+        <div class="studio-summary-grid" id="quoteSection">
           <div class="quote-box">
             <span class="studio-label" style="color:#E6BF73;">Precio Estimado de tu Configuración</span>
             <div class="quote-range" id="outRange">$48,500 MXN</div>
@@ -591,23 +591,23 @@
     <!-- Burbuja Pop-up en el aire -->
     <div class="buba-air-popup" id="bubaAirPopup" role="status" aria-live="polite">
       <button type="button" class="buba-air-close" id="bubaAirClose" aria-label="Minimizar ayuda">✕</button>
-      <span class="buba-air-kicker"><span class="buba-pulse-dot"></span> SUB-AGENTE CAD EN LÍNEA</span>
-      <h4 class="buba-air-title" id="bubaAirTitle">¿Ocupas ayuda con tu cocina?</h4>
+      <span class="buba-air-kicker"><span class="buba-pulse-dot"></span> ASESOR DE DISEÑO 3D</span>
+      <h4 class="buba-air-title" id="bubaAirTitle">¿Ocupas ayuda con tu diseño?</h4>
       <p class="buba-air-desc" id="bubaAirDesc">
-        Te ayudo a acomodar tu tarja, parrilla, sobrealacena de 42 cm o te paso directo por WhatsApp con tu diseño actual cargado.
+        Te ayudo a acomodar tus módulos, medidas o enviarlo directo por WhatsApp con el taller.
       </p>
       <div class="buba-air-actions">
         <button type="button" class="buba-btn-wa" id="bubaAirWaBtn">💬 WhatsApp Directo →</button>
-        <button type="button" class="buba-btn-chat" id="bubaAirOpenChatBtn">🧠 Preguntar Aquí</button>
+        <button type="button" class="buba-btn-chat" id="bubaAirOpenChatBtn">💡 Preguntar Aquí</button>
       </div>
     </div>
 
-    <!-- Drawer del Sub-Agente Especializado que reporta a Buba -->
+    <!-- Drawer de Ayuda Adaptativa -->
     <div class="buba-agent-drawer" id="bubaAgentDrawer">
       <div class="buba-drawer-head">
         <div class="buba-drawer-head-info">
-          <strong>🧠 Agente Ingeniero CAD · En Línea</strong>
-          <span>Conectado a Buba System · MTY &amp; SPGG</span>
+          <strong>📐 Asesor de Diseño · En Línea</strong>
+          <span>Closets-Closets · Monterrey &amp; SPGG</span>
         </div>
         <button type="button" class="buba-drawer-close" id="bubaDrawerClose" aria-label="Cerrar asistente">✕</button>
       </div>
@@ -616,23 +616,17 @@
       </div>
       <div class="buba-chat-body" id="bubaChatBody">
         <div class="buba-msg buba-msg-bot" id="bubaWelcomeMsg">
-          ¡Qué onda! Soy el <strong>Sub-Agente de Ingeniería CAD</strong> de la página. Estoy leyendo en vivo las medidas y módulos que estás armando en el 3D. ¿En qué te echo la mano?
+          ¡Hola! Estoy viendo las medidas y el diseño que tienes en el 3D. ¿En qué te ayudamos hoy?
         </div>
       </div>
-      <div class="buba-quick-questions" id="bubaQuickQuestions">
-        <button type="button" class="buba-q-pill" data-q="sobrealacena">🏛️ ¿Por qué el 2° piso mide 42 cm de fondo?</button>
-        <button type="button" class="buba-q-pill" data-q="tarja_parrilla">🚰 ¿Cómo muevo la tarja o la parrilla?</button>
-        <button type="button" class="buba-q-pill" data-q="piedra">🪨 ¿Qué cubierta recomiendan: Cuarzo o Granito?</button>
-        <button type="button" class="buba-q-pill" data-q="zoclo">🦿 ¿Patas niveladoras 10 cm vs 12 cm?</button>
-        <button type="button" class="buba-q-pill" data-q="planos">📐 ¿Venden solo la ingeniería / planos?</button>
-      </div>
+      <div class="buba-quick-questions" id="bubaQuickQuestions"></div>
       <div class="buba-drawer-foot">
         <div class="buba-input-row">
-          <input type="text" id="bubaUserQuestion" placeholder="Pregúntame lo que sea (ej. hola me ayudas, cajones, medidas)...">
-          <button type="button" class="buba-send-btn" id="bubaSendChatBtn" title="Preguntar al Sub-Agente en vivo">➤</button>
+          <input type="text" id="bubaUserQuestion" placeholder="Escribe tu duda (medidas, cajones, materiales)...">
+          <button type="button" class="buba-send-btn" id="bubaSendChatBtn" title="Enviar pregunta">➤</button>
         </div>
         <button type="button" class="buba-btn-wa" id="bubaDrawerWaBtn" style="width:100%;">
-          📲 Continuar por WhatsApp con mi Diseño 3D Adjunto →
+          📲 Enviar mi Diseño a WhatsApp →
         </button>
       </div>
     </div>
@@ -640,11 +634,11 @@
     <!-- Botón flotante permanente -->
     <button type="button" class="buba-launcher-btn" id="bubaLauncherBtn">
       <span class="buba-pulse-dot"></span>
-      <span id="bubaLauncherText">¿Ocupas ayuda? · Agente CAD</span>
+      <span id="bubaLauncherText">¿Dudas con tu diseño?</span>
     </button>
   </div>
 
-  <script src="js/cad-engine.js?v=20261122_v18"></script>
+  <script src="js/cad-engine.js?v=20261123_v19"></script>
   <script>
     (function () {
       const M = window.CLOSETS_MASTER;
@@ -1070,6 +1064,15 @@
 
         renderExtras();
         document.getElementById("outRange").textContent = "$" + r.totalMXN.toLocaleString("es-MX") + " MXN";
+        const mobilePriceVal = document.getElementById("mobileLivePriceVal");
+        const mobileML = document.getElementById("mobileLiveML");
+        if (mobilePriceVal) mobilePriceVal.textContent = "$" + r.totalMXN.toLocaleString("es-MX") + " MXN";
+        if (mobileML) mobileML.textContent = totalML.toFixed(2) + " ML";
+
+        const badgeGama = document.getElementById("stepBadgeGama");
+        const badgeExtras = document.getElementById("stepBadgeExtras");
+        if (badgeGama) badgeGama.textContent = `${p.acabadoNombre} · ${state.gama === "boutique_spgg" ? "Boutique" : "Taller MTY"}`;
+        if (badgeExtras) badgeExtras.textContent = r.extrasDesglose.length ? `${r.extrasDesglose.length} adicional(es)` : "Solo base";
         document.getElementById("outGamaLabel").textContent = `${r.gamaNombre} · ${p.acabadoNombre} (${p.acabadoMarca}) · Base + ${r.extrasDesglose.length} adicional(es)`;
         document.getElementById("outAnticipo").textContent = "$" + r.anticipo60MXN.toLocaleString("es-MX") + " MXN";
         const outFin = document.getElementById("outFiniquito");
@@ -1114,7 +1117,7 @@
           window.CAD_ENGINE.rebuild(p);
         }
         renderModuleInspector();
-        renderSeniorAdvisor(p, r);
+        renderKitchenQuickBar(p, r);
         if (typeof syncBubaSubAgentContext === "function") syncBubaSubAgentContext();
       }
 
@@ -1159,109 +1162,114 @@
         });
       }
 
-      function renderSeniorAdvisor(p, r) {
-        const grid = document.getElementById("seniorRulesGrid");
-        const badge = document.getElementById("seniorSummaryBadge");
+      function renderKitchenQuickBar(p, r) {
         const kitCtrls = document.getElementById("seniorKitchenControls");
         const cornerGrp = document.getElementById("sqcCornerGroup");
-        if (!grid || !M.generarDictamenSenior) return;
+        if (!kitCtrls) return;
+
+        kitCtrls.style.display = p.categoria === "COCINA" ? "flex" : "none";
+        if (p.categoria !== "COCINA") return;
 
         const mods = window.CAD_ENGINE && window.CAD_ENGINE.getActiveModules ? window.CAD_ENGINE.getActiveModules() : [];
-        const rules = M.generarDictamenSenior(p, r, mods);
-
-        if (kitCtrls) {
-          kitCtrls.style.display = p.categoria === "COCINA" ? "flex" : "none";
-        }
-        if (cornerGrp && p.categoria === "COCINA") {
+        if (cornerGrp) {
           const hasCorner = Boolean(state.muroB_activo || state.muroC_activo || String(state.subtipo).includes("_L") || String(state.subtipo).includes("_U"));
           cornerGrp.style.display = hasCorner ? "flex" : "none";
         }
 
-        if (badge) {
-          if (p.categoria === "COCINA" && r.piedraInfo) {
-            const altCm = state.extras.includes("zoclo_12cm") ? "93 cm (Pata 120mm)" : "91 cm (Pata 100mm)";
-            badge.textContent = `Melamina a ${altCm} · Manguete 5.5cm Gola 45° · Cubierta: ${r.piedraInfo.numPlacas} Placa(s) Llave en Mano`;
-          } else {
-            badge.textContent = `Sistema 32 Milimétrico · Regla ≥60cm = 2 Puertas Simétricas · ${r.totalML.toFixed(2)} ML`;
-          }
+        const fixtures = (window.CAD_ENGINE && window.CAD_ENGINE.getKitchenFixtures)
+          ? window.CAD_ENGINE.getKitchenFixtures()
+          : { cookBayId: null, sinkBayId: null };
+        const eligibleBaseMods = mods.filter(m => m.schemaKey === "cocina_bajo");
+        const sinkPosWrap = document.getElementById("sqcSinkPosPills");
+        const cookPosWrap = document.getElementById("sqcCookPosPills");
+
+        function shortZoneLabel(m, idx) {
+          if (m.id.startsWith("cocina_bajo_")) return "Mód " + (Number(m.id.replace("cocina_bajo_", "")) + 1);
+          if (m.id.startsWith("cocina_isla_")) return "Isla " + (Number(m.id.replace("cocina_isla_", "")) + 1);
+          if (m.id.startsWith("cocina_peninsula_")) return "Muro B · " + (Number(m.id.replace("cocina_peninsula_", "")) + 1);
+          if (m.id.startsWith("cocina_u_izq_")) return "Muro B · " + (Number(m.id.replace("cocina_u_izq_", "")) + 1);
+          if (m.id.startsWith("cocina_u_der_")) return "Muro C · " + (Number(m.id.replace("cocina_u_der_", "")) + 1);
+          return "Mód " + (idx + 1);
         }
 
-        // Sync active state on kitchen quick controls + dynamic Tarja / Parrilla position buttons
-        if (p.categoria === "COCINA") {
-          const fixtures = (window.CAD_ENGINE && window.CAD_ENGINE.getKitchenFixtures)
-            ? window.CAD_ENGINE.getKitchenFixtures()
-            : { cookBayId: null, sinkBayId: null };
-          const eligibleBaseMods = mods.filter(m => m.schemaKey === "cocina_bajo");
-
-          const sinkPosWrap = document.getElementById("sqcSinkPosPills");
-          const cookPosWrap = document.getElementById("sqcCookPosPills");
-
-          function shortZoneLabel(m, idx) {
-            if (m.id.startsWith("cocina_bajo_")) return "Muro A · Mód " + (Number(m.id.replace("cocina_bajo_", "")) + 1);
-            if (m.id.startsWith("cocina_isla_")) return "Isla · Mód " + (Number(m.id.replace("cocina_isla_", "")) + 1);
-            if (m.id.startsWith("cocina_peninsula_")) return "Muro B · Mód " + (Number(m.id.replace("cocina_peninsula_", "")) + 1);
-            if (m.id.startsWith("cocina_u_izq_")) return "Muro B · Mód " + (Number(m.id.replace("cocina_u_izq_", "")) + 1);
-            if (m.id.startsWith("cocina_u_der_")) return "Muro C · Mód " + (Number(m.id.replace("cocina_u_der_", "")) + 1);
-            return "Módulo " + (idx + 1);
-          }
-
-          if (sinkPosWrap) {
-            sinkPosWrap.innerHTML = "";
-            eligibleBaseMods.forEach((m, idx) => {
-              const btn = document.createElement("button");
-              btn.type = "button";
-              const isHere = m.id === fixtures.sinkBayId;
-              const hasCook = m.id === fixtures.cookBayId;
-              btn.className = "sqc-pill" + (isHere ? " active" : "");
-              btn.textContent = shortZoneLabel(m, idx) + (isHere ? " (🚰 Tarja Aquí)" : hasCook ? " (⇄ Cambiar x Parrilla)" : "");
-              btn.addEventListener("click", () => {
-                if (window.CAD_ENGINE && window.CAD_ENGINE.setModuleCustomization) {
-                  window.CAD_ENGINE.setModuleCustomization(m.id, { type: "tarja_puertas_botes", count: 2, door: "abatible_gola45" });
-                  updateAll();
-                }
-              });
-              sinkPosWrap.appendChild(btn);
+        if (sinkPosWrap) {
+          sinkPosWrap.innerHTML = "";
+          eligibleBaseMods.forEach((m, idx) => {
+            const btn = document.createElement("button");
+            btn.type = "button";
+            const isHere = m.id === fixtures.sinkBayId;
+            btn.className = "sqc-pill" + (isHere ? " active" : "");
+            btn.textContent = shortZoneLabel(m, idx) + (isHere ? " ✓" : "");
+            btn.addEventListener("click", () => {
+              if (window.CAD_ENGINE && window.CAD_ENGINE.setModuleCustomization) {
+                window.CAD_ENGINE.setModuleCustomization(m.id, { type: "tarja_puertas_botes", count: 2, door: "abatible_gola45" });
+                updateAll();
+              }
             });
-          }
-
-          if (cookPosWrap) {
-            cookPosWrap.innerHTML = "";
-            const currentCookMod = mods.find(m => m.id === fixtures.cookBayId);
-            const curCookType = currentCookMod ? currentCookMod.type : "parrilla_cajones";
-            const curCookCount = currentCookMod ? currentCookMod.count : 75;
-
-            eligibleBaseMods.forEach((m, idx) => {
-              const btn = document.createElement("button");
-              btn.type = "button";
-              const isHere = m.id === fixtures.cookBayId;
-              const hasSink = m.id === fixtures.sinkBayId;
-              btn.className = "sqc-pill" + (isHere ? " active" : "");
-              btn.textContent = shortZoneLabel(m, idx) + (isHere ? " (🔥 Parrilla Aquí)" : hasSink ? " (⇄ Cambiar x Tarja)" : "");
-              btn.addEventListener("click", () => {
-                if (window.CAD_ENGINE && window.CAD_ENGINE.setModuleCustomization) {
-                  window.CAD_ENGINE.setModuleCustomization(m.id, { type: curCookType, count: curCookCount, door: "none" });
-                  updateAll();
-                }
-              });
-              cookPosWrap.appendChild(btn);
-            });
-          }
-
-          const hasDoubleUpperActive = (Number(state.alto || 2.4) - 1.52) > 0.80 || state.extras.includes("sobrealacena_42cm");
-          document.querySelectorAll("#sqcUpperTierMode .sqc-pill").forEach(btn => {
-            const isOn = btn.getAttribute("data-sobre") === "on";
-            btn.classList.toggle("active", isOn === hasDoubleUpperActive);
+            sinkPosWrap.appendChild(btn);
           });
-          const cookMod = mods.find(m => m.id === "cocina_bajo_0" || m.id === "cocina_bajo_1" || (m.zone && m.zone.includes("Cocción")));
-          if (cookMod) {
-            document.querySelectorAll("#sqcCookMode .sqc-pill").forEach(btn => {
-              const t = btn.getAttribute("data-type");
-              const c = Number(btn.getAttribute("data-count"));
-              const active = cookMod.type === t && (t !== "parrilla_cajones" || Number(cookMod.count) === c);
-              btn.classList.toggle("active", active);
+        }
+
+        if (cookPosWrap) {
+          cookPosWrap.innerHTML = "";
+          const currentCookMod = mods.find(m => m.id === fixtures.cookBayId);
+          const curCookType = currentCookMod ? currentCookMod.type : "parrilla_cajones";
+          const curCookCount = currentCookMod ? currentCookMod.count : 75;
+
+          eligibleBaseMods.forEach((m, idx) => {
+            const btn = document.createElement("button");
+            btn.type = "button";
+            const isHere = m.id === fixtures.cookBayId;
+            btn.className = "sqc-pill" + (isHere ? " active" : "");
+            btn.textContent = shortZoneLabel(m, idx) + (isHere ? " ✓" : "");
+            btn.addEventListener("click", () => {
+              if (window.CAD_ENGINE && window.CAD_ENGINE.setModuleCustomization) {
+                window.CAD_ENGINE.setModuleCustomization(m.id, { type: curCookType, count: curCookCount, door: "none" });
+                updateAll();
+              }
             });
-          }
-          document.querySelectorAll("#sqcUpperTierMode .sqc-pill").forEach(btn => {
+            cookPosWrap.appendChild(btn);
+          });
+        }
+
+        const hasDoubleUpperActive = (Number(state.alto || 2.4) - 1.52) > 0.80 || state.extras.includes("sobrealacena_42cm");
+        document.querySelectorAll("#sqcUpperTierMode .sqc-pill").forEach(btn => {
+          const isOn = btn.getAttribute("data-sobre") === "on";
+          btn.classList.toggle("active", isOn === hasDoubleUpperActive);
+        });
+        const cookMod = mods.find(m => m.id === fixtures.cookBayId) || mods.find(m => m.id === "cocina_bajo_0" || m.id === "cocina_bajo_1" || (m.zone && m.zone.includes("Cocción")));
+        if (cookMod) {
+          document.querySelectorAll("#sqcCookMode .sqc-pill").forEach(btn => {
+            const t = btn.getAttribute("data-type");
+            const c = Number(btn.getAttribute("data-count"));
+            const active = cookMod.type === t && (t !== "parrilla_cajones" || Number(cookMod.count) === c);
+            btn.classList.toggle("active", active);
+          });
+        }
+
+        document.querySelectorAll("#sqcZocloMode .sqc-pill").forEach(btn => {
+          const is12 = btn.getAttribute("data-zoclo") === "12";
+          btn.classList.toggle("active", is12 === state.extras.includes("zoclo_12cm"));
+        });
+        const cornerMod = mods.find(m => m.id.startsWith("cocina_esquinero_"));
+        if (cornerMod) {
+          document.querySelectorAll("#sqcCornerMode .sqc-pill").forEach(btn => {
+            btn.classList.toggle("active", btn.getAttribute("data-corner") === cornerMod.type);
+          });
+        }
+      }
+
+      if (window.CAD_ENGINE && window.CAD_ENGINE.onModulesUpdated) {
+        window.CAD_ENGINE.onModulesUpdated(() => {
+          const p = currentPayload();
+          const r = M.calcularRango(p);
+          renderModuleInspector();
+          renderKitchenQuickBar(p, r);
+        });
+      }
+
+      // Wire Kitchen Quick Controls once
+      document.querySelectorAll("#sqcUpperTierMode .sqc-pill").forEach(btn => {
         btn.addEventListener("click", () => {
           const wantSobre = btn.getAttribute("data-sobre") === "on";
           if (wantSobre) {
@@ -1275,36 +1283,6 @@
           updateAll();
         });
       });
-
-      document.querySelectorAll("#sqcZocloMode .sqc-pill").forEach(btn => {
-            const is12 = btn.getAttribute("data-zoclo") === "12";
-            btn.classList.toggle("active", is12 === state.extras.includes("zoclo_12cm"));
-          });
-          const cornerMod = mods.find(m => m.id.startsWith("cocina_esquinero_"));
-          if (cornerMod) {
-            document.querySelectorAll("#sqcCornerMode .sqc-pill").forEach(btn => {
-              btn.classList.toggle("active", btn.getAttribute("data-corner") === cornerMod.type);
-            });
-          }
-        }
-
-        grid.innerHTML = rules.map(rule => `
-          <div class="senior-rule-item">
-            <span class="srule-badge">${rule.badge}</span>
-            <strong class="srule-title">${rule.title}</strong>
-            <p class="srule-detail">${rule.detail}</p>
-          </div>
-        `).join("");
-      }
-
-      if (window.CAD_ENGINE && window.CAD_ENGINE.onModulesUpdated) {
-        window.CAD_ENGINE.onModulesUpdated(() => {
-          const p = currentPayload();
-          const r = M.calcularRango(p);
-          renderModuleInspector();
-          renderSeniorAdvisor(p, r);
-        });
-      }
 
       // Wire Senior Kitchen Quick Controls
       document.querySelectorAll("#sqcCookMode .sqc-pill").forEach(btn => {
@@ -1929,33 +1907,33 @@
           items: [
             {
               id: "cc_tarja_parrilla",
-              label: "🚰 ¿Cómo muevo la Tarja o la Parrilla de lugar sin que se dupliquen?",
+              label: "🚰 ¿Cómo muevo la Tarja o la Parrilla de lugar?",
               q: "¿Cómo cambio de lugar la tarja o la parrilla en mi cocina?",
-              a: "Debajo del visor 3D tienes los botones <strong>🚰 Cambiar Tarja de Lugar</strong> y <strong>🔥 Cambiar Parrilla / Estufa de Lugar</strong> (o dale clic a cualquier gabinete bajo en el 3D). El motor las intercambia automáticamente y mueve la campana con la parrilla para que <strong>jamás se dupliquen</strong>."
+              a: "Justo debajo del 3D tienes las opciones de <strong>Ubicación de Tarja</strong> y <strong>Ubicación de Parrilla</strong> (o toca directo cualquier gabinete en el 3D). El sistema las intercambia en un clic y mueve la campana automáticamente."
             },
             {
               id: "cc_sobrealacena",
-              label: "🏛️ ¿Por qué el 2° piso de sobrealacena mide 42 cm de fondo?",
-              q: "¿Cómo funciona el 2° piso de sobrealacena escalonada de 32 a 42 cm?",
-              a: "Cuando la alacena supera los <strong>80 cm de altura</strong>, modulamos 2 niveles: el <strong>1° piso va a 32 cm de fondo</strong> para que no estorbe al cocinar, y el <strong>2° piso (sobrealacena a techo) sale a 42 cm de fondo</strong> (+10 cm en voladizo) para darle jerarquía arquitectónica y ocultar el ducto de la campana."
+              label: "🏛️ ¿Alacena de 2 niveles hasta techo o 1 nivel?",
+              q: "¿Cómo funciona la alacena de 2 niveles?",
+              a: "Cuando tu cocina aprovecha toda la altura hasta el techo, modulamos el nivel superior con mayor profundidad para almacenamiento amplio (vajillas de ocasión, cristalería) y ocultar ductos de campana con un diseño escalonado muy limpio."
             },
             {
               id: "cc_coccion",
-              label: "🔥 ¿Parrilla empotrada (60-90cm) c/ cajones o estufa de piso?",
-              q: "¿Cómo configuro el mueble bajo parrilla o el hueco para estufa de piso?",
-              a: "En el panel <em>Agente Diseñador Senior</em> debajo del 3D puedes elegir con 1 clic: <strong>Parrilla de 60, 75 o 90 cm (2 a 6 flamas) con 2 cajones medianos cubierteros arriba + 1 cacerolero grande abajo</strong>, <strong>Parrilla + Horno empotrado</strong>, o <strong>Estufa de Piso de 76 cm</strong> (que corta en vivo el zoclo y la cubierta)."
+              label: "🔥 ¿Parrilla empotrada (60-90cm) o estufa de piso?",
+              q: "¿Cómo elijo parrilla empotrada o estufa de piso?",
+              a: "Debajo del visor 3D puedes elegir con 1 clic <strong>Parrilla de 60, 75 o 90 cm</strong> (con cajones cubierteros y cacerolero), <strong>Parrilla + Horno empotrado</strong>, o <strong>Estufa de Piso de 76 cm</strong> para que veas el hueco exacto en el 3D."
             },
             {
               id: "cc_piedra",
               label: "🪨 ¿Qué cubierta recomiendan: Cuarzo o Granito?",
               q: "¿Qué cubierta recomiendan: Cuarzo o Granito?",
-              a: `En cocina instalamos exclusivamente <strong>Granito Natural</strong> o <strong>Cuarzo de Ingeniería</strong> (<strong>jamás Mármol</strong> porque es poroso y se mancha con limón y grasa). Para tus <strong>${r.piedraInfo ? r.piedraInfo.cubiertaML : totalML} ML de barra</strong> se consideran <strong>${r.piedraInfo ? r.piedraInfo.numPlacas : 1} placa(s)</strong> en servicio llave en mano (placa, plantillado, cortes de tarja/parrilla, faldones a 45° e instalación).`
+              a: `En cocina instalamos exclusivamente <strong>Granito Natural</strong> o <strong>Cuarzo de Ingeniería</strong> (jamás mármol porque es poroso). Tu diseño contempla <strong>${r.piedraInfo ? r.piedraInfo.numPlacas : 1} placa(s)</strong> en servicio completo llave en mano.`
             },
             {
               id: "cc_zoclo",
-              label: "🦿 ¿Patas niveladoras 10 cm vs 12 cm + tapeta aluminio anti-bichos?",
-              q: "¿Qué altura tiene la barra y cómo funciona el zoclo de aluminio?",
-              a: "Damos <strong>91 cm a la superficie de la melamina</strong> (casco de 81 cm + <strong>patas niveladoras de 10 cm / 100 mm</strong>, o <strong>93 cm con patas de 12 cm / 120 mm</strong>). Llevan <strong>tapeta clip de PVC color aluminio</strong> que bloquea humedad y bichos y se desmonta para que entre la fumigación. Arriba lleva <strong>manguete de 5.5 cm con Gola a 45°</strong>."
+              label: "📏 ¿Altura de barra estándar (91 cm) o alta (93 cm)?",
+              q: "¿Qué altura de barra me recomiendan?",
+              a: "La medida estándar ergonómica es <strong>91 cm</strong>. Si en casa son personas altas, puedes elegir <strong>93 cm</strong> debajo del 3D. Todas nuestras cocinas incluyen zoclo sellado resistente a humedad y fácil limpieza."
             },
             {
               id: "cc_planos",
@@ -2139,6 +2117,7 @@
       }
 
       function showAirPopup() {
+        if (window.innerWidth < 768) return;
         if (airPopupDismissed || !bubaAirPopup) return;
         if (bubaAgentDrawer && bubaAgentDrawer.classList.contains("is-open")) return;
         syncBubaSubAgentContext();
@@ -2209,6 +2188,13 @@
       if (bubaDrawerWaBtn) {
         bubaDrawerWaBtn.addEventListener("click", () => {
           window.open(buildBubaWhatsAppReport(), "_blank", "noopener");
+        });
+      }
+
+      // En celular, colapsar los pasos del panel para que el 3D y precio queden visibles al instante
+      if (window.innerWidth <= 960) {
+        document.querySelectorAll(".studio-sidebar .studio-step").forEach((det) => {
+          det.open = false;
         });
       }
 

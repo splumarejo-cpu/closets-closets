@@ -3161,28 +3161,192 @@ img { max-width: 100%; display: block; }
     grid-template-columns: repeat(2, minmax(0, 1fr));
   }
 }
+
+/* Guided Collapsible Sidebar Steps + Sleek Kitchen Bar + Mobile Live Price Strip (v19) */
+.studio-step {
+  border-bottom: 1px solid var(--line);
+  margin-bottom: 10px;
+  padding-bottom: 10px;
+}
+.studio-step:last-child {
+  border-bottom: none;
+  margin-bottom: 0;
+  padding-bottom: 0;
+}
+.studio-step-summary {
+  list-style: none;
+  display: flex;
+  justify-content: space-between;
+  align-items: center;
+  gap: 8px;
+  cursor: pointer;
+  padding: 6px 2px;
+  user-select: none;
+}
+.studio-step-summary::-webkit-details-marker { display: none; }
+.studio-step-summary .studio-label {
+  margin-bottom: 0;
+  display: inline-flex;
+  align-items: center;
+  gap: 6px;
+}
+.studio-step-summary .studio-label::before {
+  content: "▸";
+  font-size: 11px;
+  color: var(--navy);
+  transition: transform 0.16s ease;
+}
+.studio-step[open] > .studio-step-summary .studio-label::before {
+  transform: rotate(90deg);
+}
+.step-badge {
+  font-family: var(--mono);
+  font-size: 10.5px;
+  color: var(--navy);
+  background: var(--paper);
+  border: 1px solid var(--line);
+  padding: 2px 7px;
+  border-radius: 4px;
+  max-width: 55%;
+  white-space: nowrap;
+  overflow: hidden;
+  text-overflow: ellipsis;
+}
+.studio-step-body {
+  padding-top: 10px;
+}
+
+.kitchen-quick-card {
+  background: #FFFFFF;
+  border: 1px solid var(--line-strong);
+  border-radius: 8px;
+  padding: 12px 14px;
+  display: flex;
+  flex-direction: column;
+  gap: 10px;
+}
+.kitchen-quick-head {
+  display: flex;
+  justify-content: space-between;
+  align-items: center;
+  flex-wrap: wrap;
+  gap: 6px;
+  padding-bottom: 8px;
+  border-bottom: 1px solid var(--line);
+}
+.kitchen-quick-head span {
+  font-size: 13px;
+  font-weight: 700;
+  color: var(--navy-deep);
+}
+.kitchen-quick-head small {
+  font-size: 11px;
+  color: var(--ink-soft);
+}
+
+.mobile-live-price {
+  display: none;
+  justify-content: space-between;
+  align-items: center;
+  gap: 10px;
+  background: #0F172A;
+  color: #FFFFFF;
+  padding: 10px 14px;
+  border-radius: 8px;
+  border: 1px solid rgba(230, 191, 115, 0.35);
+}
+.mobile-live-price small {
+  display: block;
+  font-size: 10px;
+  color: #CBD5E1;
+  font-family: var(--mono);
+}
+.mobile-live-price strong {
+  font-size: 18px;
+  color: #FBBF24;
+  font-family: var(--sans);
+}
+.btn-mini-quote {
+  background: var(--brass);
+  color: #0F172A;
+  text-decoration: none;
+  font-size: 11.5px;
+  font-weight: 700;
+  padding: 8px 12px;
+  border-radius: 6px;
+  white-space: nowrap;
+}
+
+@media (max-width: 960px) {
+  .studio-stage {
+    order: -1;
+    gap: 12px;
+  }
+  .mobile-live-price {
+    display: flex;
+  }
+  .cad-viewport {
+    height: 330px;
+  }
+  .preset-gallery-wrap {
+    padding: 8px 12px 10px;
+    margin-bottom: 14px;
+  }
+  .preset-card-grid {
+    flex-wrap: nowrap;
+    overflow-x: auto;
+    padding-bottom: 6px;
+    -webkit-overflow-scrolling: touch;
+  }
+  .preset-card {
+    flex: 0 0 auto;
+    min-width: 158px;
+    max-width: 185px;
+  }
+}
 @media (max-width: 720px) {
-  .senior-agent-header {
-    flex-direction: column;
-    align-items: flex-start;
-    gap: 8px;
-  }
-  .senior-agent-badge {
-    white-space: normal;
-    line-height: 1.35;
+  .hide-sm { display: none !important; }
+  .studio-shell { padding: 14px 14px 48px; }
+  .studio-topbar { margin-bottom: 12px; gap: 10px; }
+  .studio-topbar h1.display-title { font-size: 21px !important; line-height: 1.18; }
+  .cat-pills {
+    flex-wrap: nowrap;
+    overflow-x: auto;
     max-width: 100%;
-    word-break: break-word;
+    padding-bottom: 4px;
+    -webkit-overflow-scrolling: touch;
   }
+  .cat-pill {
+    flex: 0 0 auto;
+    padding: 7px 12px;
+    font-size: 12px;
+    white-space: nowrap;
+  }
+  .preset-cat-tabs { display: none; }
   .preset-gallery-header {
-    flex-wrap: wrap;
+    flex-wrap: nowrap;
+    overflow-x: auto;
     gap: 8px;
+    margin-bottom: 8px;
   }
+  .preset-tier-filter {
+    flex-wrap: nowrap;
+    margin-left: 0;
+  }
+  .ptier-btn { white-space: nowrap; }
   .studio-sidebar,
   .studio-stage,
   .preset-gallery-wrap,
-  .senior-agent-panel {
+  .kitchen-quick-card {
     min-width: 0;
     max-width: 100%;
+  }
+  .studio-sidebar {
+    padding: 14px;
+  }
+  .buba-launcher-btn {
+    padding: 8px 13px;
+    font-size: 12px;
   }
 }
 @media (max-width: 560px) {
@@ -3210,5 +3374,13 @@ img { max-width: 100%; display: block; }
   .season-palette-grid,
   .brands-alliance-grid {
     grid-template-columns: 1fr;
+  }
+  .cad-toolbar {
+    padding: 8px 10px;
+    gap: 6px;
+  }
+  .cad-btn {
+    padding: 5px 8px;
+    font-size: 10.5px;
   }
 }
