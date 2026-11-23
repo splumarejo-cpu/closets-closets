@@ -1902,6 +1902,12 @@ img { max-width: 100%; display: block; }
   opacity: 0.6;
   background: #F1F5F9;
 }
+.muro-config-card input[type="range"] {
+  width: 100%;
+  accent-color: var(--navy);
+  margin-top: 2px;
+  cursor: pointer;
+}
 .muro-config-head {
   display: flex;
   justify-content: space-between;

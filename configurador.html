@@ -123,10 +123,10 @@
   }
 }
   </script>
-  <link rel="stylesheet" href="styles.css?v=20261123_v19">
+  <link rel="stylesheet" href="styles.css?v=20261123_v20">
   <script src="js/three.min.js"></script>
   <script src="js/OrbitControls.js"></script>
-  <script src="js/catalogo-data.js?v=20261123_v19"></script>
+  <script src="js/catalogo-data.js?v=20261123_v20"></script>
 </head>
 <body>
 
@@ -183,50 +183,10 @@
       <aside class="studio-sidebar">
         <details class="studio-step" open>
           <summary class="studio-step-summary">
-            <span class="studio-label">1. Gama &amp; Color</span>
-            <span class="step-badge" id="stepBadgeGama">Roble Santana · Taller MTY</span>
-          </summary>
-          <div class="studio-step-body">
-            <div class="gama-toggle" id="gamaToggle">
-              <button type="button" class="gama-btn active" data-gama="taller_mty">
-                <strong>Línea Taller MTY</strong>
-                <small>Melamina 16mm · Cierre Suave</small>
-              </button>
-              <button type="button" class="gama-btn" data-gama="boutique_spgg">
-                <strong>Boutique / San Pedro</strong>
-                <small>Egger / Alvic · Herrajes Blum</small>
-              </button>
-            </div>
-            <p id="gamaDescNote" style="font-size:11px; color:var(--ink-soft); margin:8px 0 4px;"></p>
-            <div class="gama-brands-strip" id="gamaBrandsStrip"></div>
-
-            <div class="studio-block-season" id="blockTemporada" style="margin-top:12px;">
-              <div class="season-head-bar">
-                <span class="season-pill" id="seasonBadgePill">🍂 TENDENCIA INVIERNO 2027</span>
-                <span class="season-selected-name" id="valAcabadoNombre">Roble Santana</span>
-              </div>
-              <p id="acabadoDescNote" style="font-size:11px; color:var(--ink-soft); margin:4px 0 8px 0;"></p>
-              <div class="swatch-grid" id="swatchCarpinteriaGrid"></div>
-
-              <div id="piedraSwatchWrap" class="piedra-swatch-wrap" style="display:none;">
-                <div class="piedra-swatch-head">
-                  <span class="studio-label" style="margin:0;">🪨 Cubierta (Cuarzo / Granito)</span>
-                  <span class="season-selected-name" id="valPiedraNombre">Cuarzo Calacatta Light</span>
-                </div>
-                <div class="swatch-grid-stone" id="swatchPiedraGrid"></div>
-              </div>
-            </div>
-          </div>
-        </details>
-
-        <details class="studio-step" open>
-          <summary class="studio-step-summary">
-            <span class="studio-label">2. Diseño &amp; Medidas</span>
+            <span class="studio-label">1. Tamaño de Muros &amp; Diseño</span>
             <span class="step-badge" id="badgeTotalML">3.60 ML</span>
           </summary>
           <div class="studio-step-body" id="blockDimensiones">
-            <div class="subtipo-list" id="subtipoList" style="margin-bottom:12px;"></div>
-
             <!-- Muro A: Frontal / Principal -->
             <div class="muro-config-card is-active" id="cardMuroA">
               <div class="muro-config-head">
@@ -295,12 +255,53 @@
               </div>
               <input type="range" id="inpAlto" min="1.8" max="2.8" step="0.05" value="2.4">
             </div>
-            <div class="range-row" style="margin-bottom:0;">
+            <div class="range-row" style="margin-bottom:12px;">
               <div class="range-head">
                 <span>Fondo / Profundidad</span>
                 <span class="range-val" id="valFondo">60 cm</span>
               </div>
               <input type="range" id="inpFondo" min="0.35" max="0.7" step="0.05" value="0.6">
+            </div>
+
+            <span class="studio-label" style="margin-bottom:6px;">Tipología del Mueble</span>
+            <div class="subtipo-list" id="subtipoList"></div>
+          </div>
+        </details>
+
+        <details class="studio-step" open>
+          <summary class="studio-step-summary">
+            <span class="studio-label">2. Gama &amp; Color</span>
+            <span class="step-badge" id="stepBadgeGama">Roble Santana · Taller MTY</span>
+          </summary>
+          <div class="studio-step-body">
+            <div class="gama-toggle" id="gamaToggle">
+              <button type="button" class="gama-btn active" data-gama="taller_mty">
+                <strong>Línea Taller MTY</strong>
+                <small>Melamina 16mm · Cierre Suave</small>
+              </button>
+              <button type="button" class="gama-btn" data-gama="boutique_spgg">
+                <strong>Boutique / San Pedro</strong>
+                <small>Egger / Alvic · Herrajes Blum</small>
+              </button>
+            </div>
+            <p id="gamaDescNote" style="font-size:11px; color:var(--ink-soft); margin:8px 0 4px;"></p>
+            <div class="gama-brands-strip" id="gamaBrandsStrip"></div>
+
+            <div class="studio-block-season" id="blockTemporada" style="margin-top:12px;">
+              <div class="season-head-bar">
+                <span class="season-pill" id="seasonBadgePill">🍂 TENDENCIA INVIERNO 2027</span>
+                <span class="season-selected-name" id="valAcabadoNombre">Roble Santana</span>
+              </div>
+              <p id="acabadoDescNote" style="font-size:11px; color:var(--ink-soft); margin:4px 0 8px 0;"></p>
+              <div class="swatch-grid" id="swatchCarpinteriaGrid"></div>
+
+              <div id="piedraSwatchWrap" class="piedra-swatch-wrap" style="display:none;">
+                <div class="piedra-swatch-head">
+                  <span class="studio-label" style="margin:0;">🪨 Cubierta (Cuarzo / Granito)</span>
+                  <span class="season-selected-name" id="valPiedraNombre">Cuarzo Calacatta Light</span>
+                </div>
+                <div class="swatch-grid-stone" id="swatchPiedraGrid"></div>
+              </div>
             </div>
           </div>
         </details>
@@ -638,7 +639,7 @@
     </button>
   </div>
 
-  <script src="js/cad-engine.js?v=20261123_v19"></script>
+  <script src="js/cad-engine.js?v=20261123_v20"></script>
   <script>
     (function () {
       const M = window.CLOSETS_MASTER;
