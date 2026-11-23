@@ -832,6 +832,7 @@
     </div>
   </footer>
 
+  <script src="js/buba-metrics.js?v=20261123_v22"></script>
   <script>
     (function () {
       const mobileBtn = document.getElementById("mobileMenuBtn");
@@ -925,6 +926,14 @@
           ].filter(Boolean).join("\n");
           const waUrl = `https://wa.me/528134575939?text=${encodeURIComponent(waTxt)}`;
 
+          if (window.BubaMetrics) {
+            window.BubaMetrics.track("lead_form_submit", {
+              source: "index_contact_form",
+              category: form.elements["categoria"].value,
+              gama: form.elements["gama"].value
+            });
+          }
+
           status.className = "status-banner ok";
           status.innerHTML = `¡Solicitud registrada! <a href="${waUrl}" target="_blank" rel="noopener noreferrer" style="font-weight:700; text-decoration:underline;">Abrir WhatsApp ahora →</a>`;
           window.open(waUrl, "_blank", "noopener");
@@ -1009,6 +1018,9 @@
 
       function goWa(customTxt) {
         const txt = (customTxt || (qInput && qInput.value) || "").trim() || "¡Hola! Estoy en closets-closets.com y ocupo ayuda para cotizar un proyecto.";
+        if (window.BubaMetrics) {
+          window.BubaMetrics.track("lead_whatsapp_click", { source: "index_buba_widget", label: txt.slice(0, 60) });
+        }
         const msg = [
           "🤖 *[REPORTE AGENTE WEB → BUBA WHATSAPP]*",
           "• *Origen:* Catálogo Principal (index.html)",

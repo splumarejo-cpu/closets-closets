@@ -645,6 +645,7 @@
   </div>
 
   <script src="js/cad-engine.js?v=20261123_v21"></script>
+  <script src="js/buba-metrics.js?v=20261123_v22"></script>
   <script>
     (function () {
       const M = window.CLOSETS_MASTER;
@@ -879,6 +880,9 @@
         renderExtras();
         if(typeof syncPresetCatTab==="function") syncPresetCatTab();
         updateAll();
+        if (window.BubaMetrics) {
+          window.BubaMetrics.track("cad_category_change", { category: catId, label: cat.nombre || catId });
+        }
       }
 
       function getAcabadoSeleccionado() {
@@ -1458,6 +1462,9 @@
       function openIngModal() {
         ingModal.classList.add("active");
         ingModal.setAttribute("aria-hidden", "false");
+        if (window.BubaMetrics) {
+          window.BubaMetrics.track("cad_engineering_open", { category: state.categoria, folio: state.folio });
+        }
       }
       function closeIngModal() {
         ingModal.classList.remove("active");
@@ -1604,6 +1611,15 @@
           `• Ver plano 3D: ${shareUrl}`
         ].join("\n");
         window.open(`https://wa.me/528134575939?text=${encodeURIComponent(msg)}`, "_blank", "noopener");
+        if (window.BubaMetrics) {
+          window.BubaMetrics.track("lead_whatsapp_click", {
+            source: "ing_modal_buy",
+            folio: p.folio,
+            category: p.categoria,
+            label: pkg,
+            precio: r.totalMXN
+          });
+        }
         closeIngModal();
       });
 
@@ -1659,6 +1675,14 @@
           const built = buildFullWaUrlForDesign(false);
           cadStatus.className = "status-banner ok";
           cadStatus.innerHTML = `¡Diseño <strong>${built.p.folio}</strong> listo sin registro! <a href="${built.waUrl}" target="_blank" rel="noopener noreferrer" style="font-weight:700; text-decoration:underline;">Abrir WhatsApp →</a>`;
+          if (window.BubaMetrics) {
+            window.BubaMetrics.track("lead_whatsapp_click", {
+              source: "cad_quick_wa",
+              folio: built.p.folio,
+              category: built.p.categoria,
+              precio: built.r.totalMXN
+            });
+          }
           window.open(built.waUrl, "_blank", "noopener");
         });
       }
@@ -1734,6 +1758,15 @@
           : "";
         cadStatus.className = "status-banner ok";
         cadStatus.innerHTML = `¡Anteproyecto <strong>${p.folio}</strong> listo! <a href="${waUrl}" target="_blank" rel="noopener noreferrer" style="font-weight:700; text-decoration:underline;">Abrir WhatsApp ahora →</a>${dlLink}`;
+        if (window.BubaMetrics) {
+          window.BubaMetrics.track("lead_form_submit", {
+            source: "cad_submit_form",
+            folio: p.folio,
+            category: p.categoria,
+            gama: state.gama,
+            precio: r.totalMXN
+          });
+        }
         window.open(waUrl, "_blank", "noopener");
         cadBtn.disabled = false;
         cadBtn.textContent = orig;
@@ -1762,6 +1795,9 @@
         renderExtras();
         if (typeof syncPresetCatTab === "function") syncPresetCatTab();
         updateAll();
+        if (window.BubaMetrics) {
+          window.BubaMetrics.track("cad_preset_apply", { category: pr.cat, label: pr.id || pr.label || "" });
+        }
       }
 
       // ── GALERÍA DE ARQUETIPOS: TABS POR CATEGORÍA ──────────────────
@@ -2297,6 +2333,13 @@
 
       if (bubaAirWaBtn) {
         bubaAirWaBtn.addEventListener("click", () => {
+          if (window.BubaMetrics) {
+            window.BubaMetrics.track("lead_whatsapp_click", {
+              source: "cad_buba_air_wa",
+              folio: state.folio,
+              category: state.categoria
+            });
+          }
           window.open(buildBubaWhatsAppReport(), "_blank", "noopener");
         });
       }
@@ -2349,6 +2392,13 @@
 
       if (bubaDrawerWaBtn) {
         bubaDrawerWaBtn.addEventListener("click", () => {
+          if (window.BubaMetrics) {
+            window.BubaMetrics.track("lead_whatsapp_click", {
+              source: "cad_buba_drawer_wa",
+              folio: state.folio,
+              category: state.categoria
+            });
+          }
           window.open(buildBubaWhatsAppReport(), "_blank", "noopener");
         });
       }
@@ -2370,7 +2420,9 @@
 
       const initDesignToken = urlParams.get("d");
       if (initDesignToken && applyDecodedToken(initDesignToken)) {
-        // Diseño restaurado íntegro desde URL ?d=...
+        if (window.BubaMetrics) {
+          window.BubaMetrics.track("cad_design_restored", { category: state.categoria, folio: state.folio });
+        }
       } else if (initPreset && M.presets) {
         const found = M.presets.find((p) => p.id === initPreset);
         if (found) applyPreset(found);
