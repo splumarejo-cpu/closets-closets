@@ -3569,6 +3569,22 @@
       kitchenCookBayId = null;
       kitchenSinkBayId = null;
     },
+    exportCustomizations: function () {
+      return {
+        bays: JSON.parse(JSON.stringify(bayCustomizations || {})),
+        cook: kitchenCookBayId || null,
+        sink: kitchenSinkBayId || null
+      };
+    },
+    importCustomizations: function (saved) {
+      if (!saved || typeof saved !== "object") return;
+      bayCustomizations = saved.bays && typeof saved.bays === "object"
+        ? JSON.parse(JSON.stringify(saved.bays))
+        : {};
+      kitchenCookBayId = saved.cook || null;
+      kitchenSinkBayId = saved.sink || null;
+      if (stateRef) rebuild3D(stateRef);
+    },
     getKitchenFixtures: function () {
       return { cookBayId: kitchenCookBayId, sinkBayId: kitchenSinkBayId };
     }

@@ -123,10 +123,10 @@
   }
 }
   </script>
-  <link rel="stylesheet" href="styles.css?v=20261123_v20">
+  <link rel="stylesheet" href="styles.css?v=20261123_v21">
   <script src="js/three.min.js"></script>
   <script src="js/OrbitControls.js"></script>
-  <script src="js/catalogo-data.js?v=20261123_v20"></script>
+  <script src="js/catalogo-data.js?v=20261123_v21"></script>
 </head>
 <body>
 
@@ -486,6 +486,8 @@
             <input type="hidden" name="folio" id="fFolio" value="">
             <input type="hidden" name="resumen_tecnico" id="fResumen" value="">
             <input type="hidden" name="rango_estimado_mxn" id="fRango" value="">
+            <input type="hidden" name="estado_json" id="fEstadoJson" value="">
+            <input type="hidden" name="url_plano" id="fUrlPlano" value="">
             <p hidden><label>No llenar: <input name="bot-field"></label></p>
             <input type="file" name="lamina_plano" id="fFileInput" hidden accept="image/png">
 
@@ -506,7 +508,10 @@
             </div>
             <div id="cadStatus" class="status-banner" role="status" aria-live="polite"></div>
             <button id="cadSubmitBtn" type="submit" class="btn btn-primary" style="width:100%;">
-              Guardar Plano en Panel &amp; Cotizar por WhatsApp
+              Guardar Plano &amp; Cotizar por WhatsApp
+            </button>
+            <button id="btnQuickWaDirect" type="button" class="btn btn-outline" style="width:100%; margin-top:8px;">
+              📲 Enviar Solo por WhatsApp (Sin llenar datos)
             </button>
           </form>
         </div>
@@ -639,7 +644,7 @@
     </button>
   </div>
 
-  <script src="js/cad-engine.js?v=20261123_v20"></script>
+  <script src="js/cad-engine.js?v=20261123_v21"></script>
   <script>
     (function () {
       const M = window.CLOSETS_MASTER;
@@ -1467,6 +1472,114 @@
         await triggerSheetDownload();
       });
 
+      function toBase64UrlUtf8(str) {
+        const bytes = new TextEncoder().encode(str);
+        let bin = "";
+        for (let i = 0; i < bytes.length; i++) bin += String.fromCharCode(bytes[i]);
+        return btoa(bin).replace(/\+/g, "-").replace(/\//g, "_").replace(/=+$/g, "");
+      }
+
+      function fromBase64UrlUtf8(tok) {
+        let b64 = String(tok || "").replace(/-/g, "+").replace(/_/g, "/");
+        while (b64.length % 4) b64 += "=";
+        const bin = atob(b64);
+        const bytes = new Uint8Array(bin.length);
+        for (let i = 0; i < bin.length; i++) bytes[i] = bin.charCodeAt(i);
+        return new TextDecoder().decode(bytes);
+      }
+
+      function buildCompactDesignObj(p, r) {
+        const cust = (window.CAD_ENGINE && window.CAD_ENGINE.exportCustomizations)
+          ? window.CAD_ENGINE.exportCustomizations()
+          : { bays: {}, cook: null, sink: null };
+        const hasBays = cust.bays && Object.keys(cust.bays).length > 0;
+        const compactCust = (hasBays || cust.cook || cust.sink) ? cust : undefined;
+        return {
+          f: state.folio,
+          c: state.categoria,
+          s: state.subtipo,
+          g: state.gama,
+          a: state.acabadoId,
+          st: state.piedraId,
+          m: [
+            Number(state.muroA_L.toFixed(2)),
+            state.muroB_activo ? Number(state.muroB_L.toFixed(2)) : 0,
+            state.muroC_activo ? Number(state.muroC_L.toFixed(2)) : 0,
+            Number(state.alto.toFixed(2)),
+            Number(state.fondo.toFixed(2))
+          ],
+          x: Array.isArray(state.extras) ? [...state.extras] : [],
+          z: state.zona,
+          pr: r ? r.totalMXN : 0,
+          ...(compactCust ? { b: compactCust } : {})
+        };
+      }
+
+      function getDesignShareUrl(p, r) {
+        try {
+          const compact = buildCompactDesignObj(p, r);
+          const tok = toBase64UrlUtf8(JSON.stringify(compact));
+          return `https://closets-closets.com/configurador.html?d=${tok}`;
+        } catch (_) {
+          return `https://closets-closets.com/configurador.html?cat=${encodeURIComponent(state.categoria)}&acabado=${encodeURIComponent(state.acabadoId)}`;
+        }
+      }
+
+      function applyDecodedToken(rawTok) {
+        if (!rawTok) return false;
+        try {
+          const parsed = JSON.parse(fromBase64UrlUtf8(rawTok));
+          if (!parsed || !parsed.c || !M.categorias[parsed.c]) return false;
+          const cat = M.categorias[parsed.c];
+          state.folio = parsed.f || state.folio;
+          state.categoria = parsed.c;
+          state.subtipo = (parsed.s && cat.subtipos.some(s => s.id === parsed.s)) ? parsed.s : cat.subtipos[0].id;
+          state.gama = M.gamas[parsed.g] ? parsed.g : state.gama;
+          if (parsed.a && (tempData.acabadosCarpinteria || []).some(a => a.id === parsed.a)) state.acabadoId = parsed.a;
+          if (parsed.st && (tempData.acabadosPiedra || []).some(s => s.id === parsed.st)) state.piedraId = parsed.st;
+          if (Array.isArray(parsed.m) && parsed.m.length >= 5) {
+            state.muroA_L = Math.max(cat.largoMin, Math.min(cat.largoMax, Number(parsed.m[0]) || cat.largoDefault));
+            state.largo = state.muroA_L;
+            const allowMulti = parsed.c === "COCINA" || parsed.c === "WALKIN";
+            state.muroB_activo = allowMulti && Number(parsed.m[1]) > 0;
+            state.muroB_L = Number(parsed.m[1]) > 0 ? Number(parsed.m[1]) : 2.4;
+            state.muroC_activo = allowMulti && Number(parsed.m[2]) > 0;
+            state.muroC_L = Number(parsed.m[2]) > 0 ? Number(parsed.m[2]) : 2.4;
+            state.alto = Math.max(cat.altoMin, Math.min(cat.altoMax, Number(parsed.m[3]) || cat.altoDefault));
+            state.fondo = Number(parsed.m[4]) || cat.fondoDefault;
+          }
+          state.extras = Array.isArray(parsed.x) ? parsed.x.filter(Boolean) : [];
+          if (parsed.z && M.zonas.some(z => z.id === parsed.z)) state.zona = parsed.z;
+          syncSlidersBounds();
+          inpAlto.value = state.alto;
+          inpFondo.value = state.fondo;
+          inpMuroB.value = state.muroB_L;
+          inpMuroC.value = state.muroC_L;
+          inpZona.value = state.zona;
+          gamaToggle.querySelectorAll(".gama-btn").forEach(b => b.classList.toggle("active", b.getAttribute("data-gama") === state.gama));
+          renderCatPills();
+          renderSubtipos();
+          renderExtras();
+          if (typeof syncPresetCatTab === "function") syncPresetCatTab();
+          updateAll();
+          if (parsed.b && window.CAD_ENGINE && window.CAD_ENGINE.importCustomizations) {
+            window.CAD_ENGINE.importCustomizations(parsed.b);
+          }
+          updateAll();
+          return true;
+        } catch (err) {
+          return false;
+        }
+      }
+
+      window.exportBubaLaminaDataUrl = async function () {
+        if (!window.CAD_ENGINE || !window.CAD_ENGINE.exportLaminaPNG) return "";
+        const p = currentPayload();
+        const r = M.calcularRango(p);
+        const out = await window.CAD_ENGINE.exportLaminaPNG(p, r);
+        return (out && out.dataUrl) ? out.dataUrl : "";
+      };
+
       const ingBuyBtn = document.getElementById("ingBuyBtn"); if (ingBuyBtn) ingBuyBtn.addEventListener("click", () => {
         const p = currentPayload();
         const r = M.calcularRango(p);
@@ -1478,6 +1591,7 @@
         const dimDesglose = (state.muroB_activo || state.muroC_activo)
           ? `Muro A: ${Math.round(state.muroA_L * 100)}cm${state.muroB_activo ? " · Muro B: " + Math.round(state.muroB_L * 100) + "cm" : ""}${state.muroC_activo ? " · Muro C: " + Math.round(state.muroC_L * 100) + "cm" : ""} (Desarrollo: ${totalMLStr} ML)`
           : `${Math.round(state.muroA_L * 100)} cm`;
+        const shareUrl = getDesignShareUrl(p, r);
 
         const msg = [
           `Hola, quiero cotizar la INGENIERÍA DE FABRICACIÓN de mi diseño (${p.folio}):`,
@@ -1486,7 +1600,8 @@
           `• Gama: ${r.gamaNombre}`,
           `• Medidas: ${dimDesglose} × ${Math.round(p.alto * 100)} × ${Math.round(p.fondo * 100)} cm`,
           `• Módulos: ${modsTxt}`,
-          `• Zona: ${p.zona}`
+          `• Zona: ${p.zona}`,
+          `• Ver plano 3D: ${shareUrl}`
         ].join("\n");
         window.open(`https://wa.me/528134575939?text=${encodeURIComponent(msg)}`, "_blank", "noopener");
         closeIngModal();
@@ -1495,23 +1610,14 @@
       document.getElementById("btnDescargarLamina").addEventListener("click", openIngModal);
       document.getElementById("btnDownloadSheetSecondary").addEventListener("click", openIngModal);
 
-      // Submit doble respaldo: Netlify Forms (con Lámina PNG adjunta) + WhatsApp con resumen completo
+      // Submit doble respaldo: Netlify Forms (con Lámina PNG + JSON) + WhatsApp con link 3D exacto
       const cadForm = document.getElementById("cadSubmitForm");
       const cadStatus = document.getElementById("cadStatus");
       const cadBtn = document.getElementById("cadSubmitBtn");
+      const btnQuickWaDirect = document.getElementById("btnQuickWaDirect");
 
-      cadForm.addEventListener("submit", async (e) => {
-        e.preventDefault();
+      function buildFullWaUrlForDesign(includeClientInfo) {
         const p = currentPayload();
-        if (!p.clienteNombre || !p.clienteTel) {
-          cadStatus.className = "status-banner err";
-          cadStatus.textContent = "Por favor anota tu nombre y número de WhatsApp.";
-          return;
-        }
-        cadBtn.disabled = true;
-        const orig = cadBtn.textContent;
-        cadBtn.textContent = "Generando Lámina CAD y enviando...";
-
         const r = M.calcularRango(p);
         const rangoStr = "$" + r.totalMXN.toLocaleString("es-MX") + " MXN (Base $" + r.precioBaseMXN.toLocaleString("es-MX") + " + Adicionales $" + r.extrasMXN.toLocaleString("es-MX") + ")";
         const activeMods = window.CAD_ENGINE && window.CAD_ENGINE.getActiveModules
@@ -1520,11 +1626,57 @@
         const modulosTxt = activeMods.length
           ? activeMods.map((m) => `${m.zone}: ${m.title}`).join("; ")
           : "Configuración estándar";
-
         const totalMLStr = (r.totalML || state.muroA_L).toFixed(2);
         const dimDesglose = (state.muroB_activo || state.muroC_activo)
           ? `Muro A: ${Math.round(state.muroA_L * 100)}cm${state.muroB_activo ? " · Muro B: " + Math.round(state.muroB_L * 100) + "cm" : ""}${state.muroC_activo ? " · Muro C: " + Math.round(state.muroC_L * 100) + "cm" : ""} (Desarrollo: ${totalMLStr} ML)`
           : `${Math.round(state.muroA_L * 100)} cm`;
+        const shareUrl = getDesignShareUrl(p, r);
+
+        const waMsg = [
+          `Hola, generé este anteproyecto CAD en Closets-Closets (${p.folio}):`,
+          includeClientInfo && p.clienteNombre ? `• Cliente: ${p.clienteNombre}${p.clienteTel ? " (" + p.clienteTel + ")" : ""}` : "",
+          `• Mueble: ${p.categoriaNombre} — ${p.subtipoNombre}`,
+          `• Gama: ${r.gamaNombre}`,
+          `• Acabado (${p.temporadaTitulo}): ${p.acabadoNombre} — ${p.acabadoMarca}`,
+          (p.categoria === "COCINA" || p.categoria === "BANIO") ? `• Piedra / Cubierta: ${p.piedraNombre}` : "",
+          `• Medidas: ${dimDesglose} × ${Math.round(p.alto * 100)} × ${Math.round(p.fondo * 100)} cm`,
+          `• Zona: ${p.zona}`,
+          `• Adicionales: ${r.extrasDetalle.length ? r.extrasDetalle.join(", ") : "Base estándar"}`,
+          `• Módulos: ${modulosTxt}`,
+          `• Presupuesto estimado: ${rangoStr} (sujeto a rectificación)`,
+          p.notas ? `• Notas: ${p.notas}` : "",
+          `• Ver plano 3D exacto: ${shareUrl}`
+        ].filter(Boolean).join("\n");
+
+        return {
+          p, r, rangoStr, modulosTxt, dimDesglose, shareUrl,
+          waUrl: `https://wa.me/528134575939?text=${encodeURIComponent(waMsg)}`
+        };
+      }
+
+      if (btnQuickWaDirect) {
+        btnQuickWaDirect.addEventListener("click", () => {
+          const built = buildFullWaUrlForDesign(false);
+          cadStatus.className = "status-banner ok";
+          cadStatus.innerHTML = `¡Diseño <strong>${built.p.folio}</strong> listo sin registro! <a href="${built.waUrl}" target="_blank" rel="noopener noreferrer" style="font-weight:700; text-decoration:underline;">Abrir WhatsApp →</a>`;
+          window.open(built.waUrl, "_blank", "noopener");
+        });
+      }
+
+      cadForm.addEventListener("submit", async (e) => {
+        e.preventDefault();
+        const pChk = currentPayload();
+        if (!pChk.clienteNombre || !pChk.clienteTel) {
+          cadStatus.className = "status-banner err";
+          cadStatus.textContent = "Anota tu nombre y WhatsApp, o usa el botón de abajo para enviar directo sin registro.";
+          return;
+        }
+        cadBtn.disabled = true;
+        const orig = cadBtn.textContent;
+        cadBtn.textContent = "Generando Lámina CAD y enviando...";
+
+        const built = buildFullWaUrlForDesign(true);
+        const { p, r, rangoStr, modulosTxt, dimDesglose, shareUrl, waUrl } = built;
 
         const resumenTxt = [
           `Folio: ${p.folio}`,
@@ -1539,41 +1691,47 @@
           p.notas ? `Notas: ${p.notas}` : ""
         ].filter(Boolean).join(" | ");
 
+        const estadoObj = {
+          ...buildCompactDesignObj(p, r),
+          clienteNombre: p.clienteNombre,
+          clienteTel: p.clienteTel,
+          notas: p.notas,
+          extrasDetalle: r.extrasDetalle,
+          precioBaseMXN: r.precioBaseMXN,
+          extrasMXN: r.extrasMXN,
+          fleteMXN: r.fleteMXN,
+          totalMXN: r.totalMXN,
+          urlPlano: shareUrl
+        };
+
         document.getElementById("fFolio").value = p.folio;
         document.getElementById("fResumen").value = resumenTxt;
         document.getElementById("fRango").value = rangoStr;
+        const fEst = document.getElementById("fEstadoJson");
+        const fUrlP = document.getElementById("fUrlPlano");
+        if (fEst) fEst.value = JSON.stringify(estadoObj);
+        if (fUrlP) fUrlP.value = shareUrl;
 
         // Adjuntar Lámina PNG al FormData para Netlify Forms
         const fd = new FormData(cadForm);
         fd.set("form-name", "anteproyecto-cad");
+        let dlUrl = "";
         try {
-          const { blob } = await window.CAD_ENGINE.exportLaminaPNG(p, r);
+          const { blob, dataUrl } = await window.CAD_ENGINE.exportLaminaPNG(p, r);
           if (blob) {
             fd.set("lamina_plano", blob, `Lamina_${p.folio}_${p.categoria}.png`);
           }
+          dlUrl = dataUrl || "";
           await fetch("/", { method: "POST", body: fd });
         } catch (_) {
           // Modo preview local sin servidor Netlify
         }
 
-        const waMsg = [
-          `Hola, generé este anteproyecto CAD en Closets-Closets (${p.folio}):`,
-          `• Cliente: ${p.clienteNombre} (${p.clienteTel})`,
-          `• Mueble: ${p.categoriaNombre} — ${p.subtipoNombre}`,
-          `• Gama: ${r.gamaNombre}`,
-          `• Acabado (${p.temporadaTitulo}): ${p.acabadoNombre} — ${p.acabadoMarca}`,
-          (p.categoria === "COCINA" || p.categoria === "BANIO") ? `• Piedra / Cubierta: ${p.piedraNombre}` : "",
-          `• Medidas: ${dimDesglose} × ${Math.round(p.alto * 100)} × ${Math.round(p.fondo * 100)} cm`,
-          `• Zona: ${p.zona}`,
-          `• Adicionales: ${r.extrasDetalle.length ? r.extrasDetalle.join(", ") : "Base estándar"}`,
-          `• Módulos: ${modulosTxt}`,
-          `• Presupuesto estimado: ${rangoStr} (sujeto a rectificación)`,
-          p.notas ? `• Notas: ${p.notas}` : ""
-        ].filter(Boolean).join("\n");
-        const waUrl = `https://wa.me/528134575939?text=${encodeURIComponent(waMsg)}`;
-
+        const dlLink = dlUrl
+          ? ` · <a href="${dlUrl}" download="Lamina_${p.folio}.png" style="font-weight:700; text-decoration:underline;">📥 Descargar Lámina (.png)</a>`
+          : "";
         cadStatus.className = "status-banner ok";
-        cadStatus.innerHTML = `¡Anteproyecto <strong>${p.folio}</strong> listo! <a href="${waUrl}" target="_blank" rel="noopener noreferrer" style="font-weight:700; text-decoration:underline;">Abrir WhatsApp ahora →</a>`;
+        cadStatus.innerHTML = `¡Anteproyecto <strong>${p.folio}</strong> listo! <a href="${waUrl}" target="_blank" rel="noopener noreferrer" style="font-weight:700; text-decoration:underline;">Abrir WhatsApp ahora →</a>${dlLink}`;
         window.open(waUrl, "_blank", "noopener");
         cadBtn.disabled = false;
         cadBtn.textContent = orig;
@@ -2111,7 +2269,8 @@
           `• *Dimensiones:* ${dimDesglose} × ${Math.round(p.alto * 100)}cm Alto × ${Math.round(p.fondo * 100)}cm Fondo`,
           cocinaPositions,
           ((state.categoria === "COCINA" && r.piedraInfo) ? `• *Cubierta Piedra:* ${p.piedraNombre} (${r.piedraInfo.numPlacas} placa(s) · ${r.piedraInfo.cubiertaML} ML barra)` : (state.categoria === "BANIO" ? `• *Cubierta Baño:* ${p.piedraNombre}` : "")),
-          `• *Precio Estimado:* ${r.totalMXN.toLocaleString("es-MX")} MXN (Mueble Base: ${r.precioBaseMXN.toLocaleString("es-MX")} + Checklist Adicionales: ${r.extrasMXN.toLocaleString("es-MX")})`
+          `• *Precio Estimado:* $${r.totalMXN.toLocaleString("es-MX")} MXN (Base: $${r.precioBaseMXN.toLocaleString("es-MX")} + Checklist: $${r.extrasMXN.toLocaleString("es-MX")})`,
+          `• *Ver plano 3D exacto:* ${getDesignShareUrl(p, r)}`
         ].filter(Boolean).join("\n");
 
         return `https://wa.me/528134575939?text=${encodeURIComponent(msg)}`;
@@ -2207,7 +2366,10 @@
       renderPresetGallery();
       updateAll();
 
-      if (initPreset && M.presets) {
+      const initDesignToken = urlParams.get("d");
+      if (initDesignToken && applyDecodedToken(initDesignToken)) {
+        // Diseño restaurado íntegro desde URL ?d=...
+      } else if (initPreset && M.presets) {
         const found = M.presets.find((p) => p.id === initPreset);
         if (found) applyPreset(found);
       }
