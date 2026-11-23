@@ -1722,9 +1722,11 @@
             fd.set("lamina_plano", blob, `Lamina_${p.folio}_${p.categoria}.png`);
           }
           dlUrl = dataUrl || "";
-          await fetch("/", { method: "POST", body: fd });
+          if (window.location.hostname.includes("netlify.app")) {
+            await fetch("/", { method: "POST", body: fd });
+          }
         } catch (_) {
-          // Modo preview local sin servidor Netlify
+          // Modo estático sin servidor Netlify
         }
 
         const dlLink = dlUrl

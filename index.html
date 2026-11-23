@@ -903,13 +903,15 @@
           const fd = new FormData(form);
           fd.set("form-name", "cotizacion-closets");
           try {
-            await fetch("/", {
-              method: "POST",
-              headers: { "Content-Type": "application/x-www-form-urlencoded" },
-              body: new URLSearchParams(fd).toString()
-            });
+            if (window.location.hostname.includes("netlify.app")) {
+              await fetch("/", {
+                method: "POST",
+                headers: { "Content-Type": "application/x-www-form-urlencoded" },
+                body: new URLSearchParams(fd).toString()
+              });
+            }
           } catch (_) {
-            // En vista previa local sin Netlify backend igual abrimos WhatsApp
+            // Modo estático sin backend: abre WhatsApp directo
           }
 
           const waTxt = [
