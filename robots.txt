@@ -1,0 +1,6 @@
+User-agent: *
+Allow: /
+Disallow: /scratch/
+Disallow: /browser_evidence/
+
+Sitemap: https://closets-closets.com/sitemap.xml

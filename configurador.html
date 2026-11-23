@@ -4,15 +4,129 @@
   <meta charset="UTF-8">
   <meta name="viewport" content="width=device-width, initial-scale=1.0">
   <title>Estudio CAD en Trazos | Closets-Closets Design &amp; More</title>
-  <meta name="description" content="Configura tu clóset, vestidor, cocina integral, mueble de baño o centro de TV en trazos arquitectónicos CAD y plano acotado 2D. Obtén tu rango estimado en Monterrey.">
+  <meta name="description" content="Configura tu clóset, vestidor, cocina integral, mueble de baño o centro de TV en trazos arquitectónicos CAD y plano acotado 2D. Calcula tu presupuesto estimado en tiempo real en Monterrey.">
   <link rel="icon" type="image/png" href="assets/favicon.png">
   <meta http-equiv="Cache-Control" content="no-cache, no-store, must-revalidate">
   <meta http-equiv="Pragma" content="no-cache">
   <meta http-equiv="Expires" content="0">
-  <link rel="stylesheet" href="styles.css?v=20261120_v3">
+  <link rel="canonical" href="https://closets-closets.com/configurador.html">
+  <meta property="og:type" content="website">
+  <meta property="og:locale" content="es_MX">
+  <meta property="og:title" content="Estudio CAD en Trazos | Closets-Closets Design & More">
+  <meta property="og:description" content="Configura tu clóset, vestidor o cocina integral en trazos arquitectónicos CAD y plano acotado 2D. Cotización en tiempo real en Monterrey.">
+  <meta property="og:image" content="https://closets-closets.com/assets/og-closets.jpg">
+    <!-- Marcado Estructurado SEO Local Schema.org -->
+  <script type="application/ld+json">
+{
+  "@context": "https://schema.org",
+  "@type": "HomeAndConstructionBusiness",
+  "name": "Closets-Closets Design & More",
+  "image": "https://closets-closets.com/assets/og-closets.jpg",
+  "url": "https://closets-closets.com",
+  "telephone": "+528134575939",
+  "priceRange": "$ - $$",
+  "address": {
+    "@type": "PostalAddress",
+    "addressLocality": "Monterrey",
+    "addressRegion": "Nuevo León",
+    "addressCountry": "MX"
+  },
+  "geo": {
+    "@type": "GeoCoordinates",
+    "latitude": 25.6866,
+    "longitude": -100.3161
+  },
+  "openingHoursSpecification": {
+    "@type": "OpeningHoursSpecification",
+    "dayOfWeek": [
+      "Monday",
+      "Tuesday",
+      "Wednesday",
+      "Thursday",
+      "Friday",
+      "Saturday"
+    ],
+    "opens": "08:30",
+    "closes": "19:00"
+  },
+  "areaServed": [
+    {
+      "@type": "City",
+      "name": "San Pedro Garza García"
+    },
+    {
+      "@type": "City",
+      "name": "Monterrey"
+    },
+    {
+      "@type": "City",
+      "name": "Santa Catarina"
+    },
+    {
+      "@type": "Place",
+      "name": "Cumbres"
+    },
+    {
+      "@type": "Place",
+      "name": "Carretera Nacional"
+    },
+    {
+      "@type": "Place",
+      "name": "Valle Oriente"
+    }
+  ],
+  "hasOfferCatalog": {
+    "@type": "OfferCatalog",
+    "name": "Catálogo de Carpintería Residencial & Sistema 32",
+    "itemListElement": [
+      {
+        "@type": "Offer",
+        "itemOffered": {
+          "@type": "Service",
+          "name": "Clósets Residenciales a Medida",
+          "description": "Fabricación con Sistema 32 en melamina de 16mm/18mm y herrajes de cierre suave."
+        }
+      },
+      {
+        "@type": "Offer",
+        "itemOffered": {
+          "@type": "Service",
+          "name": "Vestidores Walk-in Closet Boutique",
+          "description": "Vestidores en escuadra, U e islas joyeras con cristal templado y cancelería."
+        }
+      },
+      {
+        "@type": "Offer",
+        "itemOffered": {
+          "@type": "Service",
+          "name": "Cocinas Integrales de Alta Gama",
+          "description": "Cocinas con frentes fluted, cubiertas de cuarzo, torres de hornos y herrajes Blum."
+        }
+      },
+      {
+        "@type": "Offer",
+        "itemOffered": {
+          "@type": "Service",
+          "name": "Muros TV, Lambrines & Centros de Entretenimiento",
+          "description": "Paneles alistonados de nogal, consolas flotantes y cavas residenciales."
+        }
+      },
+      {
+        "@type": "Offer",
+        "itemOffered": {
+          "@type": "Service",
+          "name": "Proyectos Ejecutivos y Planos de Fabricación Sistema 32",
+          "description": "Ingeniería de despiece milimétrico, barrenado 37/32mm y optimización de tableros."
+        }
+      }
+    ]
+  }
+}
+  </script>
+  <link rel="stylesheet" href="styles.css?v=20261122_v18">
   <script src="js/three.min.js"></script>
   <script src="js/OrbitControls.js"></script>
-  <script src="js/catalogo-data.js?v=20261120_v3"></script>
+  <script src="js/catalogo-data.js?v=20261122_v18"></script>
 </head>
 <body>
 
@@ -43,18 +157,25 @@
       <div class="cat-pills" id="catPills"></div>
     </div>
 
-    <!-- PREAJUSTES DE INSPIRACIÓN RÁPIDA: MATRIZ DE 25 ARQUETIPOS -->
-    <div class="preset-strip-wrap">
-      <div class="preset-tier-nav">
-        <span class="preset-strip-title">🏛️ 25 Arquetipos:</span>
-        <div class="tier-filter-pills" id="tierFilterPills">
-          <button type="button" class="tier-pill active" data-tier="all">⚡ Todos (25)</button>
-          <button type="button" class="tier-pill tier-pill-esencial" data-tier="esencial">🟢 Esencial &amp; Clásico (7)</button>
-          <button type="button" class="tier-pill tier-pill-contempo" data-tier="contemporaneo">🔵 Contemporáneo (9)</button>
-          <button type="button" class="tier-pill tier-pill-sign" data-tier="signature">⚫ Signature San Pedro (9)</button>
+    <!-- GALERÍA DE 25 ARQUETIPOS: TABS POR CATEGORÍA + CARDS -->
+    <div class="preset-gallery-wrap" id="presetGalleryWrap">
+      <div class="preset-gallery-header">
+        <span class="preset-gallery-label">🏛️ 25 Arquetipos</span>
+        <div class="preset-cat-tabs" id="presetCatTabs">
+          <button type="button" class="pcat-tab active" data-cat="COCINA">🍳 Cocina</button>
+          <button type="button" class="pcat-tab" data-cat="CLOSET">🚪 Clóset</button>
+          <button type="button" class="pcat-tab" data-cat="WALKIN">👗 Vestidor</button>
+          <button type="button" class="pcat-tab" data-cat="TV_ROOM">📺 TV / Perchero</button>
+          <button type="button" class="pcat-tab" data-cat="BANIO">🚿 Vanity RH</button>
+        </div>
+        <div class="preset-tier-filter" id="presetTierFilter">
+          <button type="button" class="ptier-btn active" data-tier="all">Todos</button>
+          <button type="button" class="ptier-btn" data-tier="esencial">🟢 Esencial</button>
+          <button type="button" class="ptier-btn" data-tier="contemporaneo">🔵 Contemporáneo</button>
+          <button type="button" class="ptier-btn" data-tier="signature">⚫ Signature SP</button>
         </div>
       </div>
-      <div class="preset-pills" id="presetPills"></div>
+      <div class="preset-card-grid" id="presetCardGrid"></div>
     </div>
 
     <div class="studio-grid">
@@ -65,7 +186,7 @@
           <div class="gama-toggle" id="gamaToggle">
             <button type="button" class="gama-btn active" data-gama="taller_mty">
               <strong>Línea Taller MTY</strong>
-              <small>Melamina 16mm · Fórmula X3</small>
+              <small>Melamina 16mm · Cierre Suave</small>
             </button>
             <button type="button" class="gama-btn" data-gama="boutique_spgg">
               <strong>Boutique / San Pedro</strong>
@@ -73,6 +194,25 @@
             </button>
           </div>
           <p id="gamaDescNote" style="font-size:11px; color:var(--ink-soft); margin-top:8px;"></p>
+          <div class="gama-brands-strip" id="gamaBrandsStrip"></div>
+        </div>
+
+        <div class="studio-block studio-block-season" id="blockTemporada">
+          <div class="season-head-bar">
+            <span class="season-pill" id="seasonBadgePill">🍂 TENDENCIA INVIERNO 2027</span>
+            <span class="season-selected-name" id="valAcabadoNombre">Roble Santana</span>
+          </div>
+          <span class="studio-label" style="margin-bottom:4px;">1B. Paleta de Acabados &amp; Marcas</span>
+          <p id="acabadoDescNote" style="font-size:11px; color:var(--ink-soft); margin:0 0 8px 0;"></p>
+          <div class="swatch-grid" id="swatchCarpinteriaGrid"></div>
+
+          <div id="piedraSwatchWrap" class="piedra-swatch-wrap" style="display:none;">
+            <div class="piedra-swatch-head">
+              <span class="studio-label" style="margin:0;">🪨 Tono de Cubierta (Cuarzo / Granito)</span>
+              <span class="season-selected-name" id="valPiedraNombre">Cuarzo Calacatta Light</span>
+            </div>
+            <div class="swatch-grid-stone" id="swatchPiedraGrid"></div>
+          </div>
         </div>
 
         <div class="studio-block">
@@ -80,21 +220,79 @@
           <div class="subtipo-list" id="subtipoList"></div>
         </div>
 
-        <div class="studio-block">
-          <span class="studio-label">3. Dimensiones Generales (cm)</span>
-          <div class="range-row">
-            <div class="range-head">
-              <span>Ancho / Largo Total</span>
-              <span class="range-val" id="valLargo">200 cm</span>
-            </div>
-            <input type="range" id="inpLargo" min="1.2" max="5.0" step="0.1" value="2.0">
+        <div class="studio-block" id="blockDimensiones">
+          <div style="display:flex; justify-content:space-between; align-items:center; margin-bottom:8px;">
+            <span class="studio-label" style="margin-bottom:0;">3. Dimensiones &amp; Muros (A · B · C)</span>
+            <span id="badgeTotalML" style="font-size:11px; background:#1B365D; color:#FBBF24; padding:2px 8px; border-radius:4px; font-weight:700; font-family:monospace;">3.60 ML</span>
           </div>
-          <div class="range-row">
+
+          <!-- Muro A: Frontal / Principal -->
+          <div class="muro-config-card is-active" id="cardMuroA">
+            <div class="muro-config-head">
+              <div style="display:flex; align-items:center; gap:6px;">
+                <span class="muro-tag muro-tag-a">MURO A</span>
+                <strong style="font-size:12px; color:#1E293B;">Principal / Fondo</strong>
+              </div>
+              <span class="range-val" id="valMuroA">360 cm</span>
+            </div>
+            <div class="muro-quick-pills" id="pillsMuroA">
+              <button type="button" class="quick-pill" data-val="2.4">240 cm</button>
+              <button type="button" class="quick-pill" data-val="3.0">300 cm</button>
+              <button type="button" class="quick-pill active" data-val="3.6">360 cm</button>
+              <button type="button" class="quick-pill" data-val="4.2">420 cm</button>
+            </div>
+            <input type="range" id="inpMuroA" min="1.2" max="6.0" step="0.1" value="3.6">
+          </div>
+
+          <!-- Muro B: Lateral Izquierdo / Escuadra 'L' -->
+          <div class="muro-config-card" id="cardMuroB">
+            <div class="muro-config-head">
+              <label class="muro-toggle-label">
+                <input type="checkbox" id="chkMuroB">
+                <span class="muro-tag muro-tag-b">MURO B</span>
+                <span>Ala Izq. (Escuadra 'L')</span>
+              </label>
+              <span class="range-val" id="valMuroB">240 cm</span>
+            </div>
+            <div class="muro-sub-controls" id="subMuroB" style="display:none;">
+              <div class="muro-quick-pills" id="pillsMuroB">
+                <button type="button" class="quick-pill" data-val="1.5">150 cm</button>
+                <button type="button" class="quick-pill" data-val="1.8">180 cm</button>
+                <button type="button" class="quick-pill" data-val="2.1">210 cm</button>
+                <button type="button" class="quick-pill active" data-val="2.4">240 cm</button>
+              </div>
+              <input type="range" id="inpMuroB" min="1.2" max="3.6" step="0.1" value="2.4">
+            </div>
+          </div>
+
+          <!-- Muro C: Lateral Derecho / Cierre en 'U' -->
+          <div class="muro-config-card" id="cardMuroC">
+            <div class="muro-config-head">
+              <label class="muro-toggle-label">
+                <input type="checkbox" id="chkMuroC">
+                <span class="muro-tag muro-tag-c">MURO C</span>
+                <span>Ala Der. (Cierre en 'U')</span>
+              </label>
+              <span class="range-val" id="valMuroC">240 cm</span>
+            </div>
+            <div class="muro-sub-controls" id="subMuroC" style="display:none;">
+              <div class="muro-quick-pills" id="pillsMuroC">
+                <button type="button" class="quick-pill" data-val="1.5">150 cm</button>
+                <button type="button" class="quick-pill" data-val="1.8">180 cm</button>
+                <button type="button" class="quick-pill" data-val="2.1">210 cm</button>
+                <button type="button" class="quick-pill active" data-val="2.4">240 cm</button>
+              </div>
+              <input type="range" id="inpMuroC" min="1.2" max="3.6" step="0.1" value="2.4">
+            </div>
+          </div>
+
+          <!-- Altura y Fondo -->
+          <div class="range-row" style="margin-top:10px;">
             <div class="range-head">
               <span>Altura Total</span>
               <span class="range-val" id="valAlto">240 cm</span>
             </div>
-            <input type="range" id="inpAlto" min="1.8" max="2.7" step="0.05" value="2.4">
+            <input type="range" id="inpAlto" min="1.8" max="2.8" step="0.05" value="2.4">
           </div>
           <div class="range-row" style="margin-bottom:0;">
             <div class="range-head">
@@ -106,7 +304,13 @@
         </div>
 
         <div class="studio-block">
-          <span class="studio-label">4. Equipamiento &amp; Extras</span>
+          <div style="display:flex; justify-content:space-between; align-items:center; margin-bottom:6px;">
+            <span class="studio-label" style="margin-bottom:0;">4. Checklist de Adicionales</span>
+            <button type="button" id="btnClearExtras" class="btn-clear-extras" title="Desmarcar todos los adicionales para ver solo el precio base">Dejar solo Base</button>
+          </div>
+          <p style="font-size:11px; color:var(--ink-soft); margin-top:0; margin-bottom:10px;">
+            Palomea lo que quieras agregar a tu mueble base; cada elemento actualiza tu precio al instante:
+          </p>
           <div class="extras-check-list" id="extrasList"></div>
         </div>
 
@@ -168,26 +372,107 @@
           </div>
         </div>
 
+        <!-- AGENTE DISEÑADOR SENIOR SISTEMA 32: REGLAS DE TALLER & CONTROLES RÁPIDOS EN VIVO -->
+        <div class="senior-agent-card" id="seniorAgentCard">
+          <div class="senior-agent-header">
+            <div>
+              <span class="senior-agent-kicker">🧠 AGENTE DISEÑADOR SENIOR · INGENIERÍA SISTEMA 32 EN VIVO</span>
+              <h3 class="senior-agent-title" id="seniorTitle">Dictamen Técnico de Taller &amp; Modulación Milimétrica</h3>
+            </div>
+            <span class="senior-agent-badge" id="seniorSummaryBadge">Melamina 91 cm · Gola 45° · Regla ≥60cm = 2 Puertas</span>
+          </div>
+
+          <!-- Controles Rápidos de Ingeniería de Cocina (se muestran cuando Categoría === COCINA) -->
+          <div class="senior-quick-controls" id="seniorKitchenControls" style="display:none;">
+            <div class="sqc-row-2">
+              <div class="sqc-group">
+                <span class="sqc-label">🚰 Cambiar Tarja de Lugar (Única · Intercambio Automático Sin Duplicar):</span>
+                <div class="sqc-pills" id="sqcSinkPosPills"></div>
+              </div>
+              <div class="sqc-group">
+                <span class="sqc-label">🔥 Cambiar Parrilla / Estufa de Lugar (Única · La Campana la Sigue):</span>
+                <div class="sqc-pills" id="sqcCookPosPills"></div>
+              </div>
+            </div>
+
+            <div class="sqc-group">
+              <span class="sqc-label">🔥 Tipo &amp; Dimensionamiento de Cocción (En su ubicación actual):</span>
+              <div class="sqc-pills" id="sqcCookMode">
+                <button type="button" class="sqc-pill" data-type="parrilla_cajones" data-count="60">Parrilla 60cm (4 Flamas) + 2 Cub. + 1 Cac.</button>
+                <button type="button" class="sqc-pill active" data-type="parrilla_cajones" data-count="75">Parrilla 75cm (5 Flamas) + 2 Cub. + 1 Cac.</button>
+                <button type="button" class="sqc-pill" data-type="parrilla_cajones" data-count="90">Parrilla 90cm (6 Flamas) + 2 Cub. + 1 Cac.</button>
+                <button type="button" class="sqc-pill" data-type="parrilla_horno" data-count="1">Parrilla + Horno Empotrado</button>
+                <button type="button" class="sqc-pill sqc-pill-warn" data-type="estufa_piso" data-count="1">🍳 Estufa de Piso 76cm (Corta Barra)</button>
+              </div>
+            </div>
+
+            <div class="sqc-row-2">
+              <div class="sqc-group">
+                <span class="sqc-label">🏛️ Volumen Alacenas (&gt;80cm = 2° Piso Escalonado 32 → 42 cm Fondo):</span>
+                <div class="sqc-pills" id="sqcUpperTierMode">
+                  <button type="button" class="sqc-pill active" data-sobre="on">2° Piso Escalonado: 1° Piso 32cm + 2° Piso 42cm (+10cm Voladizo)</button>
+                  <button type="button" class="sqc-pill" data-sobre="off">1 Solo Piso (32cm Fondo)</button>
+                </div>
+              </div>
+              <div class="sqc-group">
+                <span class="sqc-label">🦿 Patas Niveladoras + Tapeta Aluminio (Anti-Bichos / Fumigación):</span>
+                <div class="sqc-pills" id="sqcZocloMode">
+                  <button type="button" class="sqc-pill active" data-zoclo="10">10 cm (100 mm: 9.5–11.8 cm) · Melamina a 91 cm</button>
+                  <button type="button" class="sqc-pill" data-zoclo="12">12 cm (120 mm: hasta 14–15 cm) · Melamina a 93 cm</button>
+                </div>
+              </div>
+            </div>
+
+            <div class="sqc-group" id="sqcCornerGroup">
+              <span class="sqc-label">📐 Esquinero en Escuadra ('L' / 'U'):</span>
+              <div class="sqc-pills" id="sqcCornerMode">
+                <button type="button" class="sqc-pill active" data-corner="esquinero_lemans">⚙️ Extraíble Articulado (LeMans)</button>
+                <button type="button" class="sqc-pill" data-corner="esquinero_entrepanos">📐 Entrepaños Corridos</button>
+                <button type="button" class="sqc-pill" data-corner="esquinero_cajon_entrepano">🗄️ 1 Cajón + Entrepaños</button>
+              </div>
+            </div>
+          </div>
+
+          <div class="senior-rules-grid" id="seniorRulesGrid"></div>
+        </div>
+
         <!-- RESUMEN + FORMULARIO DOBLE RESPALDO -->
         <div class="studio-summary-grid">
           <div class="quote-box">
-            <span class="studio-label" style="color:#E6BF73;">Rango Preliminar Estimado</span>
-            <div class="quote-range" id="outRange">$17,000 – $23,500 MXN</div>
-            <div id="outGamaLabel" style="font-size:13px; color:#E2E8F0;">Línea Taller MTY · Incluye flete e instalación base</div>
+            <span class="studio-label" style="color:#E6BF73;">Precio Estimado de tu Configuración</span>
+            <div class="quote-range" id="outRange">$48,500 MXN</div>
+            <div id="outGamaLabel" style="font-size:12.5px; color:#E2E8F0; margin-bottom:10px;">Línea Taller MTY · Precio calculado según tu diseño actual</div>
+
+            <!-- Desglose en vivo: Precio Base + Checklist de Adicionales -->
+            <div class="quote-breakdown" id="quoteBreakdown">
+              <div class="qb-row qb-material" id="qbMaterialRow">
+                <span id="qbMaterialLabel">🎨 Tendencia Invierno 2027: Roble Santana</span>
+                <strong id="qbMaterialMarca">Arauco · Vesto</strong>
+              </div>
+              <div class="qb-row qb-base">
+                <span id="qbBaseLabel">🪵 Mueble Base Sistema 32 (3.60 ML)</span>
+                <strong id="qbBaseVal">$38,500 MXN</strong>
+              </div>
+              <div class="qb-extras-list" id="qbExtrasList"></div>
+              <div class="qb-row qb-flete">
+                <span id="qbFleteLabel">🚚 Logística e Instalación</span>
+                <strong id="qbFleteVal">+ $1,000 MXN</strong>
+              </div>
+            </div>
 
             <div class="quote-split">
               <div>
                 <span>60% Anticipo (Apartado / Material)</span>
-                <strong id="outAnticipo">$10,200 – $14,100 MXN</strong>
+                <strong id="outAnticipo">$29,100 MXN</strong>
               </div>
               <div>
                 <span>40% Finiquito (Contra Entrega)</span>
-                <strong>Saldo al instalar</strong>
+                <strong id="outFiniquito">$19,400 MXN</strong>
               </div>
             </div>
 
             <p class="quote-disclaimer">
-              * Rango estimado preliminar sujeto a rectificación milimétrica en sitio y elección final de gama y materiales. Precios más IVA en caso de requerir factura fiscal. Entrega estándar: <strong id="outEntrega">12 a 18 días hábiles</strong>.
+              * Estimado calculado en base a tus medidas y checklist seleccionado, sujeto a rectificación milimétrica en sitio. Precios más IVA en caso de requerir factura. Entrega estándar: <strong id="outEntrega">12 a 18 días hábiles</strong>.
             </p>
 
             <button type="button" class="btn btn-brass" id="btnDownloadSheetSecondary" style="width:100%;">
@@ -228,34 +513,196 @@
     </div>
   </main>
 
-  <script src="js/cad-engine.js?v=20261120_v4"></script>
+  <!-- MODAL ESTRATÉGICO DOBLE FILO: LÁMINA GRATIS vs INGENIERÍA EJECUTIVA -->
+  <div class="ing-modal-backdrop" id="ingModal" role="dialog" aria-modal="true" aria-hidden="true">
+    <div class="ing-modal">
+      <button type="button" class="ing-close" id="ingClose" aria-label="Cerrar modal">✕</button>
+      <span class="ing-kicker">INGENIERÍA MODULAR SISTEMA 32 · MONTERREY</span>
+      <h3 class="ing-title">¿Cómo deseas llevar este anteproyecto a la realidad?</h3>
+      <p class="ing-sub">Elige entre tu anteproyecto conceptual de cortesía o los planos de ingeniería ejecutiva listos para maquilar.</p>
+
+      <div class="ing-compare">
+        <div class="ing-col free">
+          <div class="ing-col-head">Lámina Conceptual <span class="ing-tag free">GRATIS</span></div>
+          <ul>
+            <li>✓ Vista 3D en trazos arquitectónicos</li>
+            <li>✓ Alzado 2D frontal con cotas generales</li>
+            <li>✓ Estimado preliminar de presupuesto</li>
+            <li>✓ Folio único de anteproyecto</li>
+            <li class="no">✕ Sin optimización de corte milimétrico</li>
+            <li class="no">✕ Sin despiece ni lista de barrenos Sistema 32</li>
+            <li class="no">✕ Sello: "No apto para fabricación"</li>
+          </ul>
+        </div>
+        <div class="ing-col pro">
+          <div class="ing-col-head">Planos de Fabricación <span class="ing-tag pro">LISTO PARA TALLER</span></div>
+          <ul>
+            <li>✓ Despiece exacto pieza por pieza (.CSV / .PDF)</li>
+            <li>✓ Mapa de barrenado Sistema 32 (37/32mm)</li>
+            <li>✓ Optimización de tableros (Cero desperdicio)</li>
+            <li>✓ Lista de herrajes Blum / correderas al milímetro</li>
+            <li>✓ Planos de armado 2D para carpintero o maquilador</li>
+            <li>✓ Asesoría técnica directa del taller en MTY</li>
+          </ul>
+        </div>
+      </div>
+
+      <div class="ing-packages">
+        <label class="ing-pkg">
+          <input type="radio" name="ingPkg" value="Esencial" checked>
+          <span>
+            <strong>Ingeniería Esencial</strong>
+            <small>Despiece + optimización de corte de tableros</small>
+          </span>
+        </label>
+        <label class="ing-pkg">
+          <input type="radio" name="ingPkg" value="Pro">
+          <span>
+            <strong>Ingeniería Pro</strong>
+            <small>Despiece + barrenado Sistema 32 + lista Blum</small>
+          </span>
+        </label>
+        <label class="ing-pkg">
+          <input type="radio" name="ingPkg" value="Signature">
+          <span>
+            <strong>Ingeniería Signature</strong>
+            <small>Proyecto ejecutivo completo + visita de rectificación en sitio</small>
+          </span>
+        </label>
+      </div>
+
+      <div class="ing-bonus">
+        ★ <strong>Garantía de Bonificación:</strong> Si decides fabricar tu mueble con Closets-Closets,
+        el <strong>100% del costo de los planos se abona a tu anticipo</strong>. La ingeniería te sale <strong>gratis</strong>.
+      </div>
+      <p class="ing-price-note">Cotización inmediata de planos por WhatsApp según metros lineales de tu diseño.</p>
+
+      <div class="ing-actions">
+        <button type="button" class="btn btn-outline" id="ingFreeBtn">Descargar Lámina Conceptual Gratis (.png)</button>
+        <button type="button" class="btn btn-primary" id="ingBuyBtn">Cotizar Planos de Fabricación vía WhatsApp →</button>
+      </div>
+    </div>
+  </div>
+
+
+
+  <!-- SUB-AGENTE ESPECIALIZADO DE LA PÁGINA & POP-UP FLOTANTE "¿OCUPAS AYUDA?" -->
+  <div class="buba-cad-widget" id="bubaCadWidget">
+    <!-- Burbuja Pop-up en el aire -->
+    <div class="buba-air-popup" id="bubaAirPopup" role="status" aria-live="polite">
+      <button type="button" class="buba-air-close" id="bubaAirClose" aria-label="Minimizar ayuda">✕</button>
+      <span class="buba-air-kicker"><span class="buba-pulse-dot"></span> SUB-AGENTE CAD EN LÍNEA</span>
+      <h4 class="buba-air-title" id="bubaAirTitle">¿Ocupas ayuda con tu cocina?</h4>
+      <p class="buba-air-desc" id="bubaAirDesc">
+        Te ayudo a acomodar tu tarja, parrilla, sobrealacena de 42 cm o te paso directo por WhatsApp con tu diseño actual cargado.
+      </p>
+      <div class="buba-air-actions">
+        <button type="button" class="buba-btn-wa" id="bubaAirWaBtn">💬 WhatsApp Directo →</button>
+        <button type="button" class="buba-btn-chat" id="bubaAirOpenChatBtn">🧠 Preguntar Aquí</button>
+      </div>
+    </div>
+
+    <!-- Drawer del Sub-Agente Especializado que reporta a Buba -->
+    <div class="buba-agent-drawer" id="bubaAgentDrawer">
+      <div class="buba-drawer-head">
+        <div class="buba-drawer-head-info">
+          <strong>🧠 Agente Ingeniero CAD · En Línea</strong>
+          <span>Conectado a Buba System · MTY &amp; SPGG</span>
+        </div>
+        <button type="button" class="buba-drawer-close" id="bubaDrawerClose" aria-label="Cerrar asistente">✕</button>
+      </div>
+      <div class="buba-telemetry-bar" id="bubaTelemetryBar">
+        📡 Leyendo tu diseño 3D en tiempo real...
+      </div>
+      <div class="buba-chat-body" id="bubaChatBody">
+        <div class="buba-msg buba-msg-bot" id="bubaWelcomeMsg">
+          ¡Qué onda! Soy el <strong>Sub-Agente de Ingeniería CAD</strong> de la página. Estoy leyendo en vivo las medidas y módulos que estás armando en el 3D. ¿En qué te echo la mano?
+        </div>
+      </div>
+      <div class="buba-quick-questions" id="bubaQuickQuestions">
+        <button type="button" class="buba-q-pill" data-q="sobrealacena">🏛️ ¿Por qué el 2° piso mide 42 cm de fondo?</button>
+        <button type="button" class="buba-q-pill" data-q="tarja_parrilla">🚰 ¿Cómo muevo la tarja o la parrilla?</button>
+        <button type="button" class="buba-q-pill" data-q="piedra">🪨 ¿Qué cubierta recomiendan: Cuarzo o Granito?</button>
+        <button type="button" class="buba-q-pill" data-q="zoclo">🦿 ¿Patas niveladoras 10 cm vs 12 cm?</button>
+        <button type="button" class="buba-q-pill" data-q="planos">📐 ¿Venden solo la ingeniería / planos?</button>
+      </div>
+      <div class="buba-drawer-foot">
+        <div class="buba-input-row">
+          <input type="text" id="bubaUserQuestion" placeholder="Pregúntame lo que sea (ej. hola me ayudas, cajones, medidas)...">
+          <button type="button" class="buba-send-btn" id="bubaSendChatBtn" title="Preguntar al Sub-Agente en vivo">➤</button>
+        </div>
+        <button type="button" class="buba-btn-wa" id="bubaDrawerWaBtn" style="width:100%;">
+          📲 Continuar por WhatsApp con mi Diseño 3D Adjunto →
+        </button>
+      </div>
+    </div>
+
+    <!-- Botón flotante permanente -->
+    <button type="button" class="buba-launcher-btn" id="bubaLauncherBtn">
+      <span class="buba-pulse-dot"></span>
+      <span id="bubaLauncherText">¿Ocupas ayuda? · Agente CAD</span>
+    </button>
+  </div>
+
+  <script src="js/cad-engine.js?v=20261122_v18"></script>
   <script>
     (function () {
       const M = window.CLOSETS_MASTER;
       const urlParams = new URLSearchParams(window.location.search);
-      const initCat = M.categorias[urlParams.get("cat")] ? urlParams.get("cat") : "CLOSET";
+      const initCat = M.categorias[urlParams.get("cat")] ? urlParams.get("cat") : "COCINA";
       const initGama = M.gamas[urlParams.get("gama")] ? urlParams.get("gama") : "taller_mty";
 
       const initSub = urlParams.get("sub");
       const initPreset = urlParams.get("preset");
+      const tempData = M.coleccionTemporada || { acabadosCarpinteria: [], acabadosPiedra: [], marcasAliadas: [], titulo: "Tendencia Invierno 2027" };
+      const initAcabadoParam = urlParams.get("acabado");
+      const acabadoMatch = (tempData.acabadosCarpinteria || []).find(a => a.id === initAcabadoParam) || (tempData.acabadosCarpinteria || [])[0] || { id: "roble_santana", nombre: "Roble Santana", marca: "Arauco · Vesto", desc: "" };
+      const piedraMatch = (tempData.acabadosPiedra || [])[0] || { id: "cuarzo_calacatta", nombre: "Cuarzo Calacatta Light", tipo: "Cuarzo de Ingeniería" };
 
+      const isMultiWallInit = initCat === "WALKIN" || initCat === "COCINA";
       const state = {
         folio: "CAD-" + String(Date.now()).slice(-5),
         categoria: initCat,
         gama: initGama,
         subtipo: (initSub && M.categorias[initCat].subtipos.some(s => s.id === initSub)) ? initSub : M.categorias[initCat].subtipos[0].id,
         largo: M.categorias[initCat].largoDefault,
+        muroA_L: M.categorias[initCat].largoDefault,
+        muroB_activo: isMultiWallInit && (initSub === "WALKIN_L" || initSub === "WALKIN_ISLA" || initSub === "COCINA_L_PENINSULA" || initSub === "COCINA_U" || !initSub),
+        muroB_L: 2.4,
+        muroC_activo: isMultiWallInit && (initSub === "WALKIN_ISLA" || initSub === "COCINA_U"),
+        muroC_L: 2.4,
         alto: M.categorias[initCat].altoDefault,
         fondo: M.categorias[initCat].fondoDefault,
+        acabadoId: acabadoMatch.id,
+        piedraId: piedraMatch.id,
         extras: [],
         zona: M.zonas[0].id
       };
 
       const catPills = document.getElementById("catPills");
-      const presetPills = document.getElementById("presetPills");
-      const subtipoList = document.getElementById("subtipoList");
+            const subtipoList = document.getElementById("subtipoList");
       const extrasList = document.getElementById("extrasList");
-      const inpLargo = document.getElementById("inpLargo");
+
+      const cardMuroA = document.getElementById("cardMuroA");
+      const inpMuroA = document.getElementById("inpMuroA");
+      const valMuroA = document.getElementById("valMuroA");
+      const pillsMuroA = document.getElementById("pillsMuroA");
+
+      const cardMuroB = document.getElementById("cardMuroB");
+      const chkMuroB = document.getElementById("chkMuroB");
+      const valMuroB = document.getElementById("valMuroB");
+      const subMuroB = document.getElementById("subMuroB");
+      const pillsMuroB = document.getElementById("pillsMuroB");
+      const inpMuroB = document.getElementById("inpMuroB");
+
+      const cardMuroC = document.getElementById("cardMuroC");
+      const chkMuroC = document.getElementById("chkMuroC");
+      const valMuroC = document.getElementById("valMuroC");
+      const subMuroC = document.getElementById("subMuroC");
+      const pillsMuroC = document.getElementById("pillsMuroC");
+      const inpMuroC = document.getElementById("inpMuroC");
+
+      const badgeTotalML = document.getElementById("badgeTotalML");
       const inpAlto = document.getElementById("inpAlto");
       const inpFondo = document.getElementById("inpFondo");
       const inpZona = document.getElementById("inpZona");
@@ -280,6 +727,56 @@
         });
       }
 
+      function syncWallsFromSubtipo() {
+        if (state.categoria === "WALKIN") {
+          if (state.subtipo === "WALKIN_LINEAL_DOBLE") {
+            state.muroB_activo = false;
+            state.muroC_activo = false;
+          } else if (state.subtipo === "WALKIN_L") {
+            state.muroB_activo = true;
+            state.muroC_activo = false;
+          } else if (state.subtipo === "WALKIN_ISLA" || state.subtipo === "WALKIN_CRISTAL") {
+            state.muroB_activo = true;
+            state.muroC_activo = true;
+          }
+        } else if (state.categoria === "COCINA") {
+          if (state.subtipo === "COCINA_LINEAL" || state.subtipo === "COCINA_ISLA") {
+            state.muroB_activo = false;
+            state.muroC_activo = false;
+          } else if (state.subtipo === "COCINA_L_PENINSULA") {
+            state.muroB_activo = true;
+            state.muroC_activo = false;
+          } else if (state.subtipo === "COCINA_U") {
+            state.muroB_activo = true;
+            state.muroC_activo = true;
+          }
+        } else {
+          state.muroB_activo = false;
+          state.muroC_activo = false;
+        }
+      }
+
+      function syncSubtipoFromWalls() {
+        if (state.categoria === "WALKIN") {
+          if (state.muroB_activo && state.muroC_activo) {
+            state.subtipo = "WALKIN_ISLA";
+          } else if (state.muroB_activo && !state.muroC_activo) {
+            state.subtipo = "WALKIN_L";
+          } else {
+            state.subtipo = "WALKIN_LINEAL_DOBLE";
+          }
+        } else if (state.categoria === "COCINA") {
+          if (state.muroB_activo && state.muroC_activo) {
+            state.subtipo = "COCINA_U";
+          } else if (state.muroB_activo && !state.muroC_activo) {
+            state.subtipo = "COCINA_L_PENINSULA";
+          } else {
+            state.subtipo = "COCINA_LINEAL";
+          }
+        }
+        renderSubtipos();
+      }
+
       function renderSubtipos() {
         const cat = M.categorias[state.categoria];
         subtipoList.innerHTML = "";
@@ -290,6 +787,7 @@
           btn.innerHTML = `<strong>${sub.nombre}</strong><small>${sub.desc}</small>`;
           btn.addEventListener("click", () => {
             state.subtipo = sub.id;
+            syncWallsFromSubtipo();
             renderSubtipos();
             updateAll();
           });
@@ -299,14 +797,32 @@
 
       function renderExtras() {
         const cat = M.categorias[state.categoria];
+        const p = currentPayload();
         extrasList.innerHTML = "";
         cat.opcionesExtra.forEach((ext) => {
+          const isChecked = state.extras.includes(ext.id);
+          const calc = M.calcularPrecioExtra ? M.calcularPrecioExtra(ext, p) : { precio: ext.minMty };
           const lbl = document.createElement("label");
-          lbl.className = "extra-check";
-          const checked = state.extras.includes(ext.id) ? "checked" : "";
-          lbl.innerHTML = `<input type="checkbox" value="${ext.id}" ${checked}><span>${ext.nombre}</span>`;
+          lbl.className = "extra-check" + (isChecked ? " is-checked" : "");
+          const checkedAttr = isChecked ? "checked" : "";
+          const placaTag = calc.numPlacas > 0 ? ` <small style="color:#64748B;">(${calc.numPlacas} placa${calc.numPlacas > 1 ? "s" : ""})</small>` : "";
+          lbl.innerHTML = `
+            <div class="extra-check-left">
+              <input type="checkbox" value="${ext.id}" ${checkedAttr}>
+              <span class="extra-check-name">${ext.nombre}${placaTag}</span>
+            </div>
+            <span class="extra-check-price">+ $${calc.precio.toLocaleString("es-MX")}</span>
+          `;
           lbl.querySelector("input").addEventListener("change", (e) => {
             if (e.target.checked) {
+              // Si selecciona Cuarzo, desmarcar Granito y viceversa para no cobrar dos cubiertas
+              if (ext.id === "cubierta_cuarzo") {
+                state.extras = state.extras.filter((x) => x !== "cubierta_granito");
+                if (state.piedraId === "granito_via_lactea") state.piedraId = "cuarzo_calacatta";
+              } else if (ext.id === "cubierta_granito") {
+                state.extras = state.extras.filter((x) => x !== "cubierta_cuarzo");
+                state.piedraId = "granito_via_lactea";
+              }
               if (!state.extras.includes(ext.id)) state.extras.push(ext.id);
             } else {
               state.extras = state.extras.filter((x) => x !== ext.id);
@@ -317,11 +833,25 @@
         });
       }
 
+      const btnClearExtras = document.getElementById("btnClearExtras");
+      if (btnClearExtras) {
+        btnClearExtras.addEventListener("click", () => {
+          state.extras = [];
+          renderExtras();
+          updateAll();
+        });
+      }
+
       function syncSlidersBounds() {
         const cat = M.categorias[state.categoria];
-        inpLargo.min = cat.largoMin;
-        inpLargo.max = cat.largoMax;
-        inpLargo.value = state.largo;
+        const isMulti = state.categoria === "WALKIN" || state.categoria === "COCINA" || state.categoria === "CLOSET";
+
+        inpMuroA.min = cat.largoMin;
+        inpMuroA.max = cat.largoMax;
+        inpMuroA.value = state.muroA_L;
+
+        cardMuroB.style.display = isMulti ? "block" : "none";
+        cardMuroC.style.display = isMulti ? "block" : "none";
 
         inpAlto.min = cat.altoMin;
         inpAlto.max = cat.altoMax;
@@ -335,20 +865,138 @@
         if (!cat) return;
         state.categoria = catId;
         state.subtipo = cat.subtipos[0].id;
+        state.muroA_L = cat.largoDefault;
         state.largo = cat.largoDefault;
+        state.muroB_L = 2.4;
+        state.muroC_L = 2.4;
         state.alto = cat.altoDefault;
         state.fondo = cat.fondoDefault;
         state.extras = (cat.opcionesExtra || []).filter((e) => e.defaultActive).map((e) => e.id);
+        syncWallsFromSubtipo();
         syncSlidersBounds();
         renderCatPills();
         renderSubtipos();
         renderExtras();
+        if(typeof syncPresetCatTab==="function") syncPresetCatTab();
         updateAll();
+      }
+
+      function getAcabadoSeleccionado() {
+        const list = tempData.acabadosCarpinteria || [];
+        return list.find(a => a.id === state.acabadoId) || list[0] || { id: "roble_santana", nombre: "Roble Santana", marca: "Arauco · Vesto", tag: "Invierno 2027", desc: "" };
+      }
+
+      function getPiedraSeleccionada() {
+        const list = tempData.acabadosPiedra || [];
+        return list.find(p => p.id === state.piedraId) || list[0] || { id: "cuarzo_calacatta", nombre: "Cuarzo Calacatta Light", tipo: "Cuarzo de Ingeniería", extraId: "cubierta_cuarzo" };
+      }
+
+      function renderGamaBrands() {
+        const strip = document.getElementById("gamaBrandsStrip");
+        if (!strip || !tempData.marcasAliadas) return;
+        const isBou = state.gama === "boutique_spgg";
+        const marcasFiltradas = tempData.marcasAliadas.filter(m => {
+          if (m.id === "piedra") return state.categoria === "COCINA" || state.categoria === "BANIO";
+          if (isBou) return m.gama.includes("Boutique") || m.gama.includes("Opcional");
+          return m.gama.includes("Taller MTY") || m.id === "arauco";
+        });
+        strip.innerHTML = marcasFiltradas
+          .map(m => `<span class="brand-chip" title="${m.rol}: ${m.detalle}">${m.nombre}</span>`)
+          .join("");
+      }
+
+      function renderTemporadaSelector() {
+        const gridCarp = document.getElementById("swatchCarpinteriaGrid");
+        const wrapPiedra = document.getElementById("piedraSwatchWrap");
+        const gridPiedra = document.getElementById("swatchPiedraGrid");
+        const valAcab = document.getElementById("valAcabadoNombre");
+        const descAcab = document.getElementById("acabadoDescNote");
+        const badgeSeason = document.getElementById("seasonBadgePill");
+        const valPiedra = document.getElementById("valPiedraNombre");
+
+        const acab = getAcabadoSeleccionado();
+        if (badgeSeason && tempData.badge) badgeSeason.textContent = "🍂 " + tempData.badge;
+        if (valAcab) valAcab.textContent = `${acab.nombre} (${acab.marca})`;
+        if (descAcab) descAcab.textContent = acab.desc || "";
+
+        if (gridCarp && tempData.acabadosCarpinteria) {
+          gridCarp.innerHTML = "";
+          tempData.acabadosCarpinteria.forEach((item) => {
+            const btn = document.createElement("button");
+            btn.type = "button";
+            btn.className = "swatch-tile" + (item.id === acab.id ? " is-active" : "");
+            btn.title = `${item.nombre} — ${item.marca} (${item.tag})`;
+            btn.innerHTML = `
+              <span class="swatch-img-box" style="background:${item.hex || "#D6C9B8"};">
+                <img src="${item.img}" alt="${item.nombre}">
+                <span class="swatch-tag-mini">${item.tag}</span>
+              </span>
+              <span class="swatch-meta">
+                <strong>${item.nombre}</strong>
+                <small>${item.marca}</small>
+              </span>
+            `;
+            btn.addEventListener("click", () => {
+              state.acabadoId = item.id;
+              updateAll();
+            });
+            gridCarp.appendChild(btn);
+          });
+        }
+
+        const showStone = state.categoria === "COCINA" || state.categoria === "BANIO";
+        if (wrapPiedra) wrapPiedra.style.display = showStone ? "block" : "none";
+        if (showStone && gridPiedra && tempData.acabadosPiedra) {
+          const stSel = getPiedraSeleccionada();
+          const hasCubiertaActiva = state.categoria === "COCINA"
+            ? (state.extras.includes("cubierta_cuarzo") || state.extras.includes("cubierta_granito"))
+            : state.extras.includes("cubierta_piedra_bn");
+          if (valPiedra) {
+            valPiedra.textContent = hasCubiertaActiva ? stSel.nombre : `Sugerido: ${stSel.nombre}`;
+          }
+          gridPiedra.innerHTML = "";
+          tempData.acabadosPiedra.forEach((st) => {
+            const isActiveStone = st.id === stSel.id && (
+              state.categoria !== "COCINA" ||
+              !hasCubiertaActiva ||
+              state.extras.includes(st.extraId)
+            );
+            const btn = document.createElement("button");
+            btn.type = "button";
+            btn.className = "swatch-stone-tile" + (isActiveStone ? " is-active" : "");
+            btn.title = `${st.nombre} (${st.tipo}) — ${st.desc}`;
+            btn.innerHTML = `
+              <span class="swatch-stone-thumb" style="background:${st.hex || "#E5E7EB"};">
+                <img src="${st.img}" alt="${st.nombre}">
+              </span>
+              <span class="swatch-stone-info">
+                <strong>${st.nombre}</strong>
+                <small>${st.tipo}</small>
+              </span>
+            `;
+            btn.addEventListener("click", () => {
+              state.piedraId = st.id;
+              if (state.categoria === "COCINA" && st.extraId) {
+                state.extras = state.extras.filter(x => x !== "cubierta_cuarzo" && x !== "cubierta_granito");
+                state.extras.push(st.extraId);
+              } else if (state.categoria === "BANIO") {
+                if (!state.extras.includes("cubierta_piedra_bn")) state.extras.push("cubierta_piedra_bn");
+              }
+              updateAll();
+            });
+            gridPiedra.appendChild(btn);
+          });
+        }
       }
 
       function currentPayload() {
         const cat = M.categorias[state.categoria];
         const sub = cat.subtipos.find((s) => s.id === state.subtipo) || cat.subtipos[0];
+        const acab = getAcabadoSeleccionado();
+        const piedraSel = getPiedraSeleccionada();
+        const stoneActive = state.categoria === "COCINA"
+          ? (state.extras.includes("cubierta_cuarzo") || state.extras.includes("cubierta_granito"))
+          : (state.categoria === "BANIO" && state.extras.includes("cubierta_piedra_bn"));
         return {
           folio: state.folio,
           categoria: state.categoria,
@@ -356,11 +1004,21 @@
           gama: state.gama,
           subtipo: state.subtipo,
           subtipoNombre: sub.nombre,
-          largo: state.largo,
+          largo: state.muroA_L,
+          muroA_L: state.muroA_L,
+          muroB_activo: state.muroB_activo,
+          muroB_L: state.muroB_L,
+          muroC_activo: state.muroC_activo,
+          muroC_L: state.muroC_L,
           alto: state.alto,
           fondo: state.fondo,
           extras: state.extras,
           zona: state.zona,
+          acabadoId: acab.id,
+          acabadoNombre: acab.nombre,
+          acabadoMarca: acab.marca,
+          temporadaTitulo: tempData.titulo || "Tendencia Invierno 2027",
+          piedraNombre: stoneActive ? piedraSel.nombre : `Preferencia: ${piedraSel.nombre} (no incluida aún en checklist)`,
           clienteNombre: (document.getElementById("cliNombre").value || "").trim(),
           clienteTel: (document.getElementById("cliTel").value || "").trim(),
           notas: (document.getElementById("cliNotas").value || "").trim()
@@ -371,24 +1029,376 @@
         const p = currentPayload();
         const r = M.calcularRango(p);
         const gamaObj = M.gamas[state.gama];
+        const totalML = r.totalML || state.muroA_L;
+        renderGamaBrands();
+        renderTemporadaSelector();
 
-        document.getElementById("valLargo").textContent = Math.round(state.largo * 100) + " cm";
+        // Sincronizar etiquetas de muros
+        valMuroA.textContent = Math.round(state.muroA_L * 100) + " cm";
+        valMuroB.textContent = Math.round(state.muroB_L * 100) + " cm";
+        valMuroC.textContent = Math.round(state.muroC_L * 100) + " cm";
+        chkMuroB.checked = state.muroB_activo;
+        chkMuroC.checked = state.muroC_activo;
+        cardMuroB.classList.toggle("is-active", state.muroB_activo);
+        subMuroB.style.display = state.muroB_activo ? "block" : "none";
+        cardMuroC.classList.toggle("is-active", state.muroC_activo);
+        subMuroC.style.display = state.muroC_activo ? "block" : "none";
+
+        badgeTotalML.textContent = totalML.toFixed(2) + " ML";
+
+        // Sincronizar pills activas de Muro A, B, C
+        pillsMuroA.querySelectorAll(".quick-pill").forEach(pill => {
+          pill.classList.toggle("active", Math.abs(Number(pill.getAttribute("data-val")) - state.muroA_L) < 0.05);
+        });
+        pillsMuroB.querySelectorAll(".quick-pill").forEach(pill => {
+          pill.classList.toggle("active", Math.abs(Number(pill.getAttribute("data-val")) - state.muroB_L) < 0.05);
+        });
+        pillsMuroC.querySelectorAll(".quick-pill").forEach(pill => {
+          pill.classList.toggle("active", Math.abs(Number(pill.getAttribute("data-val")) - state.muroC_L) < 0.05);
+        });
+
         document.getElementById("valAlto").textContent = Math.round(state.alto * 100) + " cm";
         document.getElementById("valFondo").textContent = Math.round(state.fondo * 100) + " cm";
 
+        const dimMurosTxt = (state.muroB_activo || state.muroC_activo)
+          ? `${totalML.toFixed(2)} ML (Muro A: ${Math.round(state.muroA_L * 100)}cm${state.muroB_activo ? " · B: " + Math.round(state.muroB_L * 100) + "cm" : ""}${state.muroC_activo ? " · C: " + Math.round(state.muroC_L * 100) + "cm" : ""})`
+          : `${Math.round(state.muroA_L * 100)} cm`;
+
         document.getElementById("hudCatTitle").textContent = p.categoriaNombre.toUpperCase() + " — " + p.subtipoNombre.toUpperCase();
-        document.getElementById("hudDimSummary").textContent = `${Math.round(state.largo * 100)} × ${Math.round(state.alto * 100)} × ${Math.round(state.fondo * 100)} cm · ${gamaObj.nombre}`;
+        document.getElementById("hudDimSummary").textContent = `${dimMurosTxt} × ${Math.round(state.alto * 100)} × ${Math.round(state.fondo * 100)} cm · ${p.acabadoNombre} · ${gamaObj.nombre}`;
         document.getElementById("gamaDescNote").textContent = `${gamaObj.material} · ${gamaObj.herraje}.`;
 
-        document.getElementById("outRange").textContent = `$${r.minMXN.toLocaleString("es-MX")} – $${r.maxMXN.toLocaleString("es-MX")} MXN`;
-        document.getElementById("outGamaLabel").textContent = `${r.gamaNombre} · Flete est. ${r.fleteTexto}`;
-        document.getElementById("outAnticipo").textContent = `$${r.anticipoMin60.toLocaleString("es-MX")} – $${r.anticipoMax60.toLocaleString("es-MX")} MXN`;
+        renderExtras();
+        document.getElementById("outRange").textContent = "$" + r.totalMXN.toLocaleString("es-MX") + " MXN";
+        document.getElementById("outGamaLabel").textContent = `${r.gamaNombre} · ${p.acabadoNombre} (${p.acabadoMarca}) · Base + ${r.extrasDesglose.length} adicional(es)`;
+        document.getElementById("outAnticipo").textContent = "$" + r.anticipo60MXN.toLocaleString("es-MX") + " MXN";
+        const outFin = document.getElementById("outFiniquito");
+        if (outFin) outFin.textContent = "$" + r.finiquito40MXN.toLocaleString("es-MX") + " MXN";
         document.getElementById("outEntrega").textContent = gamaObj.entrega;
+
+        const qbMaterialLabel = document.getElementById("qbMaterialLabel");
+        const qbMaterialMarca = document.getElementById("qbMaterialMarca");
+        if (qbMaterialLabel && qbMaterialMarca) {
+          qbMaterialLabel.textContent = `🎨 ${tempData.badge || "Invierno 2027"}: ${p.acabadoNombre}`;
+          qbMaterialMarca.textContent = p.acabadoMarca;
+        }
+
+        const qbBaseLabel = document.getElementById("qbBaseLabel");
+        const qbBaseVal = document.getElementById("qbBaseVal");
+        const qbExtrasList = document.getElementById("qbExtrasList");
+        const qbFleteLabel = document.getElementById("qbFleteLabel");
+        const qbFleteVal = document.getElementById("qbFleteVal");
+
+        if (qbBaseLabel && qbBaseVal) {
+          qbBaseLabel.textContent = `🪵 Mueble Base (${totalML.toFixed(2)} ML × ${Math.round(state.alto * 100)} cm)`;
+          qbBaseVal.textContent = "$" + r.precioBaseMXN.toLocaleString("es-MX") + " MXN";
+        }
+        if (qbExtrasList) {
+          if (r.extrasDesglose.length === 0) {
+            qbExtrasList.innerHTML = '<div class="qb-row qb-empty"><span>➕ Sin adicionales marcados (Solo Mueble Base)</span><strong>$0 MXN</strong></div>';
+          } else {
+            qbExtrasList.innerHTML = r.extrasDesglose.map(item => `
+              <div class="qb-row qb-extra-item">
+                <span>✓ ${item.nombre}</span>
+                <strong>+ $${item.precio.toLocaleString("es-MX")}</strong>
+              </div>
+            `).join("");
+          }
+        }
+        if (qbFleteLabel && qbFleteVal) {
+          qbFleteLabel.textContent = `🚚 Flete e Instalación (${state.zona})`;
+          qbFleteVal.textContent = "+ $" + r.fleteMXN.toLocaleString("es-MX") + " MXN";
+        }
 
         if (window.CAD_ENGINE) {
           window.CAD_ENGINE.rebuild(p);
         }
+        renderModuleInspector();
+        renderSeniorAdvisor(p, r);
+        if (typeof syncBubaSubAgentContext === "function") syncBubaSubAgentContext();
       }
+
+      const moduleInspectorList = document.getElementById("moduleInspectorList");
+
+      function renderModuleInspector() {
+        if (!moduleInspectorList || !window.CAD_ENGINE) return;
+        const mods = window.CAD_ENGINE.getActiveModules ? window.CAD_ENGINE.getActiveModules() : [];
+        moduleInspectorList.innerHTML = "";
+        if (!mods.length) return;
+
+        mods.forEach((m) => {
+          const item = document.createElement("div");
+          item.className = "mod-insp-item" + (m.configurable ? " is-editable" : "");
+          item.innerHTML = `
+            <div class="mod-insp-meta">
+              <span class="mod-insp-zone">${m.zone || "Módulo"}</span>
+              <strong class="mod-insp-title">${m.title}</strong>
+            </div>
+            ${m.configurable
+              ? '<button type="button" class="mod-insp-btn">Editar ⚙️</button>'
+              : '<span class="mod-insp-fixed">Fijo</span>'}
+          `;
+          item.addEventListener("mouseenter", () => {
+            if (window.CAD_ENGINE && window.CAD_ENGINE.highlightModule) {
+              window.CAD_ENGINE.highlightModule(m.id);
+            }
+          });
+          item.addEventListener("mouseleave", () => {
+            if (window.CAD_ENGINE && window.CAD_ENGINE.highlightModule) {
+              window.CAD_ENGINE.highlightModule(null);
+            }
+          });
+          if (m.configurable) {
+            item.addEventListener("click", () => {
+              if (window.CAD_ENGINE && window.CAD_ENGINE.openModuleEditor) {
+                window.CAD_ENGINE.openModuleEditor(m.id);
+              }
+            });
+          }
+          moduleInspectorList.appendChild(item);
+        });
+      }
+
+      function renderSeniorAdvisor(p, r) {
+        const grid = document.getElementById("seniorRulesGrid");
+        const badge = document.getElementById("seniorSummaryBadge");
+        const kitCtrls = document.getElementById("seniorKitchenControls");
+        const cornerGrp = document.getElementById("sqcCornerGroup");
+        if (!grid || !M.generarDictamenSenior) return;
+
+        const mods = window.CAD_ENGINE && window.CAD_ENGINE.getActiveModules ? window.CAD_ENGINE.getActiveModules() : [];
+        const rules = M.generarDictamenSenior(p, r, mods);
+
+        if (kitCtrls) {
+          kitCtrls.style.display = p.categoria === "COCINA" ? "flex" : "none";
+        }
+        if (cornerGrp && p.categoria === "COCINA") {
+          const hasCorner = Boolean(state.muroB_activo || state.muroC_activo || String(state.subtipo).includes("_L") || String(state.subtipo).includes("_U"));
+          cornerGrp.style.display = hasCorner ? "flex" : "none";
+        }
+
+        if (badge) {
+          if (p.categoria === "COCINA" && r.piedraInfo) {
+            const altCm = state.extras.includes("zoclo_12cm") ? "93 cm (Pata 120mm)" : "91 cm (Pata 100mm)";
+            badge.textContent = `Melamina a ${altCm} · Manguete 5.5cm Gola 45° · Cubierta: ${r.piedraInfo.numPlacas} Placa(s) Llave en Mano`;
+          } else {
+            badge.textContent = `Sistema 32 Milimétrico · Regla ≥60cm = 2 Puertas Simétricas · ${r.totalML.toFixed(2)} ML`;
+          }
+        }
+
+        // Sync active state on kitchen quick controls + dynamic Tarja / Parrilla position buttons
+        if (p.categoria === "COCINA") {
+          const fixtures = (window.CAD_ENGINE && window.CAD_ENGINE.getKitchenFixtures)
+            ? window.CAD_ENGINE.getKitchenFixtures()
+            : { cookBayId: null, sinkBayId: null };
+          const eligibleBaseMods = mods.filter(m => m.schemaKey === "cocina_bajo");
+
+          const sinkPosWrap = document.getElementById("sqcSinkPosPills");
+          const cookPosWrap = document.getElementById("sqcCookPosPills");
+
+          function shortZoneLabel(m, idx) {
+            if (m.id.startsWith("cocina_bajo_")) return "Muro A · Mód " + (Number(m.id.replace("cocina_bajo_", "")) + 1);
+            if (m.id.startsWith("cocina_isla_")) return "Isla · Mód " + (Number(m.id.replace("cocina_isla_", "")) + 1);
+            if (m.id.startsWith("cocina_peninsula_")) return "Muro B · Mód " + (Number(m.id.replace("cocina_peninsula_", "")) + 1);
+            if (m.id.startsWith("cocina_u_izq_")) return "Muro B · Mód " + (Number(m.id.replace("cocina_u_izq_", "")) + 1);
+            if (m.id.startsWith("cocina_u_der_")) return "Muro C · Mód " + (Number(m.id.replace("cocina_u_der_", "")) + 1);
+            return "Módulo " + (idx + 1);
+          }
+
+          if (sinkPosWrap) {
+            sinkPosWrap.innerHTML = "";
+            eligibleBaseMods.forEach((m, idx) => {
+              const btn = document.createElement("button");
+              btn.type = "button";
+              const isHere = m.id === fixtures.sinkBayId;
+              const hasCook = m.id === fixtures.cookBayId;
+              btn.className = "sqc-pill" + (isHere ? " active" : "");
+              btn.textContent = shortZoneLabel(m, idx) + (isHere ? " (🚰 Tarja Aquí)" : hasCook ? " (⇄ Cambiar x Parrilla)" : "");
+              btn.addEventListener("click", () => {
+                if (window.CAD_ENGINE && window.CAD_ENGINE.setModuleCustomization) {
+                  window.CAD_ENGINE.setModuleCustomization(m.id, { type: "tarja_puertas_botes", count: 2, door: "abatible_gola45" });
+                  updateAll();
+                }
+              });
+              sinkPosWrap.appendChild(btn);
+            });
+          }
+
+          if (cookPosWrap) {
+            cookPosWrap.innerHTML = "";
+            const currentCookMod = mods.find(m => m.id === fixtures.cookBayId);
+            const curCookType = currentCookMod ? currentCookMod.type : "parrilla_cajones";
+            const curCookCount = currentCookMod ? currentCookMod.count : 75;
+
+            eligibleBaseMods.forEach((m, idx) => {
+              const btn = document.createElement("button");
+              btn.type = "button";
+              const isHere = m.id === fixtures.cookBayId;
+              const hasSink = m.id === fixtures.sinkBayId;
+              btn.className = "sqc-pill" + (isHere ? " active" : "");
+              btn.textContent = shortZoneLabel(m, idx) + (isHere ? " (🔥 Parrilla Aquí)" : hasSink ? " (⇄ Cambiar x Tarja)" : "");
+              btn.addEventListener("click", () => {
+                if (window.CAD_ENGINE && window.CAD_ENGINE.setModuleCustomization) {
+                  window.CAD_ENGINE.setModuleCustomization(m.id, { type: curCookType, count: curCookCount, door: "none" });
+                  updateAll();
+                }
+              });
+              cookPosWrap.appendChild(btn);
+            });
+          }
+
+          const hasDoubleUpperActive = (Number(state.alto || 2.4) - 1.52) > 0.80 || state.extras.includes("sobrealacena_42cm");
+          document.querySelectorAll("#sqcUpperTierMode .sqc-pill").forEach(btn => {
+            const isOn = btn.getAttribute("data-sobre") === "on";
+            btn.classList.toggle("active", isOn === hasDoubleUpperActive);
+          });
+          const cookMod = mods.find(m => m.id === "cocina_bajo_0" || m.id === "cocina_bajo_1" || (m.zone && m.zone.includes("Cocción")));
+          if (cookMod) {
+            document.querySelectorAll("#sqcCookMode .sqc-pill").forEach(btn => {
+              const t = btn.getAttribute("data-type");
+              const c = Number(btn.getAttribute("data-count"));
+              const active = cookMod.type === t && (t !== "parrilla_cajones" || Number(cookMod.count) === c);
+              btn.classList.toggle("active", active);
+            });
+          }
+          document.querySelectorAll("#sqcUpperTierMode .sqc-pill").forEach(btn => {
+        btn.addEventListener("click", () => {
+          const wantSobre = btn.getAttribute("data-sobre") === "on";
+          if (wantSobre) {
+            if (!state.extras.includes("sobrealacena_42cm")) state.extras.push("sobrealacena_42cm");
+            if (state.alto < 2.4) { state.alto = 2.4; inpAlto.value = 2.4; }
+          } else {
+            state.extras = state.extras.filter(x => x !== "sobrealacena_42cm");
+            if (state.alto > 2.30) { state.alto = 2.25; inpAlto.value = 2.25; }
+          }
+          renderExtras();
+          updateAll();
+        });
+      });
+
+      document.querySelectorAll("#sqcZocloMode .sqc-pill").forEach(btn => {
+            const is12 = btn.getAttribute("data-zoclo") === "12";
+            btn.classList.toggle("active", is12 === state.extras.includes("zoclo_12cm"));
+          });
+          const cornerMod = mods.find(m => m.id.startsWith("cocina_esquinero_"));
+          if (cornerMod) {
+            document.querySelectorAll("#sqcCornerMode .sqc-pill").forEach(btn => {
+              btn.classList.toggle("active", btn.getAttribute("data-corner") === cornerMod.type);
+            });
+          }
+        }
+
+        grid.innerHTML = rules.map(rule => `
+          <div class="senior-rule-item">
+            <span class="srule-badge">${rule.badge}</span>
+            <strong class="srule-title">${rule.title}</strong>
+            <p class="srule-detail">${rule.detail}</p>
+          </div>
+        `).join("");
+      }
+
+      if (window.CAD_ENGINE && window.CAD_ENGINE.onModulesUpdated) {
+        window.CAD_ENGINE.onModulesUpdated(() => {
+          const p = currentPayload();
+          const r = M.calcularRango(p);
+          renderModuleInspector();
+          renderSeniorAdvisor(p, r);
+        });
+      }
+
+      // Wire Senior Kitchen Quick Controls
+      document.querySelectorAll("#sqcCookMode .sqc-pill").forEach(btn => {
+        btn.addEventListener("click", () => {
+          const t = btn.getAttribute("data-type");
+          const c = Number(btn.getAttribute("data-count"));
+          const mods = window.CAD_ENGINE && window.CAD_ENGINE.getActiveModules ? window.CAD_ENGINE.getActiveModules() : [];
+          const fixtures = window.CAD_ENGINE && window.CAD_ENGINE.getKitchenFixtures ? window.CAD_ENGINE.getKitchenFixtures() : {};
+          const cookMod = mods.find(m => m.id === fixtures.cookBayId) || mods.find(m => m.schemaKey === "cocina_bajo");
+          if (cookMod && window.CAD_ENGINE.setModuleCustomization) {
+            window.CAD_ENGINE.setModuleCustomization(cookMod.id, { type: t, count: c, door: "none" });
+            updateAll();
+          }
+        });
+      });
+
+      document.querySelectorAll("#sqcZocloMode .sqc-pill").forEach(btn => {
+        btn.addEventListener("click", () => {
+          const want12 = btn.getAttribute("data-zoclo") === "12";
+          if (want12) {
+            if (!state.extras.includes("zoclo_12cm")) state.extras.push("zoclo_12cm");
+          } else {
+            state.extras = state.extras.filter(x => x !== "zoclo_12cm");
+          }
+          renderExtras();
+          updateAll();
+        });
+      });
+
+      document.querySelectorAll("#sqcCornerMode .sqc-pill").forEach(btn => {
+        btn.addEventListener("click", () => {
+          const cType = btn.getAttribute("data-corner");
+          if (cType === "esquinero_lemans") {
+            if (!state.extras.includes("esquinero_lemans")) state.extras.push("esquinero_lemans");
+          } else {
+            state.extras = state.extras.filter(x => x !== "esquinero_lemans");
+          }
+          renderExtras();
+          if (window.CAD_ENGINE && window.CAD_ENGINE.setModuleCustomization) {
+            window.CAD_ENGINE.setModuleCustomization("cocina_esquinero_izq", { type: cType, count: 2, door: "abatible_gola45" });
+            window.CAD_ENGINE.setModuleCustomization("cocina_esquinero_der", { type: cType, count: 2, door: "abatible_gola45" });
+          }
+          updateAll();
+        });
+      });
+
+      // Eventos Muros A, B, C
+      inpMuroA.addEventListener("input", () => {
+        state.muroA_L = Number(inpMuroA.value);
+        state.largo = state.muroA_L;
+        updateAll();
+      });
+      pillsMuroA.querySelectorAll(".quick-pill").forEach(pill => {
+        pill.addEventListener("click", () => {
+          state.muroA_L = Number(pill.getAttribute("data-val"));
+          inpMuroA.value = state.muroA_L;
+          state.largo = state.muroA_L;
+          updateAll();
+        });
+      });
+
+      chkMuroB.addEventListener("change", () => {
+        state.muroB_activo = chkMuroB.checked;
+        syncSubtipoFromWalls();
+        updateAll();
+      });
+      inpMuroB.addEventListener("input", () => {
+        state.muroB_L = Number(inpMuroB.value);
+        updateAll();
+      });
+      pillsMuroB.querySelectorAll(".quick-pill").forEach(pill => {
+        pill.addEventListener("click", () => {
+          state.muroB_L = Number(pill.getAttribute("data-val"));
+          inpMuroB.value = state.muroB_L;
+          updateAll();
+        });
+      });
+
+      chkMuroC.addEventListener("change", () => {
+        state.muroC_activo = chkMuroC.checked;
+        syncSubtipoFromWalls();
+        updateAll();
+      });
+      inpMuroC.addEventListener("input", () => {
+        state.muroC_L = Number(inpMuroC.value);
+        updateAll();
+      });
+      pillsMuroC.querySelectorAll(".quick-pill").forEach(pill => {
+        pill.addEventListener("click", () => {
+          state.muroC_L = Number(pill.getAttribute("data-val"));
+          inpMuroC.value = state.muroC_L;
+          updateAll();
+        });
+      });
 
       // Gama buttons
       document.querySelectorAll("#gamaToggle .gama-btn").forEach((btn) => {
@@ -403,7 +1413,6 @@
       });
 
       // Sliders & select
-      inpLargo.addEventListener("input", () => { state.largo = Number(inpLargo.value); updateAll(); });
       inpAlto.addEventListener("input", () => { state.alto = Number(inpAlto.value); updateAll(); });
       inpFondo.addEventListener("input", () => { state.fondo = Number(inpFondo.value); updateAll(); });
       inpZona.addEventListener("change", () => { state.zona = inpZona.value; updateAll(); });
@@ -459,8 +1468,53 @@
         a.click();
         a.remove();
       }
-      document.getElementById("btnDescargarLamina").addEventListener("click", triggerSheetDownload);
-      document.getElementById("btnDownloadSheetSecondary").addEventListener("click", triggerSheetDownload);
+
+      // ---- DOBLE FILO: interceptar descarga con oferta de Ingeniería ----
+      const ingModal = document.getElementById("ingModal");
+      function openIngModal() {
+        ingModal.classList.add("active");
+        ingModal.setAttribute("aria-hidden", "false");
+      }
+      function closeIngModal() {
+        ingModal.classList.remove("active");
+        ingModal.setAttribute("aria-hidden", "true");
+      }
+      const ingCloseBtn = document.getElementById("ingClose"); if (ingCloseBtn) ingCloseBtn.addEventListener("click", closeIngModal);
+      if (ingModal) ingModal.addEventListener("click", (e) => { if (e.target === ingModal) closeIngModal(); });
+      document.addEventListener("keydown", (e) => { if (e.key === "Escape") closeIngModal(); });
+
+      const ingFreeBtn = document.getElementById("ingFreeBtn"); if (ingFreeBtn) ingFreeBtn.addEventListener("click", async () => {
+        closeIngModal();
+        await triggerSheetDownload();
+      });
+
+      const ingBuyBtn = document.getElementById("ingBuyBtn"); if (ingBuyBtn) ingBuyBtn.addEventListener("click", () => {
+        const p = currentPayload();
+        const r = M.calcularRango(p);
+        const pkgEl = document.querySelector('input[name="ingPkg"]:checked');
+        const pkg = pkgEl ? pkgEl.value : "Esencial";
+        const mods = window.CAD_ENGINE && window.CAD_ENGINE.getActiveModules ? window.CAD_ENGINE.getActiveModules() : [];
+        const modsTxt = mods.length ? mods.map((m) => `${m.zone}: ${m.title}`).join("; ") : "Configuración estándar";
+        const totalMLStr = (r.totalML || state.muroA_L).toFixed(2);
+        const dimDesglose = (state.muroB_activo || state.muroC_activo)
+          ? `Muro A: ${Math.round(state.muroA_L * 100)}cm${state.muroB_activo ? " · Muro B: " + Math.round(state.muroB_L * 100) + "cm" : ""}${state.muroC_activo ? " · Muro C: " + Math.round(state.muroC_L * 100) + "cm" : ""} (Desarrollo: ${totalMLStr} ML)`
+          : `${Math.round(state.muroA_L * 100)} cm`;
+
+        const msg = [
+          `Hola, quiero cotizar la INGENIERÍA DE FABRICACIÓN de mi diseño (${p.folio}):`,
+          `• Paquete: Ingeniería ${pkg}`,
+          `• Mueble: ${p.categoriaNombre} — ${p.subtipoNombre}`,
+          `• Gama: ${r.gamaNombre}`,
+          `• Medidas: ${dimDesglose} × ${Math.round(p.alto * 100)} × ${Math.round(p.fondo * 100)} cm`,
+          `• Módulos: ${modsTxt}`,
+          `• Zona: ${p.zona}`
+        ].join("\n");
+        window.open(`https://wa.me/528134575939?text=${encodeURIComponent(msg)}`, "_blank", "noopener");
+        closeIngModal();
+      });
+
+      document.getElementById("btnDescargarLamina").addEventListener("click", openIngModal);
+      document.getElementById("btnDownloadSheetSecondary").addEventListener("click", openIngModal);
 
       // Submit doble respaldo: Netlify Forms (con Lámina PNG adjunta) + WhatsApp con resumen completo
       const cadForm = document.getElementById("cadSubmitForm");
@@ -480,15 +1534,29 @@
         cadBtn.textContent = "Generando Lámina CAD y enviando...";
 
         const r = M.calcularRango(p);
-        const rangoStr = `$${r.minMXN.toLocaleString("es-MX")} – $${r.maxMXN.toLocaleString("es-MX")} MXN`;
+        const rangoStr = "$" + r.totalMXN.toLocaleString("es-MX") + " MXN (Base $" + r.precioBaseMXN.toLocaleString("es-MX") + " + Adicionales $" + r.extrasMXN.toLocaleString("es-MX") + ")";
+        const activeMods = window.CAD_ENGINE && window.CAD_ENGINE.getActiveModules
+          ? window.CAD_ENGINE.getActiveModules()
+          : [];
+        const modulosTxt = activeMods.length
+          ? activeMods.map((m) => `${m.zone}: ${m.title}`).join("; ")
+          : "Configuración estándar";
+
+        const totalMLStr = (r.totalML || state.muroA_L).toFixed(2);
+        const dimDesglose = (state.muroB_activo || state.muroC_activo)
+          ? `Muro A: ${Math.round(state.muroA_L * 100)}cm${state.muroB_activo ? " · Muro B: " + Math.round(state.muroB_L * 100) + "cm" : ""}${state.muroC_activo ? " · Muro C: " + Math.round(state.muroC_L * 100) + "cm" : ""} (Desarrollo: ${totalMLStr} ML)`
+          : `${Math.round(state.muroA_L * 100)} cm`;
+
         const resumenTxt = [
           `Folio: ${p.folio}`,
           `Categoría: ${p.categoriaNombre} (${p.subtipoNombre})`,
           `Gama: ${r.gamaNombre}`,
-          `Medidas: ${Math.round(p.largo * 100)} × ${Math.round(p.alto * 100)} × ${Math.round(p.fondo * 100)} cm`,
+          `Acabado (${p.temporadaTitulo}): ${p.acabadoNombre} (${p.acabadoMarca})${(p.categoria === "COCINA" || p.categoria === "BANIO") ? " · Piedra: " + p.piedraNombre : ""}`,
+          `Medidas: ${dimDesglose} × ${Math.round(p.alto * 100)} × ${Math.round(p.fondo * 100)} cm`,
           `Zona: ${p.zona}`,
           `Extras: ${r.extrasDetalle.length ? r.extrasDetalle.join(", ") : "Configuración base"}`,
-          `Rango preliminar: ${rangoStr}`,
+          `Módulos: ${modulosTxt}`,
+          `Presupuesto estimado: ${rangoStr}`,
           p.notas ? `Notas: ${p.notas}` : ""
         ].filter(Boolean).join(" | ");
 
@@ -514,10 +1582,13 @@
           `• Cliente: ${p.clienteNombre} (${p.clienteTel})`,
           `• Mueble: ${p.categoriaNombre} — ${p.subtipoNombre}`,
           `• Gama: ${r.gamaNombre}`,
-          `• Medidas: ${Math.round(p.largo * 100)} × ${Math.round(p.alto * 100)} × ${Math.round(p.fondo * 100)} cm`,
+          `• Acabado (${p.temporadaTitulo}): ${p.acabadoNombre} — ${p.acabadoMarca}`,
+          (p.categoria === "COCINA" || p.categoria === "BANIO") ? `• Piedra / Cubierta: ${p.piedraNombre}` : "",
+          `• Medidas: ${dimDesglose} × ${Math.round(p.alto * 100)} × ${Math.round(p.fondo * 100)} cm`,
           `• Zona: ${p.zona}`,
           `• Adicionales: ${r.extrasDetalle.length ? r.extrasDetalle.join(", ") : "Base estándar"}`,
-          `• Rango preliminar: ${rangoStr} (sujeto a rectificación)`,
+          `• Módulos: ${modulosTxt}`,
+          `• Presupuesto estimado: ${rangoStr} (sujeto a rectificación)`,
           p.notas ? `• Notas: ${p.notas}` : ""
         ].filter(Boolean).join("\n");
         const waUrl = `https://wa.me/528134575939?text=${encodeURIComponent(waMsg)}`;
@@ -530,235 +1601,632 @@
       });
 
       function applyPreset(pr) {
+        if (window.CAD_ENGINE && window.CAD_ENGINE.resetCustomizations) {
+          window.CAD_ENGINE.resetCustomizations();
+        }
         state.categoria = pr.cat;
-        syncSlidersBounds();
         state.subtipo = pr.sub;
+        state.muroA_L = pr.largo;
         state.largo = pr.largo;
+        state.muroB_L = 2.4;
+        state.muroC_L = 2.4;
+        syncWallsFromSubtipo();
+        syncSlidersBounds();
         state.alto = pr.alto;
         state.fondo = pr.fondo;
         state.extras = [...pr.extras];
-        inpLargo.value = state.largo;
+        inpMuroA.value = state.muroA_L;
         inpAlto.value = state.alto;
         inpFondo.value = state.fondo;
         renderCatPills();
         renderSubtipos();
         renderExtras();
+        if (typeof syncPresetCatTab === "function") syncPresetCatTab();
         updateAll();
       }
 
+      // ── GALERÍA DE ARQUETIPOS: TABS POR CATEGORÍA ──────────────────
+      let currentCatFilter = state.categoria || "COCINA";
       let currentTierFilter = "all";
 
-      function renderPresets() {
-        if (!presetPills || !M.presets) return;
-        presetPills.innerHTML = "";
-        const filtered = currentTierFilter === "all"
-          ? M.presets
-          : M.presets.filter(p => p.tier === currentTierFilter);
-
-        filtered.forEach((pr) => {
-          const btn = document.createElement("button");
-          btn.type = "button";
-          btn.className = "preset-pill";
-          btn.innerHTML = `${pr.label} <span class="preset-badge badge-${pr.tier}">${pr.tierLabel || pr.tier}</span>`;
-          btn.addEventListener("click", () => applyPreset(pr));
-          presetPills.appendChild(btn);
-        });
-      }
-
-      document.querySelectorAll("#tierFilterPills .tier-pill").forEach((btn) => {
-        btn.addEventListener("click", () => {
-          document.querySelectorAll("#tierFilterPills .tier-pill").forEach(b => b.classList.remove("active"));
-          btn.classList.add("active");
-          currentTierFilter = btn.getAttribute("data-tier");
-          renderPresets();
-        });
-      });
-
-      // -------------------------------------------------------
-      // SIDEBAR DE MÓDULOS INTERACTIVOS (sincronizado con 3D)
-      // -------------------------------------------------------
-      const moduleInspectorList = document.getElementById("moduleInspectorList");
-
-      const TYPE_LABELS = {
-        cajones: "🗄️ Cajonera",
-        entrepanos: "📚 Entrepaños",
-        colgador_doble: "👔 Doble Tubo",
-        colgador_largo: "👗 Colgador Largo",
-        zapatera: "👠 Zapatera",
-        corner_hanging: "📐 Esquinero"
+      const CAT_ICONS = {
+        COCINA: "🍳", CLOSET: "🚪", WALKIN: "👗",
+        TV_ROOM: "📺", BANIO: "🚿"
       };
 
-      const COUNT_OPTIONS = {
-        cajones: [
-          { val: 2, txt: "2 Gavetas Profundas" },
-          { val: 3, txt: "3 Cajones Estándar" },
-          { val: 4, txt: "4 Cajones (Recomendado)" },
-          { val: 5, txt: "5 Cajones Slim" }
-        ],
-        entrepanos: [
-          { val: 3, txt: "3 Entrepaños Espaciosos" },
-          { val: 4, txt: "4 Entrepaños Estándar" },
-          { val: 5, txt: "5 Entrepaños (Recomendado)" },
-          { val: 6, txt: "6 Entrepaños Alta Densidad" }
-        ],
-        zapatera: [
-          { val: 4, txt: "4 Niveles Inclinados" },
-          { val: 5, txt: "5 Niveles Estándar" },
-          { val: 6, txt: "6 Niveles Alta Capacidad" }
-        ]
-      };
+      function renderPresetGallery() {
+        const grid = document.getElementById("presetCardGrid");
+        if (!grid || !M.presets) return;
+        grid.innerHTML = "";
 
-      function renderModuleInspector(modules) {
-        if (!moduleInspectorList) return;
-        if (!modules || modules.length === 0) {
-          moduleInspectorList.innerHTML = `<p style="font-size:11px;color:var(--ink-soft);text-align:center;padding:12px 0;">
-            Selecciona un tipo de mueble para ver sus módulos configurables.
-          </p>`;
+        // Filter by cat + tier
+        const filtered = M.presets.filter(p => {
+          const catOk = p.cat === currentCatFilter;
+          const tierOk = currentTierFilter === "all" || p.tier === currentTierFilter;
+          return catOk && tierOk;
+        });
+
+        if (filtered.length === 0) {
+          grid.innerHTML = '<p class="preset-empty">No hay arquetipos en esta combinación.</p>';
           return;
         }
 
-        moduleInspectorList.innerHTML = "";
-
-        modules.forEach(function(mod) {
-          const isFixed = mod.isCorner ||
-            mod.type === "corner_hanging" ||
-            mod.id === "walkin_maletero" ||
-            mod.id === "closet_maletero";
-
-          const card = document.createElement("div");
-          card.className = "module-item-card";
-          card.setAttribute("data-mod-id", mod.id);
-
-          const badgeLabel = TYPE_LABELS[mod.type] || mod.type || "Módulo";
-
-          if (isFixed) {
-            card.innerHTML = `
-              <div class="module-item-head">
-                <span class="module-item-title">${mod.title}</span>
-                <span class="module-item-badge" style="background:#E0F2FE;color:#0369A1;">FIJO</span>
-              </div>
-              <div class="module-item-desc">${mod.desc || "Elemento estructural del mueble."}</div>
-            `;
-          } else {
-            const countOpts = COUNT_OPTIONS[mod.type] || null;
-            const needsCount = !!countOpts;
-            const currentCount = mod.count || 4;
-
-            let countHtml = "";
-            if (needsCount) {
-              const opts = countOpts.map(o =>
-                `<option value="${o.val}"${o.val === currentCount ? " selected" : ""}>${o.txt}</option>`
-              ).join("");
-              const countLabel = mod.type === "cajones"
-                ? "Gavetas:" : mod.type === "entrepanos"
-                ? "Entrepaños:" : "Niveles:";
-              countHtml = `
-                <span style="font-size:11px;font-weight:600;color:#475569;white-space:nowrap;">${countLabel}</span>
-                <select class="mod-count-sel" data-mod-id="${mod.id}" style="flex:1;">
-                  ${opts}
-                </select>
-              `;
-            }
-
-            const typeOptsHtml = Object.entries(TYPE_LABELS)
-              .filter(([k]) => k !== "corner_hanging")
-              .map(([k, v]) => `<option value="${k}"${k === mod.type ? " selected" : ""}>${v}</option>`)
-              .join("");
-
-            card.innerHTML = `
-              <div class="module-item-head">
-                <span class="module-item-title">${mod.title}</span>
-                <span class="module-item-badge">${badgeLabel}</span>
-              </div>
-              <div class="module-item-desc">${mod.desc || ""}</div>
-              <div class="module-config-row" style="flex-wrap:wrap;gap:6px;margin-top:8px;">
-                <select class="mod-type-sel" data-mod-id="${mod.id}" style="width:100%;">
-                  ${typeOptsHtml}
-                </select>
-                <div class="module-config-row" style="margin-top:4px;width:100%;padding:0;" data-count-row="${mod.id}"
-                  ${!needsCount ? 'hidden' : ''}>
-                  ${countHtml}
-                </div>
-              </div>
-            `;
-          }
-
-          moduleInspectorList.appendChild(card);
-        });
-
-        // Eventos: cambio de tipo → actualiza count select visibility + dispara engine
-        moduleInspectorList.querySelectorAll(".mod-type-sel").forEach(function(sel) {
-          sel.addEventListener("change", function() {
-            const modId = this.getAttribute("data-mod-id");
-            const newType = this.value;
-            const countRow = moduleInspectorList.querySelector(`[data-count-row="${modId}"]`);
-            const countSel = moduleInspectorList.querySelector(`.mod-count-sel[data-mod-id="${modId}"]`);
-
-            const opts = COUNT_OPTIONS[newType];
-            if (opts && countRow && countSel) {
-              countRow.removeAttribute("hidden");
-              countSel.innerHTML = opts.map(o =>
-                `<option value="${o.val}">${o.txt}</option>`
-              ).join("");
-              const def = opts[Math.floor(opts.length / 2)];
-              countSel.value = def.val;
-            } else if (countRow) {
-              countRow.setAttribute("hidden", "");
-            }
-
-            const c = countSel ? parseInt(countSel.value) || 4 : 4;
-            if (window.CAD_ENGINE) {
-              window.CAD_ENGINE.setModuleCustomization(modId, { type: newType, count: c });
-            }
+        filtered.forEach(pr => {
+          const isActive = state.categoria === pr.cat && state.subtipo === pr.sub;
+          const card = document.createElement("button");
+          card.type = "button";
+          card.className = "preset-card" + (isActive ? " active" : "");
+          const tierColors = { esencial: "#16a34a", contemporaneo: "#2563eb", signature: "#1E293B", clasico: "#16a34a" };
+          const tc = tierColors[pr.tier] || "#64748B";
+          const dims = pr.largo ? `${Math.round(pr.largo*100)}×${Math.round((pr.alto||2.4)*100)} cm` : "";
+          card.innerHTML = `
+            <span class="pcard-tier-dot" style="background:${tc}"></span>
+            <span class="pcard-name">${(pr.label||"").replace(/^[\u{1F300}-\u{1FAFF}\s]*/u,"")}</span>
+            ${dims ? `<span class="pcard-dims">${dims}</span>` : ""}
+            <span class="pcard-tier-label" style="color:${tc}">${pr.tierLabel||pr.tier}</span>
+          `;
+          card.addEventListener("click", () => {
+            applyPreset(pr);
+            renderPresetGallery(); // refresh active state
           });
-        });
-
-        // Eventos: cambio de cantidad → dispara engine
-        moduleInspectorList.querySelectorAll(".mod-count-sel").forEach(function(sel) {
-          sel.addEventListener("change", function() {
-            const modId = this.getAttribute("data-mod-id");
-            const typeSel = moduleInspectorList.querySelector(`.mod-type-sel[data-mod-id="${modId}"]`);
-            const newType = typeSel ? typeSel.value : "cajones";
-            const c = parseInt(this.value) || 4;
-            if (window.CAD_ENGINE) {
-              window.CAD_ENGINE.setModuleCustomization(modId, { type: newType, count: c });
-            }
-          });
-        });
-
-        // Click en la tarjeta: abre el popover 3D en el centro del viewport
-        moduleInspectorList.querySelectorAll(".module-item-card").forEach(function(card) {
-          card.addEventListener("click", function(e) {
-            if (e.target.tagName === "SELECT" || e.target.tagName === "OPTION") return;
-            const modId = this.getAttribute("data-mod-id");
-            if (window.CAD_ENGINE && window.CAD_ENGINE.openModuleEditor) {
-              window.CAD_ENGINE.openModuleEditor(modId);
-            }
-          });
+          grid.appendChild(card);
         });
       }
 
-      // Registrar el callback en CAD_ENGINE para que se llame cada vez que el motor redibuja
-      function wireModuleCallback() {
-        if (window.CAD_ENGINE && window.CAD_ENGINE.onModulesUpdated) {
-          window.CAD_ENGINE.onModulesUpdated(renderModuleInspector);
+      // Wire category tabs
+      document.querySelectorAll("#presetCatTabs .pcat-tab").forEach(btn => {
+        btn.addEventListener("click", () => {
+          document.querySelectorAll("#presetCatTabs .pcat-tab").forEach(b => b.classList.remove("active"));
+          btn.classList.add("active");
+          currentCatFilter = btn.getAttribute("data-cat");
+          renderPresetGallery();
+        });
+      });
+
+      // Wire tier filter
+      document.querySelectorAll("#presetTierFilter .ptier-btn").forEach(btn => {
+        btn.addEventListener("click", () => {
+          document.querySelectorAll("#presetTierFilter .ptier-btn").forEach(b => b.classList.remove("active"));
+          btn.classList.add("active");
+          currentTierFilter = btn.getAttribute("data-tier");
+          renderPresetGallery();
+        });
+      });
+
+      // Sync category tab when cat changes
+      function syncPresetCatTab() {
+        document.querySelectorAll("#presetCatTabs .pcat-tab").forEach(btn => {
+          btn.classList.toggle("active", btn.getAttribute("data-cat") === state.categoria);
+        });
+        currentCatFilter = state.categoria;
+        renderPresetGallery();
+      }
+
+
+      // ── SUB-AGENTE ESPECIALIZADO ADAPTATIVO & POP-UP "¿OCUPAS AYUDA?" (v15) ──
+      const bubaAirPopup = document.getElementById("bubaAirPopup");
+      const bubaAirClose = document.getElementById("bubaAirClose");
+      const bubaAirTitle = document.getElementById("bubaAirTitle");
+      const bubaAirDesc = document.getElementById("bubaAirDesc");
+      const bubaAirWaBtn = document.getElementById("bubaAirWaBtn");
+      const bubaAirOpenChatBtn = document.getElementById("bubaAirOpenChatBtn");
+      const bubaAgentDrawer = document.getElementById("bubaAgentDrawer");
+      const bubaDrawerClose = document.getElementById("bubaDrawerClose");
+      const bubaTelemetryBar = document.getElementById("bubaTelemetryBar");
+      const bubaChatBody = document.getElementById("bubaChatBody");
+      const bubaQuickQuestions = document.getElementById("bubaQuickQuestions");
+      const bubaUserQuestion = document.getElementById("bubaUserQuestion");
+      const bubaSendChatBtn = document.getElementById("bubaSendChatBtn");
+      const bubaDrawerWaBtn = document.getElementById("bubaDrawerWaBtn");
+      const bubaLauncherBtn = document.getElementById("bubaLauncherBtn");
+      const bubaWelcomeMsg = document.getElementById("bubaWelcomeMsg");
+
+      let airPopupDismissed = false;
+      let lastAdaptiveContextKey = "";
+      let lastUserChatText = "";
+
+      // Base de conocimiento adaptativa por categoría, subtipo y estado vivo del 3D
+      function getAdaptiveMenuForCurrentState(p, r, mods) {
+        const totalML = (r.totalML || state.muroA_L).toFixed(2);
+        const rangoStr = "$" + r.totalMXN.toLocaleString("es-MX") + " MXN";
+        const nEditable = mods.filter(m => m.configurable).length;
+
+        if (state.categoria === "WALKIN") {
+          const isIsla = state.subtipo === "WALKIN_ISLA";
+          const isCristal = state.subtipo === "WALKIN_CRISTAL";
+          const isPasillo = state.subtipo === "WALKIN_LINEAL_DOBLE";
+          return {
+            welcomeHtml: `¡Qué onda! Veo que estás diseñando un <strong>${p.categoriaNombre} (${p.subtipoNombre})</strong> de <strong>${totalML} ML</strong> (${rangoStr}). Tienes <strong>${nEditable} columnas interactivas</strong> en el 3D para personalizar cajoneras, doble colgado, vestidos largos o zapateras. ¿Qué ajustamos?`,
+            items: [
+              {
+                id: "wk_modulos",
+                label: "👔 ¿Cómo cambio cajones, tubos o zapateras en cada columna?",
+                q: "¿Cómo personalizo los cajones, tubos de colgado o zapateras de mi vestidor?",
+                a: `¡Directo sobre el dibujo! Tienes <strong>${nEditable} módulos configurables</strong> en este vestidor. <strong>Haz clic sobre cualquier columna en el visor 3D</strong> (o en la lista izquierda <em>5. Configuración por Módulo</em>) y elige entre: <strong>Cajonera Soft-Close (2 a 5 gavetas)</strong>, <strong>Doble Tubo</strong>, <strong>Colgado Largo (145 cm p/ vestidos)</strong>, <strong>Torre de Entrepaños</strong> o <strong>Zapatera con tope de aluminio</strong>.`
+              },
+              {
+                id: "wk_esquina",
+                label: "📐 ¿Cómo aprovechan la esquina en 'L' o 'U' sin que choquen cajones?",
+                q: "¿Cómo resuelven las esquinas del vestidor para que no choquen los cajones?",
+                a: "Regla de oro de nuestro taller: <strong>jamás ponemos cajoneras pegadas al rincón de una escuadra</strong> porque las jaladeras chocan con el muro perpendicular. En la esquina instalamos <strong>doble tubo continuo en 'L'</strong> para acceso libre, y reubicamos las torres de cajones en las bahías centrales."
+              },
+              {
+                id: "wk_isla_pasillo",
+                label: isIsla ? "💎 ¿Cómo configuro las gavetas de la Isla Joyera Central?" : "💎 ¿Qué espacio necesito para agregar Isla Joyera o Muro en 'U'?",
+                q: isIsla ? "¿Cómo puedo personalizar la Isla Joyera Central?" : "¿Cuánto espacio necesito para meter una Isla Joyera o cerrar en 'U'?",
+                a: isIsla
+                  ? "Puedes <strong>darle clic directo a la Isla Central en el 3D</strong> para elegir entre <strong>Cubierta de Cristal Templado con exhibidor joyero</strong> (2 a 4 niveles de gavetas con terciopelo) o <strong>Cubierta Sólida</strong>. Dejamos pasillos libres ergonómicos de 90 cm alrededor."
+                  : "Para un vestidor en <strong>Pasillo Doble o en 'U'</strong> requerimos al menos <strong>90 cm de pasillo libre</strong> al centro. Si tu cuarto mide más de 3.20 × 3.20 m, puedes activar el <strong>Muro C</strong> o elegir <em>Perimetral en 'U' + Isla Joyera</em> en la sección 2."
+              },
+              {
+                id: "wk_puertas_cristal",
+                label: isCristal ? "✨ ¿Cómo funcionan las vitrinas de aluminio y cristal fumé?" : "🚪 ¿Conviene vestidor abierto o con puertas de cristal / espejo?",
+                q: "¿Qué me recomiendan: vestidor abierto tipo boutique o con puertas de cristal/espejo?",
+                a: "El <strong>vestidor abierto</strong> es el más práctico para uso diario y luce espectacular con tiras LED verticales 3000K. Si buscas proteger ropa de gala contra polvo sin perder vista, puedes tocar cualquier módulo en el 3D y ponerle <strong>Puerta Vitrina Cristal Fumé</strong> o <strong>Puerta con Espejo de 4 mm</strong>."
+              },
+              {
+                id: "wk_muros",
+                label: "📏 ¿Cómo ajusto el largo de mis Muros A, B y C?",
+                q: "¿Cómo pongo las medidas exactas de las paredes de mi cuarto?",
+                a: `En el panel izquierdo (sección <strong>3. Dimensiones & Muros</strong>) tienes el <strong>Muro A (Principal: ${Math.round(state.muroA_L*100)} cm)</strong>, y las casillas para prender o apagar el <strong>Muro B (Escuadra 'L')</strong> y el <strong>Muro C (Cierre en 'U')</strong>. El sistema descuenta automáticamente los traslapes de 60 cm en las esquinas para cobrarte solo los metros lineales reales.`
+              },
+              {
+                id: "wk_planos",
+                label: "📐 ¿Venden también solo los planos e ingeniería del vestidor?",
+                q: "¿Puedo comprar solo los planos de fabricación de este vestidor?",
+                a: "¡Claro! Dale clic a <strong>⬇ Lámina PNG</strong> arriba del 3D. Puedes descargar tu lámina conceptual gratis, o cotizar el <strong>Proyecto Ejecutivo Sistema 32</strong> (despiece milimétrico y lista de herrajes). Si luego fabricas con nosotros, se te bonifica al 100%."
+              }
+            ]
+          };
+        }
+
+        if (state.categoria === "CLOSET") {
+          const isCorr = state.subtipo === "CLOSET_CORREDIZO";
+          return {
+            welcomeHtml: `¡Listo! Estás configurando un <strong>${p.categoriaNombre} (${p.subtipoNombre})</strong> de <strong>${totalML} ML × ${Math.round(state.alto*100)} cm de alto</strong> (${rangoStr}). ¿Revisamos puertas, distribución interior de cajones o maletero?`,
+            items: [
+              {
+                id: "cl_puertas",
+                label: isCorr ? "🚪 ¿Qué ventaja tiene el riel corredizo frente a puertas abatibles?" : "🚪 ¿Por qué los módulos ≥ 60 cm llevan 2 puertas simétricas?",
+                q: "¿Qué me conviene más en mi recámara: puertas abatibles o corredizas?",
+                a: "Si entre tu cama y el clóset tienes <strong>menos de 80 cm de pasillo</strong>, elige <strong>Puertas Corredizas</strong> para no bloquear el paso. Si tienes espacio libre, las <strong>Puertas Abatibles</strong> permiten abrir todo el clóset a la vez; en módulos de 60 cm o más instalamos <strong>par de hojas simétricas (30+30 cm)</strong> para que jamás se cuelguen las bisagras."
+              },
+              {
+                id: "cl_interior",
+                label: "🗄️ ¿Cómo cambio cajones, entrepaños o tubos dentro del clóset?",
+                q: "¿Cómo modifico el interior de cada sección del clóset?",
+                a: `Haz clic directo sobre cualquiera de las <strong>${nEditable} secciones del clóset en el 3D</strong> (o usa la barra <em>Despiece %</em> abajo del dibujo para abrirlo y ver el interior). Puedes elegir cuántas gavetas (2 a 5), entrepaños, zapatera o doble tubo quieres en cada bahía, y elegir puerta de melamina, espejo o cristal.`
+              },
+              {
+                id: "cl_maletero",
+                label: "🧳 ¿Cómo se modula el maletero superior piso a techo?",
+                q: "¿Qué altura libre deja el maletero superior?",
+                a: `Tu clóset va de piso a techo (${Math.round(state.alto*100)} cm). Dejamos un <strong>maletero superior corrido de 42 a 45 cm de altura</strong> ideal para maletas, edredones y cajas, con puertas independientes para que no tengas que abrir todo el frente de abajo.`
+              },
+              {
+                id: "cl_espejo_zap",
+                label: "🪞 ¿Cómo agrego puertas con espejo de cuerpo completo o pantalonero?",
+                q: "¿Puedo poner espejo en las puertas y herrajes extraíbles?",
+                a: "Sí: en la sección <strong>4. Equipamiento & Extras</strong> puedes marcar <strong>Puertas con Luna de Espejo 4 mm</strong> (van pegadas sobre respaldo sólido de melamina con adhesivo MS y 4 bisagras cazoleta por hoja para máxima seguridad) o darle clic a un módulo específico en el 3D y asignarle puerta de espejo."
+              },
+              {
+                id: "cl_planos",
+                label: "📐 ¿Cómo descargo mi lámina con cotas o cotizo fabricación?",
+                q: "¿Cómo guardo mi plano o lo mando a cotizar al taller?",
+                a: "Haz clic en el botón <strong>⬇ Lámina PNG</strong> arriba del visor para descargar tu hoja técnica con Vista 3D + Alzado 2D acotado en centímetros, o pícale al botón verde aquí abajo para mandarme tu diseño directo por WhatsApp."
+              }
+            ]
+          };
+        }
+
+        if (state.categoria === "BANIO") {
+          return {
+            welcomeHtml: `¡Excelente! Estás diseñando un <strong>${p.categoriaNombre} (${p.subtipoNombre})</strong> de <strong>${Math.round(state.muroA_L*100)} cm de ancho</strong> (${rangoStr}) en sustrato hidrófugo RH. ¿Vemos el saque para céspol, cubierta o doble lavabo?`,
+            items: [
+              {
+                id: "bn_rh",
+                label: "💧 ¿Por qué usan tablero RH (Resistente a Humedad) en baños?",
+                q: "¿Qué diferencia tiene el material RH para muebles de baño?",
+                a: "En baños jamás usamos melamina común porque el vapor de la regadera hincha los cantos. Fabricamos tu Vanity en <strong>sustrato hidrófugo RH (verde antihumedad)</strong> con canteado perimetral sellado, garantizando que soporte vapor y salpicaduras por años."
+              },
+              {
+                id: "bn_cespol",
+                label: "🗄️ ¿Cómo libran la tubería y el céspol con los cajones?",
+                q: "¿Chocan los cajones del Vanity con el tubo del desagüe?",
+                a: "Para nada: el cajón superior se fabrica con un <strong>saque en 'U' canteado de fábrica (20 × 25 cm)</strong> que rodea el céspol y las llaves angulares, permitiéndote guardar artículos a los lados, mientras que el cajón inferior queda 100% completo para toallas."
+              },
+              {
+                id: "bn_medidas",
+                label: "📏 ¿A qué altura se instala flotado y cuándo caben 2 lavabos?",
+                q: "¿A qué altura queda el Vanity flotado y desde qué medida caben 2 lavabos?",
+                a: `Instalamos el mueble suspendido a <strong>+25 cm del piso</strong> para limpieza fácil, llegando a <strong>88–90 cm de altura total</strong>. A partir de <strong>150 cm de ancho</strong> (tú llevas ${Math.round(state.muroA_L*100)} cm) ya podemos modular <strong>Doble Seno (2 lavabos independientes)</strong> con 4 gavetas.`
+              },
+              {
+                id: "bn_cubierta",
+                label: "🪨 ¿Incluye cubierta de piedra y espejo Touch LED?",
+                q: "¿Pueden entregarlo con cubierta de cuarzo/granito y espejo iluminado?",
+                a: "¡Sí! En la sección <strong>4. Equipamiento & Extras</strong> puedes incluir la <strong>Cubierta de Cuarzo o Granito con saque para ovalín</strong>, el <strong>Botiquín oculto superior con puerta de espejo</strong> y el <strong>Espejo Touch LED antivaho</strong>."
+              }
+            ]
+          };
+        }
+
+        if (state.categoria === "TV_ROOM") {
+          const isPerchero = state.subtipo === "PERCHERO_MUDROOM";
+          const isBar = state.subtipo === "BAR_CAVA";
+          if (isPerchero) {
+            return {
+              welcomeHtml: `¡De lujo! Estás armando un <strong>Perchero Recibidor (Mudroom) + Banca Zapatera</strong> de <strong>${Math.round(state.muroA_L*100)} cm</strong> (${rangoStr}). ¿Revisamos la banca de calzado, ganchos o la torre lateral?`,
+              items: [
+                {
+                  id: "md_banca",
+                  label: "🧥 ¿Cómo funciona la Banca Zapatera y qué peso soporta?",
+                  q: "¿Me puedo sentar en la banca zapatera del Perchero Mudroom?",
+                  a: "¡Por supuesto! La banca inferior se fabrica a <strong>45 cm de altura ergonómica</strong> con cubierta reforzada de 32 mm y divisores estructurales a piso para que te sientes a calzarte con total firmeza. Haz clic en la banca en el 3D para elegir entre <strong>charolas abiertas para zapatos</strong> o <strong>gavetones extraíbles cierre suave</strong>."
+                },
+                {
+                  id: "md_torre",
+                  label: "🗄️ ¿Cómo configuro la columna lateral para mochilas, abrigos o espejo?",
+                  q: "¿Qué puedo guardar en la torre lateral del perchero recibidor?",
+                  a: "Dale clic a la <strong>Columna Lateral en el 3D</strong>: puedes configurarla con <strong>cajones inferiores + entrepaños superiores</strong> o <strong>repisas de piso a techo</strong>, y elegir <strong>Puerta cerrada de melamina</strong>, <strong>Puerta con Espejo de cuerpo completo</strong> (ideal antes de salir de casa) o dejarla abierta."
+                },
+                {
+                  id: "md_medidas",
+                  label: "📏 ¿Qué fondo recomienda el taller para un recibidor o pasillo?",
+                  q: "¿Qué profundidad ocupa el Perchero Mudroom para no estorbar el paso?",
+                  a: `Se modula entre <strong>40 y 45 cm de fondo</strong> (tú lo tienes en ${Math.round(state.fondo*100)} cm). Es la medida perfecta para que quepan pares de zapatos de adulto y mochilas sin reducir el pasillo de entrada.`
+                }
+              ]
+            };
+          }
+          if (isBar) {
+            return {
+              welcomeHtml: `¡Salud! Estás diseñando un <strong>Gabinete Bar & Cava Modular Sistema 32</strong> de <strong>${Math.round(state.muroA_L*100)} cm</strong> (${rangoStr}). ¿Vemos el botellero, vitrina copero o cajones inferiores?`,
+              items: [
+                {
+                  id: "bar_cava",
+                  label: "🍷 ¿Cómo se distribuye la cuadrícula de botellas y la vitrina copero?",
+                  q: "¿Cuántas botellas caben y cómo va iluminada la cava?",
+                  a: "El módulo superior combina una <strong>cuadrícula individual en melamina para botellas acostadas</strong> + una <strong>vitrina con cristal templado fumé e iluminación LED cálida 3000K</strong> para copas y licores, sobre una barra inferior de 91 cm de altura."
+                },
+                {
+                  id: "bar_bajos",
+                  label: "🗄️ ¿Puedo personalizar los cajones y puertas de la barra inferior?",
+                  q: "¿Cómo cambio los cajones o puertas del mueble bajo del bar?",
+                  a: "Toca cualquiera de los módulos bajos en el 3D para alternar entre <strong>Cajones Push / Cierre Suave</strong> (para destapadores y accesorios) o <strong>Gabinetes con Entrepaños y Puertas</strong> (para cajas y cristalería)."
+                }
+              ]
+            };
+          }
+          return {
+            welcomeHtml: `¡Excelente! Estás diseñando un <strong>Centro de TV & Almacenamiento (${p.subtipoNombre})</strong> de <strong>${Math.round(state.muroA_L*100)} cm</strong> (${rangoStr}). ¿Revisamos pasacables oculto, consola flotante o torres laterales?`,
+            items: [
+              {
+                id: "tv_cables",
+                label: "📺 ¿Cómo se ocultan todos los cables de la TV y consolas?",
+                q: "¿Cómo queda instalada la pantalla sin que se vea ningún cable?",
+                a: "El panel respaldo en melamina se monta sobre un <strong>bastidor francés a 45° que deja una cámara trasera libre de 3 cm</strong>. Por ahí bajan ocultos los cables HDMI, fibra óptica y corriente directo hacia el interior de la consola flotante."
+              },
+              {
+                id: "tv_consola",
+                label: "🗄️ ¿Cómo configuro los cajones o puertas de la consola flotante?",
+                q: "¿Puedo elegir entre cajones y puertas abatibles en la consola de TV?",
+                a: "Sí: <strong>haz clic sobre cualquier sección de la consola flotante en el 3D</strong> para elegir entre <strong>Cajones Push-to-Open</strong> o <strong>Compartimento para consolas/equipos</strong> (abierto para ventilación, con puerta abatible o cristal fumé que deja pasar la señal del control remoto)."
+              },
+              {
+                id: "tv_torres",
+                label: "✨ ¿Cómo agrego o modifico las torres vitrina/librero laterales?",
+                q: "¿Cómo personalizo las columnas de almacenamiento a los lados de la TV?",
+                a: "Elige la tipología <em>Centro de TV + Torres de Almacenamiento</em> en el paso 2 y dale clic a la torre lateral en el 3D: puedes ponerle <strong>3 a 6 entrepaños</strong>, agregarle <strong>cajones inferiores</strong> y elegir <strong>Puerta Vitrina Cristal Fumé con LED</strong>, <strong>Puerta Melamina</strong> o <strong>Librero Abierto</strong>."
+              }
+            ]
+          };
+        }
+
+        // DEFAULT: COCINA INTEGRAL
+        return {
+          welcomeHtml: `¡Qué onda! Veo que estás diseñando tu <strong>Cocina Integral (${p.subtipoNombre})</strong> de <strong>${totalML} ML</strong> (${rangoStr}). Estoy leyendo en vivo la posición de tu tarja, parrilla y alacenas. ¿Qué revisamos?`,
+          items: [
+            {
+              id: "cc_tarja_parrilla",
+              label: "🚰 ¿Cómo muevo la Tarja o la Parrilla de lugar sin que se dupliquen?",
+              q: "¿Cómo cambio de lugar la tarja o la parrilla en mi cocina?",
+              a: "Debajo del visor 3D tienes los botones <strong>🚰 Cambiar Tarja de Lugar</strong> y <strong>🔥 Cambiar Parrilla / Estufa de Lugar</strong> (o dale clic a cualquier gabinete bajo en el 3D). El motor las intercambia automáticamente y mueve la campana con la parrilla para que <strong>jamás se dupliquen</strong>."
+            },
+            {
+              id: "cc_sobrealacena",
+              label: "🏛️ ¿Por qué el 2° piso de sobrealacena mide 42 cm de fondo?",
+              q: "¿Cómo funciona el 2° piso de sobrealacena escalonada de 32 a 42 cm?",
+              a: "Cuando la alacena supera los <strong>80 cm de altura</strong>, modulamos 2 niveles: el <strong>1° piso va a 32 cm de fondo</strong> para que no estorbe al cocinar, y el <strong>2° piso (sobrealacena a techo) sale a 42 cm de fondo</strong> (+10 cm en voladizo) para darle jerarquía arquitectónica y ocultar el ducto de la campana."
+            },
+            {
+              id: "cc_coccion",
+              label: "🔥 ¿Parrilla empotrada (60-90cm) c/ cajones o estufa de piso?",
+              q: "¿Cómo configuro el mueble bajo parrilla o el hueco para estufa de piso?",
+              a: "En el panel <em>Agente Diseñador Senior</em> debajo del 3D puedes elegir con 1 clic: <strong>Parrilla de 60, 75 o 90 cm (2 a 6 flamas) con 2 cajones medianos cubierteros arriba + 1 cacerolero grande abajo</strong>, <strong>Parrilla + Horno empotrado</strong>, o <strong>Estufa de Piso de 76 cm</strong> (que corta en vivo el zoclo y la cubierta)."
+            },
+            {
+              id: "cc_piedra",
+              label: "🪨 ¿Qué cubierta recomiendan: Cuarzo o Granito?",
+              q: "¿Qué cubierta recomiendan: Cuarzo o Granito?",
+              a: `En cocina instalamos exclusivamente <strong>Granito Natural</strong> o <strong>Cuarzo de Ingeniería</strong> (<strong>jamás Mármol</strong> porque es poroso y se mancha con limón y grasa). Para tus <strong>${r.piedraInfo ? r.piedraInfo.cubiertaML : totalML} ML de barra</strong> se consideran <strong>${r.piedraInfo ? r.piedraInfo.numPlacas : 1} placa(s)</strong> en servicio llave en mano (placa, plantillado, cortes de tarja/parrilla, faldones a 45° e instalación).`
+            },
+            {
+              id: "cc_zoclo",
+              label: "🦿 ¿Patas niveladoras 10 cm vs 12 cm + tapeta aluminio anti-bichos?",
+              q: "¿Qué altura tiene la barra y cómo funciona el zoclo de aluminio?",
+              a: "Damos <strong>91 cm a la superficie de la melamina</strong> (casco de 81 cm + <strong>patas niveladoras de 10 cm / 100 mm</strong>, o <strong>93 cm con patas de 12 cm / 120 mm</strong>). Llevan <strong>tapeta clip de PVC color aluminio</strong> que bloquea humedad y bichos y se desmonta para que entre la fumigación. Arriba lleva <strong>manguete de 5.5 cm con Gola a 45°</strong>."
+            },
+            {
+              id: "cc_planos",
+              label: "📐 ¿Venden también solo la ingeniería / planos de fabricación?",
+              q: "¿Puedo comprar solo los planos de corte y despiece Sistema 32?",
+              a: "¡Sí! Dale clic a <strong>⬇ Lámina PNG</strong> arriba del 3D y elige <strong>Cotizar Planos de Fabricación</strong>. Y si decides fabricar tu cocina con nosotros, el 100% de los planos se abona a tu anticipo."
+            }
+          ]
+        };
+      }
+
+      // Motor intuitivo de respuesta a texto libre del cliente ("hola me ayudas", "cajones", "esquina", "precio", etc.)
+      function answerFreeUserText(rawText) {
+        const txt = (rawText || "").trim();
+        if (!txt || !bubaChatBody) return;
+        lastUserChatText = txt;
+
+        const uDiv = document.createElement("div");
+        uDiv.className = "buba-msg buba-msg-user";
+        uDiv.textContent = txt;
+        bubaChatBody.appendChild(uDiv);
+
+        const p = currentPayload();
+        const r = M.calcularRango(p);
+        const mods = window.CAD_ENGINE && window.CAD_ENGINE.getActiveModules ? window.CAD_ENGINE.getActiveModules() : [];
+        const totalML = (r.totalML || state.muroA_L).toFixed(2);
+        const rangoStr = "$" + r.totalMXN.toLocaleString("es-MX") + " MXN";
+        const nEditable = mods.filter(m => m.configurable).length;
+        const low = txt.toLowerCase();
+
+        let replyHtml = "";
+
+        if (/cajon|gaveta|entrepano|repisa|zapatera|tubo|colgad|puerta|cambiar|modific|m[oó]dulo/.test(low)) {
+          replyHtml = `Para personalizar el interior de tu <strong>${p.categoriaNombre}</strong>: tienes <strong>${nEditable} módulos interactivos</strong> en pantalla. <strong>Haz clic directo sobre cualquier sección en el dibujo 3D</strong> (o en la lista izquierda <em>5. Configuración por Módulo</em>) y ahí mismo cambias número de cajones, entrepaños, zapateras o tipo de puerta en vivo.`;
+        } else if (/material|acabado|color|tono|melamina|arauco|masisa|egger|alvic|blum|hafele|tendencia|temporada|invierno|2027/.test(low)) {
+          replyHtml = `Ahorita tienes seleccionado el acabado <strong>${p.acabadoNombre}</strong> (${p.acabadoMarca}) de nuestra colección <strong>${p.temporadaTitulo}</strong> en <strong>${r.gamaNombre}</strong>.<br><br>• En <strong>Línea Taller MTY</strong> trabajamos tableros <strong>Arauco Vesto Antimicrobiano</strong> y <strong>Masisa 16mm</strong> (con versiones RH antihumedad) y correderas <strong>Ducasse</strong>.<br>• En <strong>Boutique San Pedro</strong> subimos a frentes europeos <strong>Egger Feelwood</strong> o <strong>Alvic Luxe/Zenit</strong> con canteado PUR 2mm y herrajes austriacos <strong>Blum / Häfele</strong>.<br>Puedes cambiar de tono en vivo en el panel izquierdo <strong>1B. Paleta de Acabados</strong>.`;
+        } else if (/precio|costo|cu[aá]nto|presupuesto|anticipo|pago|cotiza/.test(low)) {
+          replyHtml = `Con lo que tienes ahorita en pantalla (<strong>${totalML} ML × ${Math.round(state.alto*100)} cm de alto</strong> en <strong>${r.gamaNombre}</strong>), tu estimado es de <strong>${rangoStr}</strong> (Mueble Base: <strong>$${r.precioBaseMXN.toLocaleString("es-MX")}</strong> + Adicionales del Checklist: <strong>$${r.extrasMXN.toLocaleString("es-MX")}</strong> + Logística: <strong>$${r.fleteMXN.toLocaleString("es-MX")}</strong>). Se trabaja con <strong>60% de anticipo</strong> ($${r.anticipo60MXN.toLocaleString("es-MX")} MXN) y <strong>40% contra entrega</strong> ($${r.finiquito40MXN.toLocaleString("es-MX")} MXN).`;
+        } else if (/medida|muro|escuadra|espacio|largo|alto|fondo|pared/.test(low)) {
+          replyHtml = `Ahorita tienes configurado un desarrollo de <strong>${totalML} ML</strong> (Muro A: ${Math.round(state.muroA_L*100)} cm${state.muroB_activo ? " · Muro B: " + Math.round(state.muroB_L*100) + " cm" : ""}${state.muroC_activo ? " · Muro C: " + Math.round(state.muroC_L*100) + " cm" : ""}) × <strong>${Math.round(state.alto*100)} cm de alto</strong>. Puedes mover las barras en la sección <em>3. Dimensiones & Muros</em> a la izquierda o decirme aquí tus medidas para pasárselas al taller por WhatsApp.`;
+        } else if (/tarja|parrilla|estufa|campana|horno/.test(low)) {
+          if (state.categoria !== "COCINA") {
+            replyHtml = `Veo que estás en <strong>${p.categoriaNombre}</strong>. Si quieres diseñar una cocina con tarja, parrilla y sobrealacenas, haz clic en la pestaña <strong>Cocina Integral</strong> arriba y ahí podrás mover la tarja y parrilla a cualquier módulo.`;
+          } else {
+            replyHtml = `En tu <strong>Cocina Integral</strong> puedes cambiar la <strong>Tarja</strong> o la <strong>Parrilla / Estufa de piso</strong> de lugar con un clic en las barras rápidas del <em>Agente Diseñador Senior</em> debajo del 3D (o tocando cualquier gabinete bajo en el 3D). El sistema las intercambia sin duplicarlas jamás.`;
+          }
+        } else {
+          // Respuesta contextual inteligente para "hola me ayudas", "ocupo ayuda", etc., adaptada 100% al mueble activo en pantalla
+          if (state.categoria === "WALKIN") {
+            replyHtml = `¡Claro que sí, con todo gusto! Veo que estás armando un <strong>Vestidor / Walk-in Closet (${p.subtipoNombre})</strong> de <strong>${totalML} ML</strong> (${rangoStr}).<br><br>Aquí te puedo ayudar con 3 cosas al instante:<br>1️⃣ <strong>Toca cualquier columna en el 3D</strong> para cambiarla entre Cajonera (2 a 5 gavetas), Doble Tubo, Vestidos Largos o Zapatera.<br>2️⃣ En el paso 3 puedes activar o ajustar tu <strong>Muro B (Escuadra 'L')</strong> y <strong>Muro C ('U')</strong>.<br>3️⃣ Si quieres que revisemos las medidas reales de tu cuarto, pícale al botón verde de abajo para abrir WhatsApp con este diseño cargado.`;
+          } else if (state.categoria === "CLOSET") {
+            replyHtml = `¡Claro que sí! Veo que tienes en pantalla un <strong>Clóset Residencial (${p.subtipoNombre})</strong> de <strong>${totalML} ML × ${Math.round(state.alto*100)} cm</strong> (${rangoStr}).<br><br>• Puedes <strong>darle clic a cualquier sección en el 3D</strong> para elegir cuántos cajones, entrepaños, tubos o puertas con espejo quieres.<br>• Usa la barra <strong>Despiece %</strong> abajo del dibujo para abrir las puertas y ver todo el interior.<br>¿Qué medida tiene la pared de tu recámara?`;
+          } else if (state.categoria === "BANIO") {
+            replyHtml = `¡Claro que sí! Estás viendo un <strong>${p.categoriaNombre} (${p.subtipoNombre})</strong> de <strong>${Math.round(state.muroA_L*100)} cm de ancho</strong> (${rangoStr}) fabricado en tablero hidrófugo RH.<br><br>• Haz clic sobre el mueble en el 3D para elegir entre <strong>Gavetas con saque en 'U' para céspol</strong> o <strong>Gabinete toallero</strong>.<br>• ¿Quieres que lo coticemos con cubierta de cuarzo/granito y espejo LED por WhatsApp?`;
+          } else if (state.categoria === "TV_ROOM") {
+            replyHtml = `¡Con gusto! Tienes en pantalla un <strong>${p.categoriaNombre} (${p.subtipoNombre})</strong> de <strong>${Math.round(state.muroA_L*100)} cm</strong> (${rangoStr}).<br><br>• Haz clic sobre los módulos inferiores o la columna lateral en el 3D para cambiar cajones, entrepaños o puertas.<br>• Si quieres atención directa con tus medidas, dale clic al botón verde de WhatsApp aquí abajo.`;
+          } else {
+            replyHtml = `¡Claro que sí! Veo que estás diseñando una <strong>Cocina Integral (${p.subtipoNombre})</strong> de <strong>${totalML} ML</strong> (${rangoStr}).<br><br>Aquí mismo puedes:<br>1️⃣ <strong>Cambiar la Tarja o la Parrilla de lugar</strong> con los botones debajo del 3D (se intercambian sin duplicarse).<br>2️⃣ Elegir entre <strong>Parrilla de 60, 75 o 90 cm con cajones</strong> o <strong>Estufa de piso</strong>.<br>3️⃣ Tocar cualquier alacena (1° piso 32 cm o 2° piso 42 cm) para cambiar puertas o entrepaños.<br>¿Qué duda tienes o qué medidas tiene tu cocina?`;
+          }
+        }
+
+        const bDiv = document.createElement("div");
+        bDiv.className = "buba-msg buba-msg-bot";
+        bDiv.innerHTML = replyHtml;
+        bubaChatBody.appendChild(bDiv);
+        bubaChatBody.scrollTop = bubaChatBody.scrollHeight;
+        if (bubaUserQuestion) bubaUserQuestion.value = "";
+      }
+
+      function syncBubaSubAgentContext() {
+        const p = currentPayload();
+        const r = M.calcularRango(p);
+        const mods = window.CAD_ENGINE && window.CAD_ENGINE.getActiveModules ? window.CAD_ENGINE.getActiveModules() : [];
+        const totalML = (r.totalML || state.muroA_L).toFixed(2);
+        const rangoStr = "$" + r.totalMXN.toLocaleString("es-MX") + " MXN";
+
+        if (bubaTelemetryBar) {
+          bubaTelemetryBar.innerHTML = `📡 <strong>En pantalla:</strong> ${p.categoriaNombre} (${totalML} ML) · ${rangoStr}`;
+        }
+
+        if (bubaAirTitle && bubaAirDesc) {
+          if (state.categoria === "COCINA") {
+            bubaAirTitle.textContent = "🍳 ¿Ocupas ayuda diseñando tu cocina?";
+            bubaAirDesc.textContent = `Llevas ${totalML} ML configurados. Te ayudo a acomodar tu tarja, parrilla, sobrealacena de 42 cm o te conecto directo a WhatsApp.`;
+          } else if (state.categoria === "WALKIN") {
+            bubaAirTitle.textContent = "👔 ¿Ocupas ayuda con tu vestidor walk-in?";
+            bubaAirDesc.textContent = `Llevas ${totalML} ML en ${p.subtipoNombre}. Personalizamos tus cajoneras, esquineros, zapateras o isla central.`;
+          } else if (state.categoria === "CLOSET") {
+            bubaAirTitle.textContent = "🚪 ¿Ocupas ayuda con tu clóset piso a techo?";
+            bubaAirDesc.textContent = `Llevas ${totalML} ML configurados. Te ayudo a elegir puertas abatibles/corredizas, cajones interiores y maletero.`;
+          } else if (state.categoria === "BANIO") {
+            bubaAirTitle.textContent = "🚿 ¿Ocupas ayuda con tu Vanity RH de baño?";
+            bubaAirDesc.textContent = `Mueble de ${Math.round(state.muroA_L*100)} cm en sustrato antihumedad RH con saque en 'U' para céspol.`;
+          } else {
+            bubaAirTitle.textContent = `📐 ¿Ocupas ayuda con tu ${p.categoriaNombre.toLowerCase()}?`;
+            bubaAirDesc.textContent = `Estoy leyendo tu diseño en vivo (${totalML} ML). Pregúntame aquí o mándalo directo por WhatsApp.`;
+          }
+        }
+
+        // Actualizar dinámicamente los botones de ayuda rápida y el mensaje contextual cuando cambia la categoría o subtipo
+        const menuData = getAdaptiveMenuForCurrentState(p, r, mods);
+        const contextKey = `${state.categoria}_${state.subtipo}`;
+
+        if (bubaQuickQuestions && contextKey !== lastAdaptiveContextKey) {
+          lastAdaptiveContextKey = contextKey;
+          if (bubaWelcomeMsg) {
+            bubaWelcomeMsg.innerHTML = menuData.welcomeHtml;
+          }
+          // Limpiar mensajes viejos de otra categoría para no mezclar temas de cocina con vestidor
+          if (bubaChatBody) {
+            Array.from(bubaChatBody.querySelectorAll(".buba-msg")).forEach((el) => {
+              if (el.id !== "bubaWelcomeMsg") el.remove();
+            });
+          }
+          bubaQuickQuestions.innerHTML = "";
+          menuData.items.forEach((item) => {
+            const btn = document.createElement("button");
+            btn.type = "button";
+            btn.className = "buba-q-pill";
+            btn.textContent = item.label;
+            btn.addEventListener("click", () => {
+              // Refrescar respuesta con las medidas actuales en vivo
+              const freshP = currentPayload();
+              const freshR = M.calcularRango(freshP);
+              const freshMods = window.CAD_ENGINE && window.CAD_ENGINE.getActiveModules ? window.CAD_ENGINE.getActiveModules() : [];
+              const freshMenu = getAdaptiveMenuForCurrentState(freshP, freshR, freshMods);
+              const targetItem = freshMenu.items.find(x => x.id === item.id) || item;
+
+              const uDiv = document.createElement("div");
+              uDiv.className = "buba-msg buba-msg-user";
+              uDiv.textContent = targetItem.q;
+              bubaChatBody.appendChild(uDiv);
+
+              const bDiv = document.createElement("div");
+              bDiv.className = "buba-msg buba-msg-bot";
+              bDiv.innerHTML = targetItem.a;
+              bubaChatBody.appendChild(bDiv);
+              bubaChatBody.scrollTop = bubaChatBody.scrollHeight;
+            });
+            bubaQuickQuestions.appendChild(btn);
+          });
+        } else if (bubaWelcomeMsg) {
+          bubaWelcomeMsg.innerHTML = menuData.welcomeHtml;
         }
       }
 
-      // Inicializar estudio CAD
+      function buildBubaWhatsAppReport(customDuda) {
+        const p = currentPayload();
+        const r = M.calcularRango(p);
+        const mods = window.CAD_ENGINE && window.CAD_ENGINE.getActiveModules ? window.CAD_ENGINE.getActiveModules() : [];
+        const fixtures = window.CAD_ENGINE && window.CAD_ENGINE.getKitchenFixtures ? window.CAD_ENGINE.getKitchenFixtures() : {};
+        const totalMLStr = (r.totalML || state.muroA_L).toFixed(2);
+        const dimDesglose = (state.muroB_activo || state.muroC_activo)
+          ? `Muro A: ${Math.round(state.muroA_L * 100)}cm${state.muroB_activo ? " · Muro B: " + Math.round(state.muroB_L * 100) + "cm" : ""}${state.muroC_activo ? " · Muro C: " + Math.round(state.muroC_L * 100) + "cm" : ""} (${totalMLStr} ML)`
+          : `${Math.round(state.muroA_L * 100)} cm`;
+
+        const cookMod = mods.find(m => m.id === fixtures.cookBayId);
+        const sinkMod = mods.find(m => m.id === fixtures.sinkBayId);
+        const cocinaPositions = state.categoria === "COCINA"
+          ? `• Cocción: ${cookMod ? cookMod.zone + " (" + cookMod.title + ")" : "Estándar"} | Tarja: ${sinkMod ? sinkMod.zone + " (" + sinkMod.title + ")" : "Estándar"}`
+          : `• Módulos Configurados (${mods.length}): ${mods.slice(0, 6).map(m => m.title).join(", ")}`;
+
+        const typedNow = (bubaUserQuestion && bubaUserQuestion.value || "").trim();
+        const dudaTxt = (customDuda || typedNow || lastUserChatText || "").trim()
+          || `¡Hola! Estoy diseñando mi ${p.categoriaNombre} en el Estudio CAD 3D y ocupo ayuda para revisar mi proyecto.`;
+
+        const msg = [
+          `🤖 *[REPORTE AGENTE CAD WEB → BUBA WHATSAPP]*`,
+          `• *Cliente / Duda:* ${dudaTxt}`,
+          `• *Folio CAD:* ${p.folio}`,
+          `• *Proyecto:* ${p.categoriaNombre} — ${p.subtipoNombre}`,
+          `• *Gama:* ${r.gamaNombre}`,
+          `• *Material (${p.temporadaTitulo}):* ${p.acabadoNombre} — ${p.acabadoMarca}`,
+          `• *Dimensiones:* ${dimDesglose} × ${Math.round(p.alto * 100)}cm Alto × ${Math.round(p.fondo * 100)}cm Fondo`,
+          cocinaPositions,
+          ((state.categoria === "COCINA" && r.piedraInfo) ? `• *Cubierta Piedra:* ${p.piedraNombre} (${r.piedraInfo.numPlacas} placa(s) · ${r.piedraInfo.cubiertaML} ML barra)` : (state.categoria === "BANIO" ? `• *Cubierta Baño:* ${p.piedraNombre}` : "")),
+          `• *Precio Estimado:* ${r.totalMXN.toLocaleString("es-MX")} MXN (Mueble Base: ${r.precioBaseMXN.toLocaleString("es-MX")} + Checklist Adicionales: ${r.extrasMXN.toLocaleString("es-MX")})`
+        ].filter(Boolean).join("\n");
+
+        return `https://wa.me/528134575939?text=${encodeURIComponent(msg)}`;
+      }
+
+      function showAirPopup() {
+        if (airPopupDismissed || !bubaAirPopup) return;
+        if (bubaAgentDrawer && bubaAgentDrawer.classList.contains("is-open")) return;
+        syncBubaSubAgentContext();
+        bubaAirPopup.classList.add("is-visible");
+      }
+
+      setTimeout(showAirPopup, 4000);
+
+      if (bubaAirClose) {
+        bubaAirClose.addEventListener("click", () => {
+          airPopupDismissed = true;
+          bubaAirPopup.classList.remove("is-visible");
+        });
+      }
+
+      if (bubaAirWaBtn) {
+        bubaAirWaBtn.addEventListener("click", () => {
+          window.open(buildBubaWhatsAppReport(), "_blank", "noopener");
+        });
+      }
+
+      if (bubaAirOpenChatBtn) {
+        bubaAirOpenChatBtn.addEventListener("click", () => {
+          bubaAirPopup.classList.remove("is-visible");
+          bubaAgentDrawer.classList.add("is-open");
+          syncBubaSubAgentContext();
+        });
+      }
+
+      if (bubaLauncherBtn) {
+        bubaLauncherBtn.addEventListener("click", () => {
+          const isOpen = bubaAgentDrawer.classList.contains("is-open");
+          if (isOpen) {
+            bubaAgentDrawer.classList.remove("is-open");
+          } else {
+            bubaAirPopup.classList.remove("is-visible");
+            bubaAgentDrawer.classList.add("is-open");
+            syncBubaSubAgentContext();
+          }
+        });
+      }
+
+      if (bubaDrawerClose) {
+        bubaDrawerClose.addEventListener("click", () => {
+          bubaAgentDrawer.classList.remove("is-open");
+        });
+      }
+
+      if (bubaSendChatBtn) {
+        bubaSendChatBtn.addEventListener("click", () => {
+          if (bubaUserQuestion && bubaUserQuestion.value.trim()) {
+            answerFreeUserText(bubaUserQuestion.value);
+          }
+        });
+      }
+
+      if (bubaUserQuestion) {
+        bubaUserQuestion.addEventListener("keydown", (e) => {
+          if (e.key === "Enter") {
+            e.preventDefault();
+            if (bubaUserQuestion.value.trim()) {
+              answerFreeUserText(bubaUserQuestion.value);
+            }
+          }
+        });
+      }
+
+      if (bubaDrawerWaBtn) {
+        bubaDrawerWaBtn.addEventListener("click", () => {
+          window.open(buildBubaWhatsAppReport(), "_blank", "noopener");
+        });
+      }
+
+      // Inicialización
       syncSlidersBounds();
       renderCatPills();
-      renderPresets();
-      wireModuleCallback();
-      if (initPreset) {
-        const found = M.presets.find(p => p.id === initPreset);
+      renderSubtipos();
+      renderExtras();
+      renderPresetGallery();
+      updateAll();
+
+      if (initPreset && M.presets) {
+        const found = M.presets.find((p) => p.id === initPreset);
         if (found) applyPreset(found);
-      } else {
-        renderSubtipos();
-        renderExtras();
-        updateAll();
       }
     })();
   </script>
+
+  
 </body>
 </html>
