@@ -17,6 +17,7 @@
 
   var STORE_KEY = "cc_funnel_metrics_v1";
   var ATTR_KEY = "cc_attribution_v1";
+  var CONSENT_KEY = "cc_cookie_consent_v1";
   var MAX_RECENT = 120;
 
   function safeParse(raw, fallback) {
@@ -133,7 +134,21 @@
   var ga4Loaded = false;
   var pixelLoaded = false;
 
+  function getCookieConsent() {
+    return safeStorageGet(win.localStorage, CONSENT_KEY) || "";
+  }
+
+  function setCookieConsent(val) {
+    safeStorageSet(win.localStorage, CONSENT_KEY, val);
+    if (val === "accepted") {
+      initThirdPartyProviders();
+    }
+  }
+
   function initThirdPartyProviders() {
+    if (getCookieConsent() !== "accepted") {
+      return;
+    }
     if (isValidGa4(CONFIG.ga4MeasurementId) && !ga4Loaded) {
       ga4Loaded = true;
       var gaId = CONFIG.ga4MeasurementId.trim();
@@ -304,10 +319,39 @@
     }, true);
   }
 
+  function renderConsentBannerIfNeeded() {
+    if (getCookieConsent() || doc.getElementById("bubaCookieBanner")) return;
+    if ((win.location.pathname || "").indexOf("privacidad.html") !== -1) return;
+    var box = doc.createElement("div");
+    box.id = "bubaCookieBanner";
+    box.setAttribute("role", "dialog");
+    box.setAttribute("aria-label", "Aviso de cookies y privacidad");
+    box.style.cssText = "position:fixed;left:16px;bottom:16px;z-index:950;max-width:390px;width:calc(100% - 32px);background:#0f172a;color:#f8fafc;border:1px solid rgba(255,255,255,.16);border-radius:14px;padding:13px 15px;box-shadow:0 18px 45px rgba(15,23,42,.38);font-size:12px;line-height:1.45;";
+    box.innerHTML = [
+      '<div style="font-weight:700;color:#fbbf24;margin-bottom:4px;">Privacidad y Cookies</div>',
+      '<p style="margin:0 0 10px;color:#cbd5e1;">Usamos almacenamiento local y cookies técnicas para guardar tu diseño 3D, vincular tu Código Match y medir el desempeño del sitio. <a href="privacidad.html" style="color:#fbbf24;text-decoration:underline;">Ver Aviso de Privacidad</a>.</p>',
+      '<div style="display:flex;gap:8px;flex-wrap:wrap;">',
+      '  <button type="button" id="bubaCookieAccept" style="background:#16a34a;color:#fff;border:0;border-radius:8px;padding:6px 11px;font-weight:700;cursor:pointer;font-size:11px;">Aceptar todo</button>',
+      '  <button type="button" id="bubaCookieEssential" style="background:#1e293b;color:#e2e8f0;border:1px solid #475569;border-radius:8px;padding:6px 11px;font-weight:600;cursor:pointer;font-size:11px;">Solo esenciales</button>',
+      '</div>'
+    ].join("");
+    doc.body.appendChild(box);
+    doc.getElementById("bubaCookieAccept").addEventListener("click", function () {
+      setCookieConsent("accepted");
+      box.remove();
+    });
+    doc.getElementById("bubaCookieEssential").addEventListener("click", function () {
+      setCookieConsent("essential");
+      box.remove();
+    });
+  }
+
   win.BubaMetrics = {
     track: track,
     getSummary: getSummary,
     getAttribution: getAttribution,
+    getCookieConsent: getCookieConsent,
+    setCookieConsent: setCookieConsent,
     resetLocal: resetLocal,
     config: CONFIG
   };
@@ -317,10 +361,12 @@
   if (doc.readyState === "loading") {
     doc.addEventListener("DOMContentLoaded", function () {
       bindAutoListeners();
+      renderConsentBannerIfNeeded();
       track("page_view", { title: doc.title });
     });
   } else {
     bindAutoListeners();
+    renderConsentBannerIfNeeded();
     track("page_view", { title: doc.title });
   }
 })(window, document);

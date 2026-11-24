@@ -141,6 +141,8 @@
         </div>
       </a>
       <div class="nav-actions">
+        <button type="button" class="btn btn-outline btn-sm" id="bubaAccountTriggerBtn" title="Identifícate o guarda tu Código Match Buba">Mi Cuenta · Match</button>
+        <a class="btn btn-outline btn-sm" href="privacidad.html">Privacidad</a>
         <a class="btn btn-outline btn-sm" href="index.html">← Volver al Catálogo</a>
         <a class="btn btn-primary btn-sm" href="https://wa.me/528134575939" target="_blank" rel="noopener noreferrer">WhatsApp 81 3457 5939</a>
       </div>
@@ -507,6 +509,7 @@
               <textarea id="cliNotas" name="notas" rows="2" placeholder="Ej. Me interesa color nogal claro, muro con ventana derecha, o agendar rectificación..."></textarea>
             </div>
             <div id="cadStatus" class="status-banner" role="status" aria-live="polite"></div>
+            <p style="font-size:11.5px; color:#64748b; margin:6px 0 8px;">Al enviar aceptas nuestro <a href="privacidad.html" style="text-decoration:underline; color:#0f172a;">Aviso de Privacidad</a>.</p>
             <button id="cadSubmitBtn" type="submit" class="btn btn-primary" style="width:100%;">
               Guardar Plano &amp; Cotizar por WhatsApp
             </button>
@@ -645,7 +648,8 @@
   </div>
 
   <script src="js/cad-engine.js?v=20261123_v21"></script>
-  <script src="js/buba-metrics.js?v=20261123_v22"></script>
+  <script src="js/buba-metrics.js?v=20261123_v23"></script>
+  <script src="js/buba-identity.js?v=20261123_v23"></script>
   <script>
     (function () {
       const M = window.CLOSETS_MASTER;
@@ -1518,7 +1522,8 @@
           x: Array.isArray(state.extras) ? [...state.extras] : [],
           z: state.zona,
           pr: r ? r.totalMXN : 0,
-          ...(compactCust ? { b: compactCust } : {})
+          ...(compactCust ? { b: compactCust } : {}),
+          ...(window.BubaIdentity ? { u: window.BubaIdentity.getCompactUserTag() } : {})
         };
       }
 
@@ -1526,7 +1531,11 @@
         try {
           const compact = buildCompactDesignObj(p, r);
           const tok = toBase64UrlUtf8(JSON.stringify(compact));
-          return `https://closets-closets.com/configurador.html?d=${tok}`;
+          const url = `https://closets-closets.com/configurador.html?d=${tok}`;
+          if (window.BubaIdentity && p && p.folio) {
+            window.BubaIdentity.recordFolio(p.folio, state.categoria, r ? r.totalMXN : 0, url);
+          }
+          return url;
         } catch (_) {
           return `https://closets-closets.com/configurador.html?cat=${encodeURIComponent(state.categoria)}&acabado=${encodeURIComponent(state.acabadoId)}`;
         }
@@ -1602,6 +1611,7 @@
 
         const msg = [
           `Hola, quiero cotizar la INGENIERÍA DE FABRICACIÓN de mi diseño (${p.folio}):`,
+          ...(window.BubaIdentity ? window.BubaIdentity.formatMatchBullets(p.folio) : []),
           `• Paquete: Ingeniería ${pkg}`,
           `• Mueble: ${p.categoriaNombre} — ${p.subtipoNombre}`,
           `• Gama: ${r.gamaNombre}`,
@@ -1650,6 +1660,7 @@
 
         const waMsg = [
           `Hola, generé este anteproyecto CAD en Closets-Closets (${p.folio}):`,
+          ...(window.BubaIdentity ? window.BubaIdentity.formatMatchBullets(p.folio) : []),
           includeClientInfo && p.clienteNombre ? `• Cliente: ${p.clienteNombre}${p.clienteTel ? " (" + p.clienteTel + ")" : ""}` : "",
           `• Mueble: ${p.categoriaNombre} — ${p.subtipoNombre}`,
           `• Gama: ${r.gamaNombre}`,
@@ -1698,6 +1709,13 @@
         cadBtn.disabled = true;
         const orig = cadBtn.textContent;
         cadBtn.textContent = "Generando Lámina CAD y enviando...";
+
+        if (window.BubaIdentity) {
+          const prof = window.BubaIdentity.getProfile();
+          if (pChk.clienteNombre && !prof.nombre) prof.nombre = pChk.clienteNombre;
+          if (pChk.clienteTel && !prof.tel) prof.tel = pChk.clienteTel;
+          window.BubaIdentity.saveProfile(prof);
+        }
 
         const built = buildFullWaUrlForDesign(true);
         const { p, r, rangoStr, modulosTxt, dimDesglose, shareUrl, waUrl } = built;
@@ -2299,6 +2317,7 @@
 
         const msg = [
           `🤖 *[REPORTE AGENTE CAD WEB → BUBA WHATSAPP]*`,
+          ...(window.BubaIdentity ? window.BubaIdentity.formatMatchBullets(p.folio) : []),
           `• *Cliente / Duda:* ${dudaTxt}`,
           `• *Folio CAD:* ${p.folio}`,
           `• *Proyecto:* ${p.categoriaNombre} — ${p.subtipoNombre}`,

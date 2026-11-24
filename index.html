@@ -157,6 +157,7 @@
       </ul>
 
       <div class="nav-actions">
+        <button type="button" class="btn btn-outline btn-sm hide-mobile" id="bubaAccountTriggerBtn" title="Identifícate o guarda tu Código Match Buba">Mi Cuenta · Match</button>
         <a class="btn btn-outline btn-sm hide-mobile" href="https://wa.me/528134575939?text=Hola%2C%20quiero%20cotizar%20un%20proyecto%20con%20Closets-Closets" target="_blank" rel="noopener noreferrer">WhatsApp</a>
         <a class="btn btn-primary btn-sm" href="configurador.html">Estudio CAD</a>
         <button class="mobile-toggle" type="button" id="mobileMenuBtn" aria-label="Abrir menú">MENÚ</button>
@@ -797,6 +798,7 @@
           </div>
 
           <div id="contactStatus" class="status-banner" role="status" aria-live="polite"></div>
+          <p style="font-size:12px; color:#64748b; margin-bottom:10px;">Al enviar aceptas nuestro <a href="privacidad.html" style="text-decoration:underline; color:#0f172a;">Aviso de Privacidad y Uso de Cookies</a>.</p>
           <button id="contactSubmit" type="submit" class="btn btn-primary" style="width:100%;">Enviar Solicitud &amp; Abrir WhatsApp</button>
         </form>
       </div>
@@ -826,13 +828,15 @@
       </div>
       <div class="footer-links">
         <a href="configurador.html">Estudio CAD</a>
+        <a href="privacidad.html">Aviso de Privacidad</a>
         <a href="https://www.facebook.com/profile.php?id=61573131999253" target="_blank" rel="noopener noreferrer">Facebook</a>
         <a href="https://wa.me/528134575939" target="_blank" rel="noopener noreferrer">WhatsApp 81 3457 5939</a>
       </div>
     </div>
   </footer>
 
-  <script src="js/buba-metrics.js?v=20261123_v22"></script>
+  <script src="js/buba-metrics.js?v=20261123_v23"></script>
+  <script src="js/buba-identity.js?v=20261123_v23"></script>
   <script>
     (function () {
       const mobileBtn = document.getElementById("mobileMenuBtn");
@@ -915,8 +919,16 @@
             // Modo estático sin backend: abre WhatsApp directo
           }
 
+          if (window.BubaIdentity) {
+            const prof = window.BubaIdentity.getProfile();
+            if (nombre && !prof.nombre) prof.nombre = nombre;
+            if (tel && !prof.tel) prof.tel = tel;
+            window.BubaIdentity.saveProfile(prof);
+          }
+
           const waTxt = [
             "Hola, Closets-Closets Design & More:",
+            ...(window.BubaIdentity ? window.BubaIdentity.formatMatchBullets("") : []),
             `• Nombre: ${nombre}`,
             `• Teléfono: ${tel}`,
             `• Proyecto: ${form.elements["categoria"].value}`,
@@ -1023,6 +1035,7 @@
         }
         const msg = [
           "🤖 *[REPORTE AGENTE WEB → BUBA WHATSAPP]*",
+          ...(window.BubaIdentity ? window.BubaIdentity.formatMatchBullets("") : []),
           "• *Origen:* Catálogo Principal (index.html)",
           "• *Mensaje del Cliente:* " + txt
         ].join("\n");
