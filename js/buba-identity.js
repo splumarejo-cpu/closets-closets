@@ -9,9 +9,8 @@
   "use strict";
 
   var CFG = win.BUBA_IDENTITY_CONFIG = Object.assign({
-    // Pegar aquí tu OAuth 2.0 Client ID tipo "Aplicación web" de Google Cloud (ej. "12345-abc.apps.googleusercontent.com")
-    // Nota: el credentials.json "installed" actual es de escritorio; Google requiere un Client ID tipo Web con origen https://closets-closets.com
-    googleClientId: ""
+    // OAuth 2.0 Client ID tipo "Aplicación web" (proyecto Gemini Pago / gen-lang-client-0395686367)
+    googleClientId: "255363114817-8e1k9l84b6kacg9nmb49b0sbdsakqm40.apps.googleusercontent.com"
   }, win.BUBA_IDENTITY_CONFIG || {});
 
   var PROFILE_KEY = "cc_client_profile_v1";
