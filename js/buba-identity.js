@@ -24,10 +24,40 @@
     }
   }
 
+  function escHtml(str) {
+    return String(str == null ? "" : str)
+      .replace(/&/g, "&amp;")
+      .replace(/</g, "&lt;")
+      .replace(/>/g, "&gt;")
+      .replace(/"/g, "&quot;")
+      .replace(/'/g, "&#39;");
+  }
+
+  function isSafeClientId(cid) {
+    return /^CC-[A-Z0-9]{4,12}$/i.test(String(cid || "").trim());
+  }
+
+  function isSafeFolio(folio) {
+    return /^[A-Z0-9_-]{3,28}$/i.test(String(folio || "").trim());
+  }
+
+  function isSafeSiteUrl(url) {
+    var u = String(url || "").trim();
+    return u.indexOf("https://closets-closets.com/") === 0 || u.indexOf("configurador.html") === 0;
+  }
+
   function genVisitorId() {
     var chars = "ABCDEFGHJKLMNPQRSTUVWXYZ23456789";
     var out = "CC-";
-    for (var i = 0; i < 6; i++) {
+    if (win.crypto && win.crypto.getRandomValues) {
+      var rnd = new Uint8Array(6);
+      win.crypto.getRandomValues(rnd);
+      for (var i = 0; i < 6; i++) {
+        out += chars.charAt(rnd[i] % chars.length);
+      }
+      return out;
+    }
+    for (var j = 0; j < 6; j++) {
       out += chars.charAt(Math.floor(Math.random() * chars.length));
     }
     return out;
@@ -41,7 +71,7 @@
       raw = "";
     }
     var p = safeParse(raw, null);
-    if (!p || !p.clientId) {
+    if (!p || !isSafeClientId(p.clientId)) {
       p = {
         clientId: genVisitorId(),
         nombre: "",
@@ -176,7 +206,7 @@
   function parseBubaReturnPayload() {
     var params = new URLSearchParams(win.location.search || "");
     var rawBuba = params.get("buba");
-    if (!rawBuba) return null;
+    if (!rawBuba || rawBuba.length > 4096) return null;
     try {
       var obj = JSON.parse(fromBase64UrlUtf8(rawBuba));
       return obj && typeof obj === "object" ? obj : null;
@@ -268,7 +298,7 @@
       var p = loadProfile();
       var codeEl = doc.getElementById("bubaAccCodePill");
       if (codeEl) {
-        codeEl.innerHTML = '<span>Código Match: <strong style="color:#0f172a;">BUBA-' + p.clientId + '</strong></span><span style="color:' + (p.verifiedGoogle ? '#15803d' : '#64748b') + ';font-weight:700;">' + (p.verifiedGoogle ? '✓ Google' : 'Local') + '</span>';
+        codeEl.innerHTML = '<span>Código Match: <strong style="color:#0f172a;">BUBA-' + escHtml(p.clientId) + '</strong></span><span style="color:' + (p.verifiedGoogle ? '#15803d' : '#64748b') + ';font-weight:700;">' + (p.verifiedGoogle ? '✓ Google' : 'Local') + '</span>';
       }
       var nEl = doc.getElementById("bubaAccName"); if (nEl) nEl.value = p.nombre || "";
       var tEl = doc.getElementById("bubaAccTel"); if (tEl) tEl.value = p.tel || "";
@@ -311,12 +341,27 @@
 
       var hist = doc.getElementById("bubaAccHistory");
       if (hist) {
+        hist.innerHTML = "";
         if (p.historyFolios.length) {
-          hist.innerHTML = "<strong>Tus últimos diseños guardados:</strong> " + p.historyFolios.slice(0, 4).map(function (h) {
-            return h.url ? '<a href="' + h.url + '" style="color:#b45309;font-weight:700;margin-right:8px;">' + h.folio + '</a>' : h.folio;
-          }).join(" ");
-        } else {
-          hist.textContent = "";
+          var lbl = doc.createElement("strong");
+          lbl.textContent = "Tus últimos diseños guardados: ";
+          hist.appendChild(lbl);
+          p.historyFolios.slice(0, 4).forEach(function (h) {
+            if (!h || !isSafeFolio(h.folio)) return;
+            if (isSafeSiteUrl(h.url)) {
+              var a = doc.createElement("a");
+              a.href = h.url;
+              a.rel = "noopener";
+              a.style.cssText = "color:#b45309;font-weight:700;margin-right:8px;";
+              a.textContent = String(h.folio);
+              hist.appendChild(a);
+            } else {
+              var sp = doc.createElement("span");
+              sp.style.cssText = "margin-right:8px;font-weight:600;";
+              sp.textContent = String(h.folio);
+              hist.appendChild(sp);
+            }
+          });
         }
       }
     }
@@ -360,7 +405,7 @@
     var p = loadProfile();
     if (p.nombre || p.verifiedGoogle) {
       var shortName = String(p.nombre || p.email || "Mi Cuenta").split(" ")[0].slice(0, 16);
-      btn.innerHTML = (p.verifiedGoogle ? "✓ " : "👤 ") + shortName + " · " + p.clientId;
+      btn.textContent = (p.verifiedGoogle ? "✓ " : "👤 ") + shortName + " · " + p.clientId;
     } else {
       btn.textContent = hasValidGoogleClientId() ? "Identifícate con Google" : "Mi Cuenta · Match " + p.clientId;
     }
@@ -368,6 +413,7 @@
 
   function initGoogleIdentity() {
     if (!hasValidGoogleClientId()) return;
+    var clientIdTrim = String(CFG.googleClientId).trim();
     var s = doc.createElement("script");
     s.src = "https://accounts.google.com/gsi/client";
     s.async = true;
@@ -375,10 +421,11 @@
     s.onload = function () {
       if (!win.google || !win.google.accounts || !win.google.accounts.id) return;
       win.google.accounts.id.initialize({
-        client_id: String(CFG.googleClientId).trim(),
+        client_id: clientIdTrim,
         callback: function (response) {
           var payload = decodeJwtPayload(response && response.credential);
-          if (!payload) return;
+          if (!payload || payload.aud !== clientIdTrim) return;
+          if (payload.iss !== "https://accounts.google.com" && payload.iss !== "accounts.google.com") return;
           var p = loadProfile();
           p.googleSub = payload.sub || "";
           p.email = payload.email || p.email;
