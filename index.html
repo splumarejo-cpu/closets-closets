@@ -159,7 +159,7 @@
       </ul>
 
       <div class="nav-actions">
-        <button type="button" class="btn btn-outline btn-sm hide-mobile" id="bubaAccountTriggerBtn" title="Identifícate o guarda tu Código Match Buba">Mi Cuenta · Match</button>
+        <button type="button" class="btn btn-outline btn-sm" id="bubaAccountTriggerBtn" title="Identifícate con Google o guarda tu Código Match Buba">Identifícate con Google</button>
         <a class="btn btn-outline btn-sm hide-mobile" href="https://wa.me/528134575939?text=Hola%2C%20quiero%20cotizar%20un%20proyecto%20con%20Closets-Closets" target="_blank" rel="noopener noreferrer">WhatsApp</a>
         <a class="btn btn-primary btn-sm" href="configurador.html">Estudio CAD</a>
         <button class="mobile-toggle" type="button" id="mobileMenuBtn" aria-label="Abrir menú">MENÚ</button>
@@ -756,6 +756,7 @@
         <form id="contactForm" name="cotizacion-closets" method="POST" data-netlify="true" netlify-honeypot="bot-field" class="contact-panel">
           <input type="hidden" name="form-name" value="cotizacion-closets">
           <p hidden><label>No llenar: <input name="bot-field"></label></p>
+          <div data-buba-google-inline="1"></div>
 
           <div class="field-grid">
             <div class="field">
@@ -838,7 +839,7 @@
   </footer>
 
   <script src="js/buba-metrics.js?v=20261123_v23"></script>
-  <script src="js/buba-identity.js?v=20261123_v25"></script>
+  <script src="js/buba-identity.js?v=20261123_v26"></script>
   <script>
     (function () {
       const mobileBtn = document.getElementById("mobileMenuBtn");
